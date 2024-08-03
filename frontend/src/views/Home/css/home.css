@@ -1,0 +1,36 @@
+.containerHome{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.containerHome .headHome {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem;
+}
+
+.headHome img{
+    width:10rem;
+    height:3rem;
+}
+.btnAcceso{
+    background: #074d83;
+    border: 1px solid #204d72;
+    border-radius: 17px;
+    color:#ddd;
+    font-weight:600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    box-shadow: rgb(27, 28, 29) 1px 5px 8px;
+}
+.textHome{
+    width: 50%;
+    padding: 4rem 5.5rem;
+    font-size: 1.5rem;
+}

@@ -1,6 +1,8 @@
-import NavHome from "./components/NavHome"
-import "./css/home.css"
-import logo from "../../assets/logo.webp"
+import NavHome from "./components/NavHome";
+import "./css/home.css";
+import logo from "../../assets/logo.webp";
+import { Link } from "react-router-dom";
+
 const Home = () => {
     return (
         <div>
@@ -11,7 +13,9 @@ const Home = () => {
                         <NavHome />
                     </section>
                     <div>
+                        <Link to="login">
                         <button className="btnAcceso">Acceso</button>
+                        </Link>
                     </div>
                 </div>
                 <section className="bodyHome">

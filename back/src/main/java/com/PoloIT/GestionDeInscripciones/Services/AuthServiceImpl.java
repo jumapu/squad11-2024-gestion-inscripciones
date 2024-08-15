@@ -46,8 +46,11 @@ public class UserServiceImpl implements UserService {
                     userDto.getPassword()
             ));
         } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
             if (e.getLocalizedMessage().equals("Bad credentials"))
                 throw new ResponseException("404", "Incorrect password", HttpStatus.NOT_FOUND);
+            if (e.getLocalizedMessage().equals("Email not Found"))
+                throw new ResponseException("404", "Email not Found", HttpStatus.NOT_FOUND);
             throw new ResponseException("404", "Error Credentials", HttpStatus.NOT_FOUND);
         }
     }

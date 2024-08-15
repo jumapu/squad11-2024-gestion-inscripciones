@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth/")
 @AllArgsConstructor
-public class AuhtDemo {
+public class AuthController {
 
     private final UserServiceImpl userService;
 

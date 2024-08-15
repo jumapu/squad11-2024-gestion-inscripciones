@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -39,4 +40,17 @@ public class Teams {
             inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
     private Set<Mentor> mentors = new HashSet<>();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Teams teams = (Teams) o;
+        return Objects.equals(event.getId(), teams.event.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(event.getId());
+    }
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -36,5 +37,19 @@ public class Mentor {
     private Set<String> skills;
     private Set<String> profiles;
     private String linkedin;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mentor mentor = (Mentor) o;
+        return user != null && user.getId() != null &&
+                user.getId().equals(mentor.user != null ? mentor.user.getId() : null);
+    }
+
+    @Override
+    public int hashCode() {
+        return user != null && user.getId() != null ? Objects.hash(user.getId()) : 0;
+    }
 
 }

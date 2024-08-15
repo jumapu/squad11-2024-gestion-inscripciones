@@ -4,7 +4,7 @@ import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseExcept
 import org.springframework.http.HttpStatus;
 
 public enum Rol {
-    ADMIN, USER;
+    ADMIN, STUDENT, MENTOR;
 
     // Static method to check if the value is valid
     public static void fromString(String role) {

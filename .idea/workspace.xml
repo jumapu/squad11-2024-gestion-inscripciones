@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ad5d0a6b-4aed-48c4-989a-337a3bada31b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/back/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/back/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Controller/AuhtDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Controller/DemoAdmin.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Controller/DemoUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Mentor.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Mentor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Registration.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Registration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Teams.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/Teams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Enums/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Enums/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Services/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Services/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/java/com/PoloIT/GestionDeInscripciones/Services/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/back/src/main/resources/application.yml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2khIt7YATzFf4fMAAOAIco6KpVc" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "code.cleanup.on.save": "true",
+    "git-widget-placeholder": "develop-back-cristian",
+    "kotlin-language-version-configured": "true",
+    "rearrange.code.on.save": "true",
+    "settings.editor.selected.configurable": "actions.on.save"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad5d0a6b-4aed-48c4-989a-337a3bada31b" name="Changes" comment="" />
+      <created>1723729594665</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1723729594665</updated>
+    </task>
+    <servers />
+  </component>
+</project>

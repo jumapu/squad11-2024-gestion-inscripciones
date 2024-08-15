@@ -2,7 +2,7 @@ package com.PoloIT.GestionDeInscripciones.Controller;
 
 
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
-import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
+import com.PoloIT.GestionDeInscripciones.Services.AuthServiceImpl;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class AuthController {
 
-    private final UserServiceImpl userService;
+    private final AuthServiceImpl userService;
 
     @PostMapping("authentication")
     public ResponseEntity<Map<String, String>> authentication(@Valid @RequestBody UserDto userDto) {

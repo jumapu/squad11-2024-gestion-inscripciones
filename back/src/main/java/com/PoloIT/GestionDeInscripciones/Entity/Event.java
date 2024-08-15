@@ -33,7 +33,7 @@ public class Event {
     @OneToOne(mappedBy = "event")
     private Registration registration;
 
-    //* RELATIONSHIP WITH REGISTRATION
+    //* RELATIONSHIP WITH TEAMS
     @OneToOne(mappedBy = "event")
     private Teams teams;
 

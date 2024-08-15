@@ -28,8 +28,9 @@ public class SecurityConfig {
         htpp.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
                         auth.requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/user/**").hasAnyAuthority(Rol.USER.name())
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Rol.ADMIN.name())
+                                .requestMatchers("/api/v1/mentor/**").hasAnyAuthority(Rol.MENTOR.name())
+                                .requestMatchers("/api/v1/student/**").hasAnyAuthority(Rol.STUDENT.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

@@ -23,7 +23,6 @@ public class Registration {
     @JoinColumn(name = "event_id")
     private Event event;
 
-
     @ManyToMany
     @JoinTable(
             name = "registration_mentors",

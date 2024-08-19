@@ -8,7 +8,3 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-  security:
-    user:
-      name: user
-      password: 123

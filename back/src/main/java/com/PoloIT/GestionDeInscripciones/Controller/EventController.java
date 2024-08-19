@@ -20,7 +20,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1/event")
+@RequestMapping("/api/v1/event/")
 @AllArgsConstructor
 public class EventController {
     private final EventRepository eventRepository;
@@ -42,25 +42,26 @@ public class EventController {
     public ResponseEntity<DataResponseEvent> updateEvent(
             @RequestBody @Valid DataUpdateEvent dataUpdateEvent) {
 
-        Event event=eventServiceIpml.updateEventDB(dataUpdateEvent);
+        Event event = eventServiceIpml.updateEventDB(dataUpdateEvent);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 
     @GetMapping("list")
     public ResponseEntity<Page<DataListEvents>> listEvents(
-            @PageableDefault(size = 5) Pageable pageable){
+            @PageableDefault(size = 5) Pageable pageable) {
         //me falta agregarle esl servivio
         return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id){
+    public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {
         Event event = eventServiceIpml.getEventDB(id);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity<DataResponseEvent> deleteEvent(@PathVariable Long id){
+    public ResponseEntity<DataResponseEvent> deleteEvent(@PathVariable Long id) {
         Event event = eventServiceIpml.deleteEventDB(id);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }

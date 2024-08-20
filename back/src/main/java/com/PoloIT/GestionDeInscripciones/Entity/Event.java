@@ -1,5 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
+import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,4 +43,19 @@ public class Event {
     @ManyToOne()
     @JoinColumn(name = "admin_id")
     private Admin admin;
+
+    @Column(name = "is_active")
+    private boolean isActive = false;
+
+    public Event(DataRegisterEvent datosRegistroEvent) {
+        this.name = datosRegistroEvent.name();
+    }
+
+    public void updateEvent(DataUpdateEvent dataUpdateEvent) {
+        this.name = dataUpdateEvent.name();
+    }
+
+    public void deactivateEvent() {
+        this.isActive = false;
+    }
 }

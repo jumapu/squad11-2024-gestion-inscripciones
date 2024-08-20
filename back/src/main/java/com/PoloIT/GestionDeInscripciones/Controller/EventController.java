@@ -48,9 +48,19 @@ public class EventController {
 
     @GetMapping("list")
     public ResponseEntity<Page<DataListEvents>> listEvents(
+<<<<<<< HEAD
             @PageableDefault(size = 5) Pageable pageable) {
         //me falta agregarle esl servivio
         return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
+||||||| 6dd321a
+            @PageableDefault(size = 5) Pageable pageable){
+        //me falta agregarle esl servivio
+        return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
+=======
+            @PageableDefault(size = 5) Pageable pageable){
+        //me falta agregarle el servicio
+        return ResponseEntity.ok(eventServiceIpml.listEventsDB(pageable));
+>>>>>>> origin/develop-back-ale
     }
 
     @GetMapping("/{id}")

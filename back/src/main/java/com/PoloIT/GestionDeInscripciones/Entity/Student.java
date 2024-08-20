@@ -26,8 +26,7 @@ public class Student {
     //*Registration
     @ManyToMany(mappedBy = "students")
     private Set<Registration> registrations = new HashSet<>();
-
-
+    
     //*TEAMS
     @ManyToMany(mappedBy = "students")
     private Set<Teams> teams = new HashSet<>();

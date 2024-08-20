@@ -23,7 +23,7 @@ import java.net.URI;
 @RequestMapping("/api/v1/event")
 @AllArgsConstructor
 public class EventController {
-    private final EventRepository eventRepository;
+
     private final EventServiceIpml eventServiceIpml;
 
     @PostMapping("add")
@@ -49,7 +49,6 @@ public class EventController {
     @GetMapping("list")
     public ResponseEntity<Page<DataListEvents>> listEvents(
             @PageableDefault(size = 5) Pageable pageable){
-        //me falta agregarle el servicio
         return ResponseEntity.ok(eventServiceIpml.listEventsDB(pageable));
     }
     @GetMapping("/{id}")

@@ -1,42 +1,51 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Setter
 @Getter
 public class Mentor {
 
     @Id
+    private Long id;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 
-    //*Registration
-    @ManyToMany(mappedBy = "mentors")
-    private Set<Registration> registrations = new HashSet<>();
-
-
-    //*TEAMS
-    @ManyToMany(mappedBy = "mentors")
-    private Set<Teams> teams = new HashSet<>();
-
     private String name;
+    private String lastName;
     private String company;
     private Set<String> skills;
     private Set<String> profiles;
     private String linkedin;
+
+
+    //*Registration
+    @ManyToMany(mappedBy = "mentors")
+    private Set<Registration> registrations;
+
+
+    //*TEAMS
+    @ManyToMany(mappedBy = "mentors")
+    private Set<Teams> teams;
+
+    public boolean areFieldsValid() {
+        return this.name != null &&
+                this.company != null &&
+                this.skills != null && !this.skills.isEmpty() &&
+                this.linkedin != null &&
+                this.profiles != null && !this.profiles.isEmpty();
+    }
 
     @Override
     public boolean equals(Object o) {

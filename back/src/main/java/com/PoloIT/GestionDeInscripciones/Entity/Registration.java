@@ -1,27 +1,35 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 public class Registration {
 
     @Id
+    private Long id;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "event_id")
     private Event event;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime finishAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
 
     @ManyToMany
     @JoinTable(
@@ -29,7 +37,7 @@ public class Registration {
             joinColumns = @JoinColumn(name = "registration_id"),
             inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
-    private Set<Mentor> mentors = new HashSet<>();
+    private Set<Mentor> mentors;
 
     @ManyToMany
     @JoinTable(
@@ -37,7 +45,7 @@ public class Registration {
             joinColumns = @JoinColumn(name = "registration_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students = new HashSet<>();
+    private Set<Student> students;
 
     @Override
     public boolean equals(Object o) {

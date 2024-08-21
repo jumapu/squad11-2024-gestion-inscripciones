@@ -3,9 +3,15 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.Entity.Admin;
+import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import com.PoloIT.GestionDeInscripciones.Jwt.JwtService;
+import com.PoloIT.GestionDeInscripciones.Repository.AdminRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,11 +26,13 @@ import org.springframework.stereotype.Service;
 public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
+    private final UserRepository userRepository;
+    private final AdminRepository adminRepository;
+    private final StudentRepository studentRepository;
+    private final MentorRepository mentorRepository;
     private final PasswordEncoder encoder;
     private final ModelMapper mapper;
     private final JwtService jwtService;
-    private final UserRepository userRepository;
-
 
     public String authenticate(UserDto userDto) {
         authenticationAccount(userDto);
@@ -34,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     public String register(UserDto userDto) {
 
         emailInUsed(userDto);
-        userRepository.save(toUser(userDto));
+        setRol(userRepository.save(toUser(userDto)));
         return jwtService.generateJwt(userDto.getEmail());
     }
 
@@ -69,5 +77,29 @@ public class AuthServiceImpl implements AuthService {
 
     private void checkRol(UserDto userDto) {
         Rol.fromString(userDto.getRol());
+    }
+
+    private void setRol(User user) {
+        if (user.getRol().name().equalsIgnoreCase("admin")) {
+            adminRepository.save(
+                    Admin.builder()
+                            .user(user)
+                            .build());
+            return;
+        }
+
+        if (user.getRol().name().equalsIgnoreCase("mentor")) {
+            mentorRepository.save(Mentor.builder()
+                    .user(user).build());
+            return;
+        }
+
+        if (user.getRol().name().equalsIgnoreCase("student")) {
+            studentRepository.save(Student.builder()
+                    .user(user).build());
+            return;
+        }
+
+        throw new ResponseException("505", "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

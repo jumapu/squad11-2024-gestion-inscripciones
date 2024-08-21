@@ -1,23 +1,22 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Setter
 @Getter
 public class Student {
 
     @Id
+    private Long id;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
@@ -25,11 +24,11 @@ public class Student {
 
     //*Registration
     @ManyToMany(mappedBy = "students")
-    private Set<Registration> registrations = new HashSet<>();
-    
+    private Set<Registration> registrations;
+
     //*TEAMS
     @ManyToMany(mappedBy = "students")
-    private Set<Teams> teams = new HashSet<>();
+    private Set<Teams> teams;
 
 
     private String name;
@@ -38,6 +37,14 @@ public class Student {
     private Set<String> profiles;
     private String linkedin;
 
+
+    public boolean areFieldsValid() {
+        return this.name != null &&
+                this.skills != null && !this.skills.isEmpty() &&
+                this.linkedin != null &&
+                this.profiles != null && !this.profiles.isEmpty() &&
+                this.courses != null && !this.courses.isEmpty();
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -52,4 +59,6 @@ public class Student {
     public int hashCode() {
         return user != null && user.getId() != null ? Objects.hash(user.getId()) : 0;
     }
+
+
 }

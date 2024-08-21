@@ -1,12 +1,9 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventsDTO.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventsDTO.DataUpdateEvent;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -14,6 +11,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Setter
 @Getter
@@ -23,6 +21,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
+    @Column(name = "is_active")
+    private boolean isActive;
 
     @Column(unique = false)
     @CreationTimestamp
@@ -32,7 +33,7 @@ public class Event {
     private LocalDateTime updatedAt;
 
     //* RELATIONSHIP WITH REGISTRATION
-    @OneToOne(mappedBy = "event")
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
     private Registration registration;
 
     //* RELATIONSHIP WITH TEAMS
@@ -44,12 +45,11 @@ public class Event {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
-    @Column(name = "is_active")
-    private boolean isActive = false;
 
     public Event(DataRegisterEvent datosRegistroEvent) {
         this.name = datosRegistroEvent.name();
     }
+
 
     public void updateEvent(DataUpdateEvent dataUpdateEvent) {
         this.name = dataUpdateEvent.name();

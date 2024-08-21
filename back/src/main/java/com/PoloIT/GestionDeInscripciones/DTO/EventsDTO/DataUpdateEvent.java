@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
+package com.PoloIT.GestionDeInscripciones.DTO.EventsDTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

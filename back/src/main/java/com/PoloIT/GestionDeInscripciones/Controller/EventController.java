@@ -1,78 +1,60 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataResponseEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.EventsDTO.DataResponseEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventsDTO.DataUpdateEvent;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
-import com.PoloIT.GestionDeInscripciones.Services.EventServiceIpml;
+import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/event/")
+@RequestMapping("/api/v1/admin/event/")
 @AllArgsConstructor
 public class EventController {
-    private final EventRepository eventRepository;
-    private final EventServiceIpml eventServiceIpml;
+    private final EventServiceImpl eventServiceImpl;
 
-    @PostMapping("add")
-    public ResponseEntity<DataResponseEvent> registerEvent(
-            UriComponentsBuilder uriComponentsBuilder,
-            @RequestBody @Valid DataRegisterEvent dataRegisterEvent) {
-
-        Event event = eventServiceIpml.saveEventDB(dataRegisterEvent);
-        DataResponseEvent dataResponseEvent = new DataResponseEvent(event);
-        URI url = uriComponentsBuilder.path("/event/{id}").buildAndExpand(event.getId()).toUri();
-        return ResponseEntity.created(url).body(dataResponseEvent);
+    @PostMapping("save")
+    public ResponseEntity<Map<String, String>> save(@RequestBody @Valid EventDTO eventDTO) {
+        eventServiceImpl.save(eventDTO);
+        return new ResponseEntity<>(Map.of("Event", "Event register"), HttpStatus.CREATED);
     }
+
 
     @PutMapping("update")
     @Transactional
     public ResponseEntity<DataResponseEvent> updateEvent(
             @RequestBody @Valid DataUpdateEvent dataUpdateEvent) {
+        Event event = eventServiceImpl.updateEventDB(dataUpdateEvent);
 
-        Event event = eventServiceIpml.updateEventDB(dataUpdateEvent);
+        //! ACA => no devolve la entidad, devolver un dto.
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 
-    @GetMapping("list")
-    public ResponseEntity<Page<DataListEvents>> listEvents(
-<<<<<<< HEAD
-            @PageableDefault(size = 5) Pageable pageable) {
-        //me falta agregarle esl servivio
-        return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
-||||||| 6dd321a
-            @PageableDefault(size = 5) Pageable pageable){
-        //me falta agregarle esl servivio
-        return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
-=======
-            @PageableDefault(size = 5) Pageable pageable){
-        //me falta agregarle el servicio
-        return ResponseEntity.ok(eventServiceIpml.listEventsDB(pageable));
->>>>>>> origin/develop-back-ale
+    @GetMapping("all")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEvents() {
+        return new ResponseEntity<>(eventServiceImpl.allEvents(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {
-        Event event = eventServiceIpml.getEventDB(id);
+        //! ACA => no devolve la entidad, devolver un dto.
+        Event event = eventServiceImpl.getEventDB(id);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
     public ResponseEntity<DataResponseEvent> deleteEvent(@PathVariable Long id) {
-        Event event = eventServiceIpml.deleteEventDB(id);
+        //! no hace falta devolver el objeto eliminado, solo un mensaje que confimacion que se elimino.
+        Event event = eventServiceImpl.deleteEventDB(id);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 }

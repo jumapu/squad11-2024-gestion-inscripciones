@@ -7,7 +7,7 @@ import com.PoloIT.GestionDeInscripciones.Entity.Teams;
 
 import java.time.LocalDateTime;
 
-public record DataResponseEvent(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt, DataResponseRegistration Registrations, /*Teams teams,*/
+public record DataResponseEvent(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt, DataResponseRegistration registrations, /*Teams teams,*/
                                 DataResponseAdmin admin) {
     public DataResponseEvent(Event event) {
         this(event.getId(),event.getName(),event.getCreatedAt(), event.getUpdatedAt(), new DataResponseRegistration(event.getRegistration())/*, event.getTeams()*/,new DataResponseAdmin(event.getAdmin()));

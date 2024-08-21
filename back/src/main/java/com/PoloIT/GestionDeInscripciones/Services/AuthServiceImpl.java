@@ -69,13 +69,6 @@ public class AuthServiceImpl implements AuthService {
         return mapper.map(userDto, User.class);
     }
 
-    private Admin getAdminContext() {
-        return userRepository.findByEmail(
-                        SecurityContextHolder.getContext().getAuthentication().getName()).
-                map(User::getAdmin).
-                orElseThrow(() -> new ResponseException("404", "Admin", HttpStatus.NOT_FOUND));
-    }
-
     private void checkRol(UserDto userDto) {
         Rol.fromString(userDto.getRol());
     }

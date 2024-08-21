@@ -1,12 +1,11 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataResponseEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataResponseEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceIpml;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;

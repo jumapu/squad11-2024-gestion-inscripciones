@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO.AdminDTO;
+package com.PoloIT.GestionDeInscripciones.DTO.admin;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 

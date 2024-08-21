@@ -1,7 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

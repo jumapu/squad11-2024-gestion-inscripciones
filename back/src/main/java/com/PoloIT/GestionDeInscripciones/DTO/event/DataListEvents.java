@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
+package com.PoloIT.GestionDeInscripciones.DTO.event;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 

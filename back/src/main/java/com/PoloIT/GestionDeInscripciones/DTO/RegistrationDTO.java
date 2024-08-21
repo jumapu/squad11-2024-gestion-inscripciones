@@ -3,7 +3,7 @@ package com.PoloIT.GestionDeInscripciones.DTO;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 public record RegistrationDTO(
 
@@ -12,12 +12,12 @@ public record RegistrationDTO(
         @NotNull(message = "Required enrollment end date")
         LocalDateTime finishAt,
         LocalDateTime updatedAt,
-        Set<StudentDTO> students,
-        Set<MentorDTO> mentors
+        List<StudentDTO> students,
+        List<MentorDTO> mentors
 
 ) {
 
-    public RegistrationDTO(LocalDateTime createdAt, LocalDateTime finishAt, LocalDateTime updatedAt, Set<StudentDTO> students, Set<MentorDTO> mentors) {
+    public RegistrationDTO(LocalDateTime createdAt, LocalDateTime finishAt, LocalDateTime updatedAt, List<StudentDTO> students, List<MentorDTO> mentors) {
         this.createdAt = createdAt;
         this.finishAt = finishAt;
         this.updatedAt = updatedAt;

@@ -74,9 +74,9 @@ public class EventServiceImpl {
                             , event.getRegistration().getFinishAt()
                             , event.getRegistration().getUpdatedAt(),
                             event.getRegistration().getStudents().stream()
-                                    .map(student -> new StudentDTO(student.getId(), student.getName(), student.getSkills(), student.getCourses(), student.getProfiles(), student.getLinkedin())).collect(Collectors.toSet())
+                                    .map(student -> new StudentDTO(student.getId(), student.getName(), student.getSkills(), student.getCourses(), student.getProfiles(), student.getLinkedin())).collect(Collectors.toList())
                             , event.getRegistration().getMentors().stream()
-                            .map(mentor -> new MentorDTO(mentor.getId(), mentor.getName(), mentor.getCompany(), mentor.getLastName(), mentor.getSkills(), mentor.getProfiles(), mentor.getLinkedin())).collect(Collectors.toSet())
+                            .map(mentor -> new MentorDTO(mentor.getId(), mentor.getName(), mentor.getCompany(), mentor.getLastName(), mentor.getSkills(), mentor.getProfiles(), mentor.getLinkedin())).collect(Collectors.toList())
                     );
 
                     return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getCreatedAt(), event.getUpdatedAt(), registrationDTO, event.isActive());

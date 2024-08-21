@@ -28,7 +28,7 @@ public class Student {
 
     //*TEAMS
     @ManyToMany(mappedBy = "students")
-    private Set<Teams> teams;
+    private Set<Team> team;
 
 
     private String name;

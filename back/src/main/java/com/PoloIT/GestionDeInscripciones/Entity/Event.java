@@ -38,7 +38,7 @@ public class Event {
 
     //* RELATIONSHIP WITH TEAMS
     @OneToOne(mappedBy = "event")
-    private Teams teams;
+    private TeamGroup teamGroup;
 
     //* RELATIONSHIP WITH ADMIN
     @ManyToOne()

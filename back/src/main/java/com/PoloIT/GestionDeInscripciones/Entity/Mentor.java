@@ -37,7 +37,7 @@ public class Mentor {
 
     //*TEAMS
     @ManyToMany(mappedBy = "mentors")
-    private Set<Teams> teams;
+    private Set<Team> team;
 
     public boolean areFieldsValid() {
         return this.name != null &&

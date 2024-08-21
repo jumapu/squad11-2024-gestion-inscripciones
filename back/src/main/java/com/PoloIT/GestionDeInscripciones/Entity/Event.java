@@ -47,8 +47,9 @@ public class Event {
     @Column(name = "is_active")
     private boolean isActive = false;
 
-    public Event(DataRegisterEvent datosRegistroEvent) {
+    public Event(DataRegisterEvent datosRegistroEvent, Admin admin) {
         this.name = datosRegistroEvent.name();
+        this.admin = admin;
     }
 
     public void updateEvent(DataUpdateEvent dataUpdateEvent) {

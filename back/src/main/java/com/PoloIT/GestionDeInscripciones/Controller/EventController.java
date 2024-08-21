@@ -4,9 +4,11 @@ import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataListEvents;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataRegisterEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataResponseEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceIpml;
+import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -25,13 +27,14 @@ import java.net.URI;
 public class EventController {
 
     private final EventServiceIpml eventServiceIpml;
+    private final UserServiceImpl userServiceImpl;
 
     @PostMapping("add")
     public ResponseEntity<DataResponseEvent> registerEvent(
             UriComponentsBuilder uriComponentsBuilder,
             @RequestBody @Valid DataRegisterEvent dataRegisterEvent) {
-
-        Event event = eventServiceIpml.saveEventDB(dataRegisterEvent);
+        Admin admin = userServiceImpl.getUserRolContext(Admin.class);
+        Event event = eventServiceIpml.saveEventDB(dataRegisterEvent,admin);
         DataResponseEvent dataResponseEvent = new DataResponseEvent(event);
         URI url = uriComponentsBuilder.path("/event/{id}").buildAndExpand(event.getId()).toUri();
         return ResponseEntity.created(url).body(dataResponseEvent);
@@ -48,18 +51,9 @@ public class EventController {
 
     @GetMapping("list")
     public ResponseEntity<Page<DataListEvents>> listEvents(
-<<<<<<< HEAD
-            @PageableDefault(size = 5) Pageable pageable) {
-        //me falta agregarle esl servivio
-        return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
-||||||| 6dd321a
-            @PageableDefault(size = 5) Pageable pageable){
-        //me falta agregarle esl servivio
-        return ResponseEntity.ok(eventRepository.findAll(pageable).map(DataListEvents::new));
-=======
+
             @PageableDefault(size = 5) Pageable pageable){
         return ResponseEntity.ok(eventServiceIpml.listEventsDB(pageable));
->>>>>>> origin/develop-back-ale
     }
 
     @GetMapping("/{id}")

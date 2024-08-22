@@ -22,6 +22,12 @@ public class Student {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private String name;
+    private Set<String> skills;
+    private Set<String> courses;
+    private Set<String> profiles;
+    private String linkedin;
+
     //*Registration
     @ManyToMany(mappedBy = "students")
     private Set<Registration> registrations;
@@ -29,13 +35,6 @@ public class Student {
     //*TEAMS
     @ManyToMany(mappedBy = "students")
     private Set<Team> team;
-
-
-    private String name;
-    private Set<String> skills;
-    private Set<String> courses;
-    private Set<String> profiles;
-    private String linkedin;
 
 
     public boolean areFieldsValid() {

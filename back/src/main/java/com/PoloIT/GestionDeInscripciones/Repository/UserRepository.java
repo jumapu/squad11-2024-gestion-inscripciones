@@ -12,6 +12,9 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
+    @Query(value = "SELECT COUNT(*) FROM user WHERE rol = 'ADMIN'", nativeQuery = true)
+    long countAdmins();
+
     @Transactional
     @Query(value = "UPDATE user Set name=:name where id=:id", nativeQuery = true)
     void patchName(@Param("name") String name, @Param("id") Long id);

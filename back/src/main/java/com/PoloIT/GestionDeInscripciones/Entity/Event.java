@@ -22,15 +22,14 @@ public class Event {
     private Long id;
     private String name;
     private String description;
+
     @Column(name = "is_active")
     private boolean isActive;
 
-    @Column(unique = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
-
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDateTime finishAt;
 
     //* RELATIONSHIP WITH REGISTRATION
     @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)

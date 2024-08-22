@@ -1,11 +1,13 @@
 package com.PoloIT.GestionDeInscripciones.Config;
 
 
+import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,7 +24,7 @@ public class ConfigApp {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> userRep.findByEmail(username).orElseThrow(() -> new RuntimeException("Email not Found"));
+        return username -> userRep.findByEmail(username).orElseThrow(() -> new ResponseException("404", "Email not Found", HttpStatus.NOT_FOUND));
     }
 
     @Bean

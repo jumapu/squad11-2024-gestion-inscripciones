@@ -2,29 +2,28 @@ package com.PoloIT.GestionDeInscripciones.Entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Setter
 @Getter
 @Entity
 public class Admin {
     @Id
+    private Long id;
+
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "admin")
-    private Set<Event> events = new HashSet<>();
+    @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+    private Set<Event> events;
 
 
     @Override

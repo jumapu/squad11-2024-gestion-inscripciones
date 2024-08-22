@@ -3,7 +3,6 @@ package com.PoloIT.GestionDeInscripciones.DTO.event;
 import com.PoloIT.GestionDeInscripciones.DTO.admin.DataResponseAdmin;
 import com.PoloIT.GestionDeInscripciones.DTO.registration.DataResponseRegistration;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Entity.Teams;
 
 import java.time.LocalDateTime;
 

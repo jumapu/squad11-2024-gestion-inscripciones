@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class EventServiceIpml {
+public class EventServiceImpl {
 
     private final EventRepository eventRepository;
 

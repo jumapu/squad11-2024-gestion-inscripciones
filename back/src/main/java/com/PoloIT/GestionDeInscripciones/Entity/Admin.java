@@ -21,6 +21,8 @@ public class Admin {
     @MapsId
     @JoinColumn(name = "user_id")
     private User user;
+    private String name;
+    private String lastName;
 
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
     private Set<Event> events;

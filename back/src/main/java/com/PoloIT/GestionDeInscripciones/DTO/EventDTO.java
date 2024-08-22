@@ -11,20 +11,20 @@ public record EventDTO(
         @NotNull(message = "description required")
         String description,
         LocalDateTime createdAt,
-        LocalDateTime updatedAt,
+        LocalDateTime finishAt,
         @NotNull(message = "registration required")
         RegistrationDTO registration,
         boolean isActive
 ) {
     public EventDTO(Long id, @NotNull(message = "Name required")
     String name, @NotNull(message = "description required")
-                    String description, LocalDateTime createdAt, LocalDateTime updatedAt, @NotNull(message = "registration required")
+                    String description, LocalDateTime createdAt, LocalDateTime finishAt, @NotNull(message = "registration required")
                     RegistrationDTO registration, boolean isActive) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.finishAt = finishAt;
         this.registration = registration;
         this.isActive = isActive;
     }

@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 public record DataResponseEvent(Long id, String name, LocalDateTime createdAt, LocalDateTime updatedAt,
                                 Registration registration, TeamGroup teamGroup) {
     public DataResponseEvent(Event event) {
-        this(event.getId(), event.getName(), event.getCreatedAt(), event.getUpdatedAt(), event.getRegistration(), event.getTeamGroup());
+        this(event.getId(), event.getName(), event.getCreatedAt(), event.getFinishAt(), event.getRegistration(), event.getTeamGroup());
     }
 }

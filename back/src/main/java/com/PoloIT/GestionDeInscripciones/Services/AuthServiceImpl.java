@@ -21,6 +21,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -40,9 +42,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public String register(UserDto userDto) {
-
         emailInUsed(userDto);
-        setRol(userRepository.save(toUser(userDto)));
+        setRol(userRepository.save(toUser(userDto)), userDto);
         return jwtService.generateJwt(userDto.getEmail());
     }
 
@@ -64,6 +65,15 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void emailInUsed(UserDto userDto) {
+        if (Objects.isNull(userDto.getName()))
+            throw new ResponseException("404", "Name required", HttpStatus.NOT_FOUND);
+
+        //! se puede limitar los admin
+//        if (userRepository.countAdmins() >= 4) {
+//            throw new ResponseException("404", "No more admins can register!", HttpStatus.NOT_ACCEPTABLE);
+//        }
+
+
         if (userRepository.findByEmail(userDto.getEmail()).isPresent())
             throw new ResponseException("404", "Email in used", HttpStatus.NOT_ACCEPTABLE);
     }
@@ -79,10 +89,12 @@ public class AuthServiceImpl implements AuthService {
         Rol.fromString(userDto.getRol());
     }
 
-    private void setRol(User user) {
+    private void setRol(User user, UserDto userDto) {
+
         if (user.getRol().name().equalsIgnoreCase("admin")) {
             adminRepository.save(
                     Admin.builder()
+                            .name(userDto.getName())
                             .user(user)
                             .build());
             return;

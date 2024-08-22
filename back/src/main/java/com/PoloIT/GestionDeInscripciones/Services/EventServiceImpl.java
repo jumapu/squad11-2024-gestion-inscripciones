@@ -43,6 +43,7 @@ public class EventServiceImpl {
                         .build())
                 .description(eventDTO.description())
                 .createdAt(eventDTO.createdAt())
+                .finishAt(eventDTO.finishAt())
                 .isActive(true)
                 .build();
         event.getRegistration().setEvent(event);
@@ -65,8 +66,7 @@ public class EventServiceImpl {
         return eventRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
     }
 
-    public Map<String, List<EventDTO>> allEvents() {
-
+    public Map<String, List<EventDTO>> allEvent() {
         List<EventDTO> list = eventRepository.findAll().stream()
                 .map(event -> {
                     RegistrationDTO registrationDTO = new RegistrationDTO(
@@ -79,12 +79,27 @@ public class EventServiceImpl {
                             .map(mentor -> new MentorDTO(mentor.getId(), mentor.getName(), mentor.getCompany(), mentor.getLastName(), mentor.getSkills(), mentor.getProfiles(), mentor.getLinkedin())).collect(Collectors.toList())
                     );
 
-                    return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getCreatedAt(), event.getUpdatedAt(), registrationDTO, event.isActive());
+                    return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getCreatedAt(), event.getFinishAt(), registrationDTO, event.isActive());
 
                 }).toList();
         return Map.of("Events", list);
     }
 
+    public Map<String, List<EventDTO>> allEventsActive() {
+
+        System.out.println(allEvent().get("Events").stream().filter(EventDTO::isActive).toList());
+        return Map.of(
+                "Events",
+                allEvent().get("Events").stream().filter(EventDTO::isActive).toList()
+        );
+    }
+
+    public Map<String, List<EventDTO>> allEventsNotActive() {
+        return Map.of(
+                "Events",
+                allEvent().get("Events").stream().filter(eventDTO -> !eventDTO.isActive()).toList()
+        );
+    }
 
     private Admin getAdminContext() {
         return userRepository.findByEmail(

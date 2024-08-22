@@ -20,6 +20,7 @@ public class UserDto {
     @NotNull(message = "Email required")
     @Pattern(regexp = ".*(^\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$)", message = "Email not valid")
     private String email;
+    private String name;
 
     @NotEmpty(message = "Password required")
     @Length(min = 7, max = 20, message = "Password min 8 and max 20")

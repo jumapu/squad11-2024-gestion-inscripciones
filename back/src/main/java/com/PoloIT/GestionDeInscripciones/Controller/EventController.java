@@ -40,8 +40,20 @@ public class EventController {
 
     @GetMapping("all")
     public ResponseEntity<Map<String, List<EventDTO>>> listEvents() {
-        return new ResponseEntity<>(eventServiceImpl.allEvents(), HttpStatus.OK);
+        return new ResponseEntity<>(eventServiceImpl.allEvent(), HttpStatus.OK);
     }
+
+
+    @GetMapping("all/notActive")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEventsNotActive() {
+        return new ResponseEntity<>(eventServiceImpl.allEventsNotActive(), HttpStatus.OK);
+    }
+
+    @GetMapping("all/active")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEventsActive() {
+        return new ResponseEntity<>(eventServiceImpl.allEventsActive(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {

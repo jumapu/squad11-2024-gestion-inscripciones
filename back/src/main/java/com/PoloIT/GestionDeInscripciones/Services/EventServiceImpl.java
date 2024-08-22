@@ -24,17 +24,15 @@ public class EventServiceImpl {
         return eventRepository.save(new Event(dataRegisterEvent, admin));
     }
 
-    public Event updateEventDB(DataUpdateEvent dataUpdateEvent) {
+    public void updateEventDB(DataUpdateEvent dataUpdateEvent) {
         Event event = eventRepository.findById(dataUpdateEvent.id())
                 .orElseThrow(() -> new ResponseException("404","Not Found Event", HttpStatus.NOT_FOUND));
         event.updateEvent(dataUpdateEvent);
-        return event;
     }
 
-    public Event deleteEventDB(Long id) {
+    public void deleteEventDB(Long id) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseException("404","Not Found Event", HttpStatus.NOT_FOUND));
         event.deactivateEvent();
-        return event;
     }
 
     public Event getEventDB(Long id) {

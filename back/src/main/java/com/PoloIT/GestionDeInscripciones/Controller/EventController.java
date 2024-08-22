@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/event/")
@@ -41,12 +43,12 @@ public class EventController {
 
     @PutMapping("update")
     @Transactional
-    public ResponseEntity<DataResponseEvent> updateEvent(
+    public ResponseEntity<Map<String,String>> updateEvent(
             @RequestBody @Valid DataUpdateEvent dataUpdateEvent) {
-        Event event = eventServiceImpl.updateEventDB(dataUpdateEvent);
-
-        //! ACA => no devolve la entidad, devolver un dto.
-        return ResponseEntity.ok(new DataResponseEvent(event));
+        eventServiceImpl.updateEventDB(dataUpdateEvent);
+        Map<String, String> body = new HashMap<>();
+        body.put("message","se modifico el evento");
+        return ResponseEntity.ok(body);
     }
 
     @GetMapping("list")
@@ -58,16 +60,17 @@ public class EventController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {
-        //! ACA => no devolve la entidad, devolver un dto.
         Event event = eventServiceImpl.getEventDB(id);
         return ResponseEntity.ok(new DataResponseEvent(event));
     }
 
     @DeleteMapping("/delete/{id}")
     @Transactional
-    public ResponseEntity<DataResponseEvent> deleteEvent(@PathVariable Long id) {
+    public ResponseEntity<Map<String,String>> deleteEvent(@PathVariable Long id) {
         //! no hace falta devolver el objeto eliminado, solo un mensaje que confimacion que se elimino.
-        Event event = eventServiceImpl.deleteEventDB(id);
-        return ResponseEntity.ok(new DataResponseEvent(event));
+        eventServiceImpl.deleteEventDB(id);
+        Map<String, String> body = new HashMap<>();
+        body.put("message","se elimino el evento");
+        return ResponseEntity.ok(body);
     }
 }

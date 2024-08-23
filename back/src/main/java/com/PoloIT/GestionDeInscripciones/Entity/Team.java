@@ -13,7 +13,6 @@ import java.util.Set;
 @Getter
 @Entity
 public class Team {
-
     @ManyToMany
     @JoinTable(
             name = "team_students",
@@ -28,11 +27,11 @@ public class Team {
             inverseJoinColumns = @JoinColumn(name = "mentor_id")
     )
     private final Set<Mentor> mentors = new HashSet<>();
-    @ManyToOne()
-    @JoinColumn(name = "teamgroup_id")
-    private TeamGroup teamGroup;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne()
+    @JoinColumn(name = "teamgroup_id")
+    private TeamGroup teamGroup;
 
 }

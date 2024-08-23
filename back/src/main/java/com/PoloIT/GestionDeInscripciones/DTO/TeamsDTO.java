@@ -1,7 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
 public record TeamsDTO(
-        int limitGroup,
+        int groups,
         int limitStudent,
         int limitMentor
 ) {

@@ -75,3 +75,38 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
    ```bash
     GET /api/v1/student
     ```
+
+
+
+# Registro de Usuarios
+
+```bash
+/user
+```
+
+**Guardar un usuario.**
+
+Por defecto se va a guardar como estudiante.
+
+ **POST**
+ 
+ ```bash
+ /user/saveuser
+```
+
+**Obtener usuarios**
+
+**GET**
+ 
+ ```bash
+/user/{username}
+```
+
+**Eliminar Usuarios**
+
+**DELETE**
+
+```bash 
+/user/{id}
+```
+

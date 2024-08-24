@@ -6,13 +6,17 @@ import com.PoloIT.GestionDeInscripciones.Entity.Event;
 
 import java.time.LocalDateTime;
 
-public record DataResponseEvent(Long id, String name, LocalDateTime createdAt,
-                                LocalDateTime finishAt, DataResponseRegistration registrations,
+public record DataResponseEvent(Long id, String name, LocalDateTime createdAt, LocalDateTime finishAt,
+                                DataResponseRegistration registrations,
         //Faltaraia el DTO de team
-        /*Teams teams,*/DataResponseAdmin admin) {
+        /*Teams teams,*/
+                                DataResponseAdmin admin) {
     public DataResponseEvent(Event event) {
+
         this(event.getId(),event.getName(),event.getCreatedAt(), event.getFinishAt(),
-                new DataResponseRegistration(event.getRegistration())/*, event.getTeams()*/,
+
+                event.getRegistration() != null ? new DataResponseRegistration(event.getRegistration()) : null,
+//                event.getTeams(),
                 new DataResponseAdmin(event.getAdmin()));
     }
 }

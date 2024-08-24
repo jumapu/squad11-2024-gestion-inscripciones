@@ -37,41 +37,74 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
   
 5. **Accede a la Aplicación**
 
-    La aplicación debería estar disponible en `http://localhost:8080`.
+   La aplicación debería estar disponible en `http://localhost:8080`.
 
    # Endpoints
    
     Autenticación y Registro
 
  
-    Autenticación de usuario. Requiere un OBJECT(EMAIL,PASSWORD) en el cuerpo de la solicitud. Devuelve un JWT.
-    
+   Autenticación de usuario. Requiere un OBJECT(EMAIL,PASSWORD) en el cuerpo de la solicitud. Devuelve un JWT.
 
    ```bash
-     POST /api/v1/auth/authentication 
-    ```
-    Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
+    POST /api/v1/auth/authentication 
+   ```
+   Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
    
-    ```bash
-      POST /api/v1/auth/register
-    ```
+   ```bash
+    POST /api/v1/auth/register
+   ```
     
-    Acceso Basado en Roles
+   Acceso Basado en Roles
 
-    Acceso para usuarios con el rol de administrador.
+   Acceso para usuarios con el rol de administrador.
    
    ```bash
     GET /api/v1/admin
-    ```
+   ```
 
-    Acceso para usuarios con el rol de mentor.
+   Acceso para usuarios con el rol de mentor.
     
    ```bash
     GET /api/v1/mentor
-    ```
-
-    Acceso para usuarios con el rol de estudiante.
+   ```
+   Acceso para usuarios con el rol de estudiante.
 
    ```bash
     GET /api/v1/student
-    ```
+   ```
+   ### Eventos
+
+Agregar un evento
+
+   ```bash
+    POST /api/v1/event/add
+   ```
+Ejemplo del cuerpo de la peticion
+   ```json
+       
+   ```
+Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
+
+   ```bash
+    POST /api/v1/auth/register
+   ```
+
+Acceso Basado en Roles
+
+Acceso para usuarios con el rol de administrador.
+
+   ```bash
+    GET /api/v1/admin
+   ```
+
+Acceso para usuarios con el rol de mentor.
+
+   ```bash
+    GET /api/v1/mentor
+   ```
+Acceso para usuarios con el rol de estudiante.
+
+   ```bash
+    GET /api/v1/student
+   ```

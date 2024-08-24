@@ -140,3 +140,32 @@ Por defecto se va a guardar como estudiante.
 /user/{id}
 ```
 
+# Registro de Estudiantes
+
+```bash
+/student
+```
+
+**Guardar un Estudiante**
+
+ **POST**
+ 
+ ```bash
+ /user/savestudent
+```
+
+**Obtener Estudiante**
+
+**GET**
+ 
+ ```bash
+/user/{username}
+```
+
+**Eliminar Estudiante**
+
+**DELETE**
+
+```bash 
+/user/{id}
+```

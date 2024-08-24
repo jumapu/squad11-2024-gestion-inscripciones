@@ -22,7 +22,7 @@ public class MentorController {
      @Autowired
     private MentorService mentorService;
 
-    @PostMapping("/saveadmin")
+    @PostMapping("/savementor")
     public Mentor saveMentor(@RequestBody Mentor mentor) throws Exception {
 
         mentor.setUser(mentor.getUser());

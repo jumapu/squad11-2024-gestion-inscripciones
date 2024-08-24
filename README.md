@@ -78,6 +78,36 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 
 
 
+# Registro de Administrador
+
+```bash
+/admin
+```
+
+**Guardar un usuario.**
+
+ **POST**
+ 
+ ```bash
+ /user/saveadmin
+```
+
+**Obtener Administrador**
+
+**GET**
+ 
+ ```bash
+/user/{username}
+```
+
+**Eliminar Administrador**
+
+**DELETE**
+
+```bash 
+/user/{id}
+```
+
 # Registro de Usuarios
 
 ```bash

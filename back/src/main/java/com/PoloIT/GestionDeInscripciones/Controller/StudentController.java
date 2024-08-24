@@ -31,7 +31,9 @@ public class StudentController {
         student.setCourses(student.getCourses());
         student.setProfiles(student.getProfiles());
         student.setLinkedin(student.getLinkedin());
-
+        student.setRegistrations(student.getRegistrations());
+        student.setTeam(student.getTeam());
+        
         return studentService.save(student);
     }
 

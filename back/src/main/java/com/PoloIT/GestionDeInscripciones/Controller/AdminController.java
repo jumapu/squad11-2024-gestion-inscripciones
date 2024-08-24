@@ -27,6 +27,7 @@ public class AdminController {
         admin.setUser(admin.getUser());
         admin.setName(admin.getName());
         admin.setLastName(admin.getLastName());
+        admin.setEvents(admin.getEvents());
 
         return adminService.save(admin);
     }

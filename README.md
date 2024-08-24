@@ -97,7 +97,7 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 **GET**
  
  ```bash
-/user/{username}
+/admin/{username}
 ```
 
 **Eliminar Administrador**

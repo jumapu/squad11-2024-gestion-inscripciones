@@ -1,8 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
-import com.PoloIT.GestionDeInscripciones.Entity.User;
-import com.PoloIT.GestionDeInscripciones.Enums.Rol;
-import com.PoloIT.GestionDeInscripciones.Services.UserService;
+import com.PoloIT.GestionDeInscripciones.Entity.Admin;
+import com.PoloIT.GestionDeInscripciones.Services.AdminService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,30 +14,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin")
 @CrossOrigin("*") //Agregar la ruta del front
-public class UserController {
+public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private AdminService adminService;
 
-    @PostMapping("/saveuser")
-    public User saveUser(@RequestBody User user) throws Exception {
+    @PostMapping("/saveadmin")
+    public Admin saveAdmin(@RequestBody Admin admin) throws Exception {
 
-        user.setEmail(user.getEmail());
-        user.setPassword(user.getPassword());
-        user.setRol(Rol.STUDENT);
+        admin.setUser(admin.getUser());
+        admin.setName(admin.getName());
+        admin.setLastName(admin.getLastName());
 
-        return userService.save(user);
+        return adminService.save(admin);
     }
 
     @GetMapping("/{username}")
-    public Optional<User> getUser(@PathVariable("email") String email) {
-        return userService.findByEmail(email);
+    public Optional<Admin> getAdmin(@PathVariable("email") String email) {
+        return adminService.findByEmail(email);
     }
 
     @DeleteMapping("/{Id}")
-    public void deleteUser(@PathVariable("Id") Long Id) {
-        userService.delete(Id);
+    public void deleteAdmin(@PathVariable("Id") Long Id) {
+        adminService.delete(Id);
     }
+
 }

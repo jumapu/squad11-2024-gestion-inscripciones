@@ -11,8 +11,6 @@
   .login-container::after {
     content: '';
     position: absolute;
-    background-size: cover;
-    background-repeat: no-repeat;
     width: 150px;
     height: 150px;
     z-index: -1;

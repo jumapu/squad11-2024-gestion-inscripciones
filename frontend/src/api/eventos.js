@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API=''
+const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/'
 
 export const eventosList= async () => 
 {

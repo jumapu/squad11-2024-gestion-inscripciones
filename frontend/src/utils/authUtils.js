@@ -1,5 +1,5 @@
 import { toast } from "sonner";
-import { userLogin } from "../api/login";
+import { userLogin } from "@/api/login";
 
 export const authenticateUser = async (data, signIn, navigate) => {
   if (!data.email || !data.password) {
@@ -11,26 +11,28 @@ export const authenticateUser = async (data, signIn, navigate) => {
     const response = await userLogin(data);
     const { token, user } = response;
 
-    
+
     if (signIn({
       auth: {
         token: token,
         type: 'Bearer',
       },
       userState: {
+        usuario: user.usuario,
         email: user.email,
         rol: user.role
       },
-    })) 
-     
-    if(user.role === 'egresado'){
+    }))
 
-      navigate('/home');
-    }else{
-      navigate('/mentorhome')
+      if (user.role === 'egresado') {
+        navigate('/egresadosdash');
+      } else {
+        navigate('/mentordash');
+      } else {
+      navigate('/admindash');
     }
-      
-    
+
+
   } catch (error) {
     if (error.response) {
       console.error("Error response:", error.response.data);

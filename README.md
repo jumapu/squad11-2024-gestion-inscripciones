@@ -84,12 +84,12 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 /admin
 ```
 
-**Guardar un Administrador.**
+**Guardar un Administrador**
 
  **POST**
  
  ```bash
- /user/saveadmin
+ /admin/saveadmin
 ```
 
 **Obtener Administrador**
@@ -105,7 +105,7 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 **DELETE**
 
 ```bash 
-/user/{id}
+/admin/{id}
 ```
 
 # Registro de Usuarios
@@ -151,7 +151,7 @@ Por defecto se va a guardar como estudiante.
  **POST**
  
  ```bash
- /user/savestudent
+ /student/savestudent
 ```
 
 **Obtener Estudiante**
@@ -159,7 +159,7 @@ Por defecto se va a guardar como estudiante.
 **GET**
  
  ```bash
-/user/{username}
+/student/{username}
 ```
 
 **Eliminar Estudiante**
@@ -167,5 +167,5 @@ Por defecto se va a guardar como estudiante.
 **DELETE**
 
 ```bash 
-/user/{id}
+/student/{id}
 ```

@@ -84,7 +84,7 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 /admin
 ```
 
-**Guardar un usuario.**
+**Guardar un Administrador.**
 
  **POST**
  

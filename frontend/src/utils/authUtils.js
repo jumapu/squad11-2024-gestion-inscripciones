@@ -24,13 +24,15 @@ export const authenticateUser = async (data, signIn, navigate) => {
       },
     }))
 
-      if (user.role === 'egresado') {
-        navigate('/egresadosdash');
-      } else {
+      if (user.role === 'admin') {
+        navigate('/admindash');
+      } else if (user.role === 'mentor') {
         navigate('/mentordash');
+      } else if (user.role === 'egresado') {
+        navigate('/egresadodash');
       } else {
-      navigate('/admindash');
-    }
+        navigate("/home");
+      }
 
 
   } catch (error) {

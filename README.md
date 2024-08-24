@@ -169,3 +169,34 @@ Por defecto se va a guardar como estudiante.
 ```bash 
 /student/{id}
 ```
+
+
+# Registro de Mentor
+
+```bash
+/mentor
+```
+
+**Guardar un Mentor**
+
+ **POST**
+ 
+ ```bash
+ /mentor/savementor
+```
+
+**Obtener Mentor**
+
+**GET**
+ 
+ ```bash
+/mentor/{username}
+```
+
+**Eliminar Mentor**
+
+**DELETE**
+
+```bash 
+/mentor/{id}
+```

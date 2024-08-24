@@ -12,7 +12,7 @@ import { store } from "./store/Auth/store.js";
 import { storeRedux, persistor } from "./store/index.js";
 
 // Wrapper to connect to Redux store
-const ThemedApp =() =>{
+export const ThemedApp =() =>{
   return (
     <Theme>
     <BrowserRouter>

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import { userLogin } from "../../api/login";
+import { userLogin } from "@/api/login";
 
 export const listUser = createAsyncThunk("usuarios/user", async () => {
   try {
@@ -10,7 +10,7 @@ export const listUser = createAsyncThunk("usuarios/user", async () => {
 
     return userData;
   } catch (error) {
-    console.error("Error buscar usuarios:", error);
+    console.error("Error al buscar usuarios:", error);
     throw error;
   }
 });

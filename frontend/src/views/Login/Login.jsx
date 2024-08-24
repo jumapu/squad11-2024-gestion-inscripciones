@@ -7,13 +7,14 @@ import {
   Strong,
   Link,
 } from "@radix-ui/themes";
-import { authenticateUser } from "../../utils/authUtils";
+import '@radix-ui/themes/styles.css';
+import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
-import "../Login/css/login.css";
-import Logo from "../../assets/logo.webp";
+import "./css/login.css";
+import Logo from "@/assets/logo.webp";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -33,24 +34,39 @@ const Login = () => {
           className="max-w-full max-h-full"
           style={{ maxWidth: "12rem", maxHeight: "12rem" }}
         />
+        <span>
+          <h1>Login</h1>
+        </span>
       </div>
       <div className="flex-1 flex items-center justify-center">
         <Container size="2" className="login-container">
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
-            <Card className="py-8 px-10 shadow-lg rounded-lg">
+            <Card style={{margin: "10px 5px"}} className="py-8 px-10 shadow-lg rounded-lg">
               <form onSubmit={handleSubmit(onSubmit)} >
                 <Flex direction="column" gap="6" className="py-8 px-10">
+                <div>
+                    <Text as="p" size="2" className="mb-1">
+                      <Strong>Nombre de Usuario:</Strong>
+                    </Text>
+                    <input
+                    style={{width: "98%"}}
+                      type="text"
+                      name="usuario"
+                      placeholder="Usuario"
+                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      {...register("usuario")}
+                    />
+                  </div>
                   <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Email:</Strong>
                     </Text>
                     <input
                     style={{width: "98%"}}
-                    width="100%"
                       type="text"
                       name="email"
                       placeholder="Ingrese su email"
-                      className="px-4 py-2 border border-[#57ced4] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       {...register("email")}
                     />
                   </div>
@@ -63,7 +79,7 @@ const Login = () => {
                       type="password"
                       name="password"
                       placeholder="Ingrese su contraseña"
-                      className="px-4 py-2 border border-[#57ced4] rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       {...register("password")}
                     />
                   </div>

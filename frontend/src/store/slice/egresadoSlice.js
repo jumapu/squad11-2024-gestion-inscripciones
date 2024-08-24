@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { egresadosList } from "../../api/egresados";
+import { egresadosList } from "@/api/egresados";
 
 export const listegresados = createAsyncThunk("egresados/listEgresados", async () => {
   try {

@@ -14,7 +14,13 @@
     width: 150px;
     height: 150px;
     z-index: -1;
-  }  
+  }
+  .campos{
+    border: 1px solid slategray;
+    border-radius: 5px;
+    padding: 5px;
+    outline:none;
+  }
   .crearCuenta{
     width: 100%;
     text-align: center;

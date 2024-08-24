@@ -7,3 +7,10 @@
   h1{
     color: #1c668f;
   }
+  .campos{
+    width: 98%;
+    border: 1px solid slategray;
+    border-radius: 5px;
+    padding: 5px;
+    outline:none;
+  }

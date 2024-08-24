@@ -28,7 +28,10 @@ const Login = () => {
   return (
     <div className="flex h-screen">
       <Toaster richColors position="top-center" />
-      <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
+      
+      <div className="flex-1 flex items-center justify-center">
+        <Container size="2" className="login-container">
+        <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
         <img
           src={Logo}
           className="max-w-full max-h-full"
@@ -38,8 +41,6 @@ const Login = () => {
           <h1>Login</h1>
         </span>
       </div>
-      <div className="flex-1 flex items-center justify-center">
-        <Container size="2" className="login-container">
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card style={{margin: "10px 5px"}} className="py-8 px-10 shadow-lg rounded-lg">
               <form onSubmit={handleSubmit(onSubmit)} >
@@ -53,7 +54,7 @@ const Login = () => {
                       type="text"
                       name="usuario"
                       placeholder="Usuario"
-                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="campos"
                       {...register("usuario")}
                     />
                   </div>
@@ -66,7 +67,7 @@ const Login = () => {
                       type="text"
                       name="email"
                       placeholder="Ingrese su email"
-                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="campos"
                       {...register("email")}
                     />
                   </div>
@@ -79,7 +80,7 @@ const Login = () => {
                       type="password"
                       name="password"
                       placeholder="Ingrese su contraseña"
-                      className="px-4 py-2 border border-[#57ced4] rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="campos"
                       {...register("password")}
                     />
                   </div>

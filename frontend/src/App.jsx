@@ -15,11 +15,12 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
+        <Route path="/admindash" element={<Admindash />}></Route>
       
         <Route element={<AuthOutlet fallbackPath='/login' />}>
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>
           <Route path="/mentordash" element={<Mentordash />}></Route>
-          <Route path="/admindash" element={<Admindash />}></Route>
+          
         </Route>
       </Routes>
     </>

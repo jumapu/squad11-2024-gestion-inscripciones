@@ -28,29 +28,29 @@ const Login = () => {
   return (
     <div className="flex h-screen">
       <Toaster richColors position="top-center" />
-      
+
       <div className="flex-1 flex items-center justify-center">
         <Container size="2" className="login-container">
-        <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
-        <img
-          src={Logo}
-          className="max-w-full max-h-full"
-          style={{ maxWidth: "12rem", maxHeight: "12rem" }}
-        />
-        <span>
-          <h1>Login</h1>
-        </span>
-      </div>
+          <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
+            <img
+              src={Logo}
+              className="max-w-full max-h-full"
+              style={{ maxWidth: "12rem", maxHeight: "12rem" }}
+            />
+            <span>
+              <h1>Login</h1>
+            </span>
+          </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
-            <Card style={{margin: "10px 5px"}} className="py-8 px-10 shadow-lg rounded-lg">
+            <Card style={{ margin: "10px 5px" }} className="py-8 px-10 shadow-lg rounded-lg">
               <form onSubmit={handleSubmit(onSubmit)} >
                 <Flex direction="column" gap="6" className="py-8 px-10">
-                <div>
+                  <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Nombre de Usuario:</Strong>
                     </Text>
                     <input
-                    style={{width: "98%"}}
+                      style={{ width: "98%" }}
                       type="text"
                       name="usuario"
                       placeholder="Usuario"
@@ -60,10 +60,23 @@ const Login = () => {
                   </div>
                   <div>
                     <Text as="p" size="2" className="mb-1">
+                      <Strong>Participa como: </Strong>
+                    </Text>
+                    <input
+                      style={{ width: "98%" }}
+                      type="text"
+                      name="rol"
+                      placeholder="Mentor/a o Egresado/a"
+                      className="campos"
+                      {...register("rol")}
+                    />
+                  </div>
+                  <div>
+                    <Text as="p" size="2" className="mb-1">
                       <Strong>Email:</Strong>
                     </Text>
                     <input
-                    style={{width: "98%"}}
+                      style={{ width: "98%" }}
                       type="text"
                       name="email"
                       placeholder="Ingrese su email"
@@ -76,7 +89,7 @@ const Login = () => {
                       <Strong>Contraseña:</Strong>
                     </Text>
                     <input
-                    style={{width: "98%"}}
+                      style={{ width: "98%" }}
                       type="password"
                       name="password"
                       placeholder="Ingrese su contraseña"

@@ -2,7 +2,7 @@ import { toast } from "sonner";
 import { userLogin } from "@/api/login";
 
 export const authenticateUser = async (data, signIn, navigate) => {
-  if (!data.email || !data.password) {
+  if (!data.email || !data.password){
     toast.error("Debe completar los campos");
     return;
   }
@@ -20,7 +20,6 @@ export const authenticateUser = async (data, signIn, navigate) => {
       userState: {
         usuario: user.usuario,
         email: user.email,
-        rol: user.role
       },
     }))
 

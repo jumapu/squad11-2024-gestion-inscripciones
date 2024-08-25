@@ -31,7 +31,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/v1/admin/**","/api/v1/event/**").hasAnyAuthority(Rol.ADMIN.name())
                                 .requestMatchers("/api/v1/student/**").hasAnyAuthority(Rol.STUDENT.name())
                                 .requestMatchers("/api/v1/mentor/**").hasAnyAuthority(Rol.MENTOR.name())
-                                .requestMatchers("/api/v1/event/**").hasAnyAuthority(Rol.STUDENT.name(), Rol.MENTOR.name())
+                                .requestMatchers("/api/v1/event/list","/api/v1/event/{id}").hasAnyAuthority(Rol.STUDENT.name(), Rol.MENTOR.name())
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)

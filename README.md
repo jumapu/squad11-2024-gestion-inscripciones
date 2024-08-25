@@ -74,37 +74,84 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
     GET /api/v1/student
    ```
    ### Eventos
+1. ***Agregar un evento***
+   * Usuarios permitidos para la peticion : ADMIN
 
-Agregar un evento
+      ```bash
+     POST /api/v1/event/add
+      ```
 
-   ```bash
-    POST /api/v1/event/add
-   ```
-Ejemplo del cuerpo de la peticion
-   ```json
-       
-   ```
-Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
+   * Ejemplo del cuerpo de la peticion
+      ```json
+      {
+      "name":"Evento 1"
+      }
+      ```
+   * Ejemplo respuesta
+   * Respuesta en el Header con un enlace del evento : 	http://localhost:8080/api/v1/event/11
+      ```json
+     {
+      "id": 34,
+      "name": "Evento 1",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```
+   2 ***Obtener Evento***
+   * Usuarios permitidos para la peticion : ADMIN, STUDENT, MENTOR
 
-   ```bash
-    POST /api/v1/auth/register
-   ```
+      ```bash
+     POST /api/v1/event/{id}
+      ```
 
-Acceso Basado en Roles
+   * Ejemplo del la peticion
+      ```bash
+      POST /api/v1/event/1
+      ```
+   * Ejemplo respuesta
+      ```json
+     {
+      "id": 1,
+      "name": "Evento 12",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```
+   2 ***Modificar Evento***
+   * Usuarios permitidos para la peticion : ADMIN
 
-Acceso para usuarios con el rol de administrador.
+      ```bash
+     POST /api/v1/event/{id}
+      ```
 
-   ```bash
-    GET /api/v1/admin
-   ```
-
-Acceso para usuarios con el rol de mentor.
-
-   ```bash
-    GET /api/v1/mentor
-   ```
-Acceso para usuarios con el rol de estudiante.
-
-   ```bash
-    GET /api/v1/student
-   ```
+   * Ejemplo del la peticion
+      ```bash
+      POST /api/v1/event/1
+      ```
+   * Ejemplo respuesta
+      ```json
+     {
+      "id": 1,
+      "name": "Evento 12",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```

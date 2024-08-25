@@ -1,7 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataResponseEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -33,11 +34,11 @@ public class EventController {
     @PostMapping("add")
     public ResponseEntity<DataResponseEvent> registerEvent(
             UriComponentsBuilder uriComponentsBuilder,
-            @RequestBody @Valid DataRegisterEvent dataRegisterEvent) {
+            @RequestBody @Valid DataRequestEvent dataRequestEvent) {
         Admin admin = userServiceImpl.getUserRolContext(Admin.class);
-        Event event = eventServiceImpl.saveEventDB(dataRegisterEvent,admin);
+        Event event = eventServiceImpl.saveEventDB(dataRequestEvent,admin);
         DataResponseEvent dataResponseEvent = new DataResponseEvent(event);
-        URI url = uriComponentsBuilder.path("/event/{id}").buildAndExpand(event.getId()).toUri();
+        URI url = uriComponentsBuilder.path("/api/v1/event/{id}").buildAndExpand(event.getId()).toUri();
         return ResponseEntity.created(url).body(dataResponseEvent);
     }
 
@@ -51,10 +52,11 @@ public class EventController {
         return ResponseEntity.ok(body);
     }
 
-    @GetMapping("list")
+    @GetMapping("list/{size}/{page}")
     public ResponseEntity<Page<DataListEvents>> listEvents(
-
+            @PathVariable int size,int page,
             @PageableDefault(size = 5) Pageable pageable){
+        pageable= PageRequest.of(page, size);
         return ResponseEntity.ok(eventServiceImpl.listEventsDB(pageable));
     }
 
@@ -67,10 +69,10 @@ public class EventController {
     @DeleteMapping("/delete/{id}")
     @Transactional
     public ResponseEntity<Map<String,String>> deleteEvent(@PathVariable Long id) {
-        //! no hace falta devolver el objeto eliminado, solo un mensaje que confimacion que se elimino.
         eventServiceImpl.deleteEventDB(id);
         Map<String, String> body = new HashMap<>();
         body.put("message","se elimino el evento");
         return ResponseEntity.ok(body);
     }
 }
+

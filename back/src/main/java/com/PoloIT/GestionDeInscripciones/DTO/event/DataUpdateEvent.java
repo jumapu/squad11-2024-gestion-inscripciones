@@ -8,7 +8,8 @@ public record DataUpdateEvent(
         Long id,
         @NotBlank(message = "Name required")
         @NotNull(message = "Name required")
-        String name
+        String name,
+        String description
 ) {
 
 }

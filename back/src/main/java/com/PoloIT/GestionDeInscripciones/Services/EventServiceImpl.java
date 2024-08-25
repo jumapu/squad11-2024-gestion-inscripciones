@@ -2,7 +2,7 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataRegisterEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -25,7 +24,7 @@ public class EventServiceImpl {
     private final RegistraionRepository registraionRepository;
     private final EventRepository eventRepository;
 
-    public Event saveEventDB(DataRegisterEvent dataRegisterEvent, Admin admin) {
+    public Event saveEventDB(DataRequestEvent dataRegisterEvent, Admin admin) {
         return eventRepository.save(new Event(dataRegisterEvent, admin));
     }
 

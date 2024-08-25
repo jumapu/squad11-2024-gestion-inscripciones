@@ -1,5 +1,6 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
+import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
 import com.PoloIT.GestionDeInscripciones.DTO.event.DataResponseEvent;
@@ -15,12 +16,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -59,6 +62,23 @@ public class EventController {
         pageable= PageRequest.of(page, size);
         return ResponseEntity.ok(eventServiceImpl.listEventsDB(pageable));
     }
+
+    @GetMapping("all")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEvents() {
+        return new ResponseEntity<>(eventServiceImpl.allEvent(), HttpStatus.OK);
+    }
+
+
+    @GetMapping("all/notActive")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEventsNotActive() {
+        return new ResponseEntity<>(eventServiceImpl.allEventsNotActive(), HttpStatus.OK);
+    }
+
+    @GetMapping("all/active")
+    public ResponseEntity<Map<String, List<EventDTO>>> listEventsActive() {
+        return new ResponseEntity<>(eventServiceImpl.allEventsActive(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {

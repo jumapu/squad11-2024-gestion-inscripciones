@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO.EventsDTO;
+package com.PoloIT.GestionDeInscripciones.DTO.event;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +8,8 @@ public record DataUpdateEvent(
         Long id,
         @NotBlank(message = "Name required")
         @NotNull(message = "Name required")
-        String name
+        String name,
+        String description
 ) {
 
 }

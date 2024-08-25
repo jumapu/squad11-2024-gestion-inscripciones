@@ -37,41 +37,121 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
   
 5. **Accede a la Aplicación**
 
-    La aplicación debería estar disponible en `http://localhost:8080`.
+   La aplicación debería estar disponible en `http://localhost:8080`.
 
    # Endpoints
    
     Autenticación y Registro
 
  
-    Autenticación de usuario. Requiere un OBJECT(EMAIL,PASSWORD) en el cuerpo de la solicitud. Devuelve un JWT.
-    
+   Autenticación de usuario. Requiere un OBJECT(EMAIL,PASSWORD) en el cuerpo de la solicitud. Devuelve un JWT.
 
    ```bash
-     POST /api/v1/auth/authentication 
-    ```
-    Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
+    POST /api/v1/auth/authentication 
+   ```
+   Registro de nuevo usuario. Requiere un OBJECT(EMAIL,PASSWORD,ROL(admin,student,mentor))  en el cuerpo de la solicitud. Devuelve un JWT.
    
-    ```bash
-      POST /api/v1/auth/register
-    ```
+   ```bash
+    POST /api/v1/auth/register
+   ```
     
-    Acceso Basado en Roles
+   Acceso Basado en Roles
 
-    Acceso para usuarios con el rol de administrador.
+   Acceso para usuarios con el rol de administrador.
    
    ```bash
     GET /api/v1/admin
-    ```
+   ```
 
-    Acceso para usuarios con el rol de mentor.
+   Acceso para usuarios con el rol de mentor.
     
    ```bash
     GET /api/v1/mentor
-    ```
-
-    Acceso para usuarios con el rol de estudiante.
+   ```
+   Acceso para usuarios con el rol de estudiante.
 
    ```bash
     GET /api/v1/student
-    ```
+   ```
+   ### Eventos
+1. ***Agregar un evento***
+   * Usuarios permitidos para la peticion : ADMIN
+
+      ```bash
+     POST /api/v1/event/add
+      ```
+
+   * Ejemplo del cuerpo de la peticion
+      ```json
+      {
+      "name":"Evento 1"
+      }
+      ```
+   * Ejemplo respuesta
+   * Respuesta en el Header con un enlace del evento : 	http://localhost:8080/api/v1/event/11
+      ```json
+     {
+      "id": 34,
+      "name": "Evento 1",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```
+   2 ***Obtener Evento***
+   * Usuarios permitidos para la peticion : ADMIN, STUDENT, MENTOR
+
+      ```bash
+     POST /api/v1/event/{id}
+      ```
+
+   * Ejemplo del la peticion
+      ```bash
+      POST /api/v1/event/1
+      ```
+   * Ejemplo respuesta
+      ```json
+     {
+      "id": 1,
+      "name": "Evento 12",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```
+   2 ***Modificar Evento***
+   * Usuarios permitidos para la peticion : ADMIN
+
+      ```bash
+     POST /api/v1/event/{id}
+      ```
+
+   * Ejemplo del la peticion
+      ```bash
+      POST /api/v1/event/1
+      ```
+   * Ejemplo respuesta
+      ```json
+     {
+      "id": 1,
+      "name": "Evento 12",
+      "description": "Este es un evento sobre...",
+      "createdAt": "2024-08-24T21:19:53.809773",
+      "finishAt": "2024-08-24T21:19:53.809773",
+      "registrations": null,
+      "admin": {
+        "id": 1,
+        "email": "elvizvida@gmail.com"
+       }
+      }   
+     ```

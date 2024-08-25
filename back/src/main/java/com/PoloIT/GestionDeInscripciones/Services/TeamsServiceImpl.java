@@ -41,6 +41,8 @@ public class TeamsServiceImpl {
         int e = (event.getRegistration().getStudents().size() + event.getRegistration().getMentors().size());
 
         //  for (int i = 0; i <); i++) {
+
+        //* el limite de vueltas es la cantidad de registrados total, "pero si no hay student o mentor se termina antes el bucle"
         for (int i = 0; i <= e; i++) {
 
             Team team = new Team();
@@ -62,17 +64,23 @@ public class TeamsServiceImpl {
                     break;
                 Student student = event.getRegistration().getStudents().stream().toList().get(index);
                 team.getStudents().add(student);
+
+
             }
 
             for (int j = 0; j < limitMentor; j++) {
                 int index = j + countMentor;
                 System.out.println("metors " + event.getRegistration().getMentors().size());
                 System.out.println("index " + index);
-                if (index >= event.getRegistration().getMentors().size())
+
+                if (index >= event.getRegistration().getMentors().size()) {
                     break;
+                }
+
                 Mentor mentor = event.getRegistration().getMentors().stream().toList().get(index);
                 team.getMentors().add(mentor);
             }
+
             System.out.println("------------");
 
             //   count += memberLimit;
@@ -85,7 +93,7 @@ public class TeamsServiceImpl {
             System.out.println(team.getStudents().size());
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-            // si tems la lista de student y mentor esta vacia significa que no hay que crear mas grupos.
+            //* si tems la lista de student y mentor esta vacia significa que no hay que crear mas grupos.
             if (team.getStudents().isEmpty() && team.getMentors().isEmpty()) {
                 break;
             }
@@ -93,7 +101,50 @@ public class TeamsServiceImpl {
         }
 
         // ver las incriptos que queador fuera.
-        // con el lime de grupo sacamos de todo los primo grupos.
+        List<Team> espera = new ArrayList<>();
+
+
+        for (int i = teamsDTO.groups(); i < teams.size(); i++) {
+            System.out.println(teams.size());
+            espera.add(teams.get(i - 1));
+        }
+
+//        System.out.println("-------------------------------------");
+//        System.out.println("-------------------------------------");
+//        System.out.println("lista de espera.");
+//        espera.forEach((x) -> {
+//            System.out.println("team " + x.getId());
+//            x.getStudents().forEach(student -> {
+//                System.out.println(student.getId() + " " + student.getName());
+//
+//            });
+//            x.getMentors().forEach(mentor -> {
+//                System.out.println(mentor.getId() + " " + mentor.getName());
+//            });
+//        });
+//
+//        System.out.println("-------------------------------------");
+//        System.out.println("-------------------------------------");
+//
+//        List<Team> creados = new ArrayList<>();
+//        for (int i = 0; i < teamsDTO.groups() - 1; i++) {
+//            creados.add(teams.get(i));
+//        }
+//
+//
+//        System.out.println("-------------------------------------");
+//        System.out.println("-------------------------------------");
+//        System.out.println("Team creado a partir de " + teamsDTO.groups() + " grupos");
+//        creados.forEach((x) -> {
+//            System.out.println("team " + x.getId());
+//            x.getStudents().forEach(student -> {
+//                System.out.println(student.getId() + " " + student.getName());
+//
+//            });
+//            x.getMentors().forEach(mentor -> {
+//                System.out.println(mentor.getId() + " " + mentor.getName());
+//            });
+//        });
 
 
         teams.forEach((x) -> {

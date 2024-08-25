@@ -15,7 +15,7 @@ import java.util.Date;
 public class JwtService {
 
     private static final String private_key = "2ns7utNmJSCwdrx6KZpVEqUFdyoHMJoqGXQR7328y2Fi4UL2ggCKS4d8ZRIw8QHL";
-    private static final long jwtExpirationDate = 3600000;
+    private static final long jwtExpirationDate = 7200000;
 
     public String generateJwt(String email) {
         Date cuurentDate = new Date();

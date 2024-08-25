@@ -74,7 +74,7 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
     GET /api/v1/student
    ```
    ### Eventos
-1. ***Agregar un evento***
+***Agregar un evento***
    * Usuarios permitidos para la peticion : ADMIN
 
       ```bash
@@ -103,16 +103,16 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
        }
       }   
      ```
-   2 ***Obtener Evento***
+***Obtener Evento***
    * Usuarios permitidos para la peticion : ADMIN, STUDENT, MENTOR
 
       ```bash
-     POST /api/v1/event/{id}
+      GET /api/v1/event/{id}
       ```
 
    * Ejemplo del la peticion
       ```bash
-      POST /api/v1/event/1
+      GET /api/v1/event/1
       ```
    * Ejemplo respuesta
       ```json
@@ -129,29 +129,86 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
        }
       }   
      ```
-   2 ***Modificar Evento***
-   * Usuarios permitidos para la peticion : ADMIN
+***Listar Evento***
+   * Usuarios permitidos para la peticion : ADMIN, USER, MENTOR
 
       ```bash
-     POST /api/v1/event/{id}
+      GET /api/v1/event/list/{tamaño}/{pagina}
       ```
 
    * Ejemplo del la peticion
       ```bash
-      POST /api/v1/event/1
+      GET /api/v1/event/list/3/2
       ```
    * Ejemplo respuesta
       ```json
-     {
-      "id": 1,
-      "name": "Evento 12",
-      "description": "Este es un evento sobre...",
-      "createdAt": "2024-08-24T21:19:53.809773",
-      "finishAt": "2024-08-24T21:19:53.809773",
-      "registrations": null,
-      "admin": {
-        "id": 1,
-        "email": "elvizvida@gmail.com"
-       }
-      }   
-     ```
+      {
+        "content": [
+          {
+          "id": 28,
+          "name": "evento 11",
+          "createdAt": "2024-08-24T21:11:12.936755",
+          "finishAt": "2024-08-24T21:11:12.936755"
+          },
+          {
+          "id": 29,
+          "name": "evento 11",
+          "createdAt": "2024-08-24T21:11:53.637213",
+          "finishAt": "2024-08-24T21:11:53.637213"
+          },
+          {
+          "id": 30,
+          "name": "evento 4",
+          "createdAt": "2024-08-24T21:13:30.563517",
+          "finishAt": "2024-08-24T21:42:32.069671"
+          }
+        ],
+          "pageable": {
+          "pageNumber": 2,
+          "pageSize": 3
+          },
+     "CONTINUA...": "CONTINUA..."
+      }
+        ```
+***Modificar Evento***
+* Usuarios permitidos para la peticion : ADMIN
+
+   ```bash
+   PUT /api/v1/event/update
+   ```
+
+* Ejemplo del la peticion
+   ```json
+   {
+    "id":"30",
+    "name":"evento 4",
+    "description":"este evento se modifico..."
+    }
+   ```
+* Ejemplo respuesta
+   ```json
+    {
+	  "message": "se modifico el evento"
+    }
+  ```
+***Quitar Evento***
+* Usuarios permitidos para la peticion : ADMIN
+
+   ```bash
+   DELETE /api/v1/event/delete/{id}
+   ```
+
+* Ejemplo del la peticion
+   ```bash
+  DELETE /api/v1/event/delete/23
+   ```
+* Ejemplo respuesta
+   ```json
+    {
+    "message": "se elimino el evento"
+    }
+  ```
+### Faltante a agragar al readme
+1. ***Listar Eventos Activos***
+2. ***Listar Eventos inactivos***
+3. ***Listar todos los Eventos***

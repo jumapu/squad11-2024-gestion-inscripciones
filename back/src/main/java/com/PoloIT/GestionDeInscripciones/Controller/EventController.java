@@ -57,12 +57,10 @@ public class EventController {
 
     @GetMapping("list/{size}/{page}")
     public ResponseEntity<Page<DataListEvents>> listEvents(
-            @PathVariable int size,int page,
-            @PageableDefault(size = 5) Pageable pageable){
-        pageable= PageRequest.of(page, size);
+            @PathVariable int size,@PathVariable int page){
+        Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(eventServiceImpl.listEventsDB(pageable));
     }
-
     @GetMapping("all")
     public ResponseEntity<Map<String, List<EventDTO>>> listEvents() {
         return new ResponseEntity<>(eventServiceImpl.allEvent(), HttpStatus.OK);

@@ -31,7 +31,7 @@ public record UserDto(
                 .id(userDto.id)
                 .email(userDto.email)
                 .password(userDto.password)
-                .rol(Rol.valueOf(userDto.rol))
+                .rol(Rol.valueOf(userDto.rol.toUpperCase()))
                 .build();
     }
 

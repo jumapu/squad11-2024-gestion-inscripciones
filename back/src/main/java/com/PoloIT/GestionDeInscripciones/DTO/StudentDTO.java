@@ -1,15 +1,23 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
 
 public record StudentDTO(
         Long id,
+        @NotNull(message = "name requerido")
         String name,
-        Set<String> skills,
+        @NotNull(message = "lastname requerido")
+        String lastName,
+        @NotNull(message = "technologies requerido")
+        Set<String> technologies,
+        @NotNull(message = "courses requerido")
         Set<String> courses,
-        Set<String> profiles,
+        @NotNull(message = "rol requerido")
+        Set<String> rol,
+        @NotNull(message = "linkedin requerido")
         String linkedin
 ) {
 
@@ -18,6 +26,7 @@ public record StudentDTO(
         this(
                 student.getId(),
                 student.getName(),
+                student.getLastName(),
                 student.getTechnologies(),
                 student.getCourses(),
                 student.getRol(),
@@ -25,39 +34,15 @@ public record StudentDTO(
         );
     }
 
-    //* Convierte una entidad Student a StudentDTO utilizando el DTO actual.
-    public static StudentDTO fromStudent(Student student) {
-        return new StudentDTO(
-                student.getId(),
-                student.getName(),
-                student.getTechnologies(),
-                student.getCourses(),
-                student.getRol(),
-                student.getLinkedin()
-        );
-    }
-
-    //* Convierte otro StudentDTO a la entidad Student.
-    public static Student toEntity(StudentDTO studentDTO) {
+    public static Student fromStudent(StudentDTO studentDTO) {
         return Student.builder()
-                .id(studentDTO.id())
-                .name(studentDTO.name())
-                .technologies(studentDTO.skills())
-                .courses(studentDTO.courses())
-                .rol(studentDTO.profiles())
-                .linkedin(studentDTO.linkedin())
-                .build();
-    }
-
-    //* Convierte este StudentDTO a la entidad Student usando sus propios datos.
-    public Student toEntity() {
-        return Student.builder()
-                .id(this.id())
-                .name(this.name())
-                .technologies(this.skills())
-                .courses(this.courses())
-                .rol(this.profiles())
-                .linkedin(this.linkedin())
+                .id(studentDTO.id)
+                .name(studentDTO.name)
+                .rol(studentDTO.rol)
+                .technologies(studentDTO.technologies)
+                .lastName(studentDTO.lastName)
+                .courses(studentDTO.courses)
+                .linkedin(studentDTO.linkedin)
                 .build();
     }
 }

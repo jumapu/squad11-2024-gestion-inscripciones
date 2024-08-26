@@ -20,7 +20,7 @@ public class EventController {
     private final EventServiceImpl eventServiceImpl;
 
     @PostMapping("save")
-    public ResponseEntity<Map<String, String>> registerEvent(EventDTO eventDTO) {
+    public ResponseEntity<Map<String, String>> registerEvent(@Valid @RequestBody EventDTO eventDTO) {
         eventServiceImpl.save(eventDTO);
         return new ResponseEntity<>(Map.of("Event", "Save Event"), HttpStatus.CREATED);
     }

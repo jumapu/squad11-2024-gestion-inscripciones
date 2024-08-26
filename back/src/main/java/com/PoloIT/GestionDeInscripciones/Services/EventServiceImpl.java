@@ -4,7 +4,6 @@ import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseExcept
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.RegistraionRepository;
@@ -28,20 +27,9 @@ public class EventServiceImpl {
 
     public void save(EventDTO eventDTO) {
         if (eventRepository.existsByName(eventDTO.name()))
-            throw new ResponseException("Name", "Event NAME in used!", HttpStatus.NOT_ACCEPTABLE);
+            throw new ResponseException("Name", "Event name in used!", HttpStatus.NOT_ACCEPTABLE);
 
-        Event event = Event.builder()
-                .name(eventDTO.name())
-                .registration(Registration.builder()
-                        .finishAt(eventDTO.registration().finishAt())
-                        .createdAt(eventDTO.registration().createdAt())
-                        .build())
-                .description(eventDTO.description())
-                .createdAt(eventDTO.createdAt())
-                .finishAt(eventDTO.finishAt())
-                .isActive(true)
-                .build();
-        event.getRegistration().setEvent(event);
+        Event event = EventDTO.fromEvent(eventDTO);
         eventRepository.save(event);
     }
 

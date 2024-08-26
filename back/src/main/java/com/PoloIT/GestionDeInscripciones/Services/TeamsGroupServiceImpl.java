@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
-public class TeamsServiceImpl {
+public class TeamsGroupServiceImpl {
     private final TeamsRepository teamsRepository;
     private final EventRepository eventRepository;
 

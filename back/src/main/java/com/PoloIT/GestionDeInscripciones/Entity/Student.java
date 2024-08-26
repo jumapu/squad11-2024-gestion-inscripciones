@@ -38,14 +38,6 @@ public class Student {
     private Set<Team> team;
 
 
-    public boolean areFieldsValid() {
-        return this.name != null &&
-                this.technologies != null && !this.technologies.isEmpty() &&
-                this.linkedin != null &&
-                this.rol != null && !this.rol.isEmpty() &&
-                this.courses != null && !this.courses.isEmpty();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -131,6 +131,7 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
      ```
 ***Listar Evento***
    * Usuarios permitidos para la peticion : ADMIN, USER, MENTOR
+   * En la peticion le indico el tamaño de la lista de **Eventos** y que **pagina** de la lista quiere traer
 
       ```bash
       GET /api/v1/event/list/{tamaño}/{pagina}

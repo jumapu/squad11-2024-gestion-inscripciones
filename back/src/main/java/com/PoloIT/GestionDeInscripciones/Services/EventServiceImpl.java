@@ -2,10 +2,6 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.EventsDTO.DataUpdateEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.RegistrationDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
@@ -20,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -50,54 +45,39 @@ public class EventServiceImpl {
         eventRepository.save(event);
     }
 
-    public Event updateEventDB(DataUpdateEvent dataUpdateEvent) {
-        Event event = eventRepository.findById(dataUpdateEvent.id()).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
-        event.updateEvent(dataUpdateEvent);
-        return event;
+    public void update(EventDTO eventDTO) {
+        Event event = eventRepository.findById(eventDTO.id()).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        event.update(eventDTO);
     }
 
-    public Event deleteEventDB(Long id) {
+    public void delete(Long id) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
-        event.deactivateEvent();
-        return event;
+        eventRepository.deleteById(id);
     }
 
-    public Event getEventDB(Long id) {
-        return eventRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+    public EventDTO get(Long id) {
+        return eventRepository.findById(id)
+                .map(EventDTO::new)
+                .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
     }
 
-    public Map<String, List<EventDTO>> allEvent() {
+    public Map<String, List<EventDTO>> all() {
         List<EventDTO> list = eventRepository.findAll().stream()
-                .map(event -> {
-                    RegistrationDTO registrationDTO = new RegistrationDTO(
-                            event.getRegistration().getCreatedAt()
-                            , event.getRegistration().getFinishAt()
-                            , event.getRegistration().getUpdatedAt(),
-                            event.getRegistration().getStudents().stream()
-                                    .map(student -> new StudentDTO(student.getId(), student.getName(), student.getSkills(), student.getCourses(), student.getProfiles(), student.getLinkedin())).collect(Collectors.toList())
-                            , event.getRegistration().getMentors().stream()
-                            .map(mentor -> new MentorDTO(mentor.getId(), mentor.getName(), mentor.getCompany(), mentor.getLastName(), mentor.getSkills(), mentor.getProfiles(), mentor.getLinkedin())).collect(Collectors.toList())
-                    );
-
-                    return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getCreatedAt(), event.getFinishAt(), registrationDTO, event.isActive());
-
-                }).toList();
+                .map(EventDTO::new).toList();
         return Map.of("Events", list);
     }
 
-    public Map<String, List<EventDTO>> allEventsActive() {
-
-        System.out.println(allEvent().get("Events").stream().filter(EventDTO::isActive).toList());
+    public Map<String, List<EventDTO>> AllActiveEvent() {
         return Map.of(
                 "Events",
-                allEvent().get("Events").stream().filter(EventDTO::isActive).toList()
+                all().get("Events").stream().filter(EventDTO::isActive).toList()
         );
     }
 
-    public Map<String, List<EventDTO>> allEventsNotActive() {
+    public Map<String, List<EventDTO>> AllInactiveEvent() {
         return Map.of(
                 "Events",
-                allEvent().get("Events").stream().filter(eventDTO -> !eventDTO.isActive()).toList()
+                all().get("Events").stream().filter(eventDTO -> !eventDTO.isActive()).toList()
         );
     }
 

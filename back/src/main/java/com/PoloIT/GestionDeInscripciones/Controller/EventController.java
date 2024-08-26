@@ -1,98 +1,68 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataResponseEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
-import com.PoloIT.GestionDeInscripciones.Entity.Admin;
-import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
-import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/event/")
-@AllArgsConstructor
+@RequestMapping("/api/v1/admin/event/")
+@RequiredArgsConstructor
 public class EventController {
 
     private final EventServiceImpl eventServiceImpl;
-    private final UserServiceImpl userServiceImpl;
 
-    @PostMapping("add")
-    public ResponseEntity<DataResponseEvent> registerEvent(
-            UriComponentsBuilder uriComponentsBuilder,
-            @RequestBody @Valid DataRequestEvent dataRequestEvent) {
-        Admin admin = userServiceImpl.getUserRolContext(Admin.class);
-        Event event = eventServiceImpl.saveEventDB(dataRequestEvent,admin);
-        DataResponseEvent dataResponseEvent = new DataResponseEvent(event);
-        URI url = uriComponentsBuilder.path("/api/v1/event/{id}").buildAndExpand(event.getId()).toUri();
-        return ResponseEntity.created(url).body(dataResponseEvent);
+    @PostMapping("save")
+    public ResponseEntity<Map<String, String>> registerEvent(EventDTO eventDTO) {
+        eventServiceImpl.save(eventDTO);
+        return new ResponseEntity<>(Map.of("Event", "Save Event"), HttpStatus.CREATED);
     }
 
-    @PutMapping("update")
+    @PatchMapping("update")
     @Transactional
-    public ResponseEntity<Map<String,String>> updateEvent(
-            @RequestBody @Valid DataUpdateEvent dataUpdateEvent) {
-        eventServiceImpl.updateEventDB(dataUpdateEvent);
-        Map<String, String> body = new HashMap<>();
-        body.put("message","se modifico el evento");
-        return ResponseEntity.ok(body);
+    public ResponseEntity<Map<String, String>> patchEvent(@RequestBody @Valid EventDTO dataUpdateEvent) {
+
+        return new ResponseEntity<>(Map.of("Event", "updated Event"), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("list/{size}/{page}")
-    public ResponseEntity<Page<DataListEvents>> listEvents(
-            @PathVariable int size,int page,
-            @PageableDefault(size = 5) Pageable pageable){
-        pageable= PageRequest.of(page, size);
-        return ResponseEntity.ok(eventServiceImpl.listEventsDB(pageable));
-    }
 
     @GetMapping("all")
     public ResponseEntity<Map<String, List<EventDTO>>> listEvents() {
-        return new ResponseEntity<>(eventServiceImpl.allEvent(), HttpStatus.OK);
+        Map<String, List<EventDTO>> body = eventServiceImpl.all();
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
 
     @GetMapping("all/notActive")
     public ResponseEntity<Map<String, List<EventDTO>>> listEventsNotActive() {
-        return new ResponseEntity<>(eventServiceImpl.allEventsNotActive(), HttpStatus.OK);
+        Map<String, List<EventDTO>> body = eventServiceImpl.AllInactiveEvent();
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
     @GetMapping("all/active")
     public ResponseEntity<Map<String, List<EventDTO>>> listEventsActive() {
-        return new ResponseEntity<>(eventServiceImpl.allEventsActive(), HttpStatus.OK);
+        Map<String, List<EventDTO>> body = eventServiceImpl.AllActiveEvent();
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<DataResponseEvent> getEvent(@PathVariable Long id) {
-        Event event = eventServiceImpl.getEventDB(id);
-        return ResponseEntity.ok(new DataResponseEvent(event));
+    public ResponseEntity<Map<String, EventDTO>> getEvent(@PathVariable Long id) {
+        EventDTO body = eventServiceImpl.get(id);
+        return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
     }
 
-    @DeleteMapping("/delete/{id}")
-    @Transactional
-    public ResponseEntity<Map<String,String>> deleteEvent(@PathVariable Long id) {
-        eventServiceImpl.deleteEventDB(id);
-        Map<String, String> body = new HashMap<>();
-        body.put("message","se elimino el evento");
-        return ResponseEntity.ok(body);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> deleteEvent(@PathVariable Long id) {
+        eventServiceImpl.delete(id);
+        return new ResponseEntity<>(Map.of("Event", "Event eliminated"), HttpStatus.ACCEPTED);
     }
 }
 

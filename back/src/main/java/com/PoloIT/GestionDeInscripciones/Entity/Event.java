@@ -1,7 +1,6 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
+import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,16 +43,16 @@ public class Event {
     @JoinColumn(name = "admin_id")
     private Admin admin;
 
-    public Event(DataRequestEvent datosRegistroEvent, Admin admin) {
-        this.name = datosRegistroEvent.name();
-        this.description = datosRegistroEvent.description();
+    public Event(EventDTO eventDTO, Admin admin) {
+        this.name = eventDTO.name();
+        this.description = eventDTO.description();
         this.admin = admin;
     }
 
 
-    public void updateEvent(DataUpdateEvent dataUpdateEvent) {
-        this.name = dataUpdateEvent.name();
-        this.description = dataUpdateEvent.description();
+    public void update(EventDTO eventDTO) {
+        this.name = eventDTO.name();
+        this.description = eventDTO.description();
     }
 
     public void deactivateEvent() {

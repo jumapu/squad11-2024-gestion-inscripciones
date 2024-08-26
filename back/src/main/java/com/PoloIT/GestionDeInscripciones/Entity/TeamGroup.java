@@ -23,10 +23,12 @@ public class TeamGroup {
     @JoinColumn(name = "event_id")
     private Event event;
 
-    private int groupStudentLimit;
 
     @OneToMany(mappedBy = "teamGroup")
     private Set<Team> teams;
+
+
+    //! agregar una lista de los que no quedaron.
 
     @Override
     public boolean equals(Object o) {

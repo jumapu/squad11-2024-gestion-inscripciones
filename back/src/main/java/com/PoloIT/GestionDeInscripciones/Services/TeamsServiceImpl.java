@@ -1,19 +1,15 @@
 package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
-import com.PoloIT.GestionDeInscripciones.DTO.TeamsDTO;
-import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
-import com.PoloIT.GestionDeInscripciones.Entity.Student;
-import com.PoloIT.GestionDeInscripciones.Entity.Team;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilter;
+import com.PoloIT.GestionDeInscripciones.Entity.*;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.TeamsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -22,143 +18,70 @@ public class TeamsServiceImpl {
     private final TeamsRepository teamsRepository;
     private final EventRepository eventRepository;
 
-    public void createTeams(TeamsDTO teamsDTO, Long id) {
+    public void createTeams(TeamGroupFilter filter, Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT/REGISTRATION", HttpStatus.NOT_FOUND));
 
-        createTeamGroup(event, teamsDTO);
+        generateGroup(event, filter);
     }
 
-    private Set<Team> createTeamGroup(Event event, TeamsDTO teamsDTO) {
 
-        List<Team> teams = new ArrayList<>();
-        int memberLimit = (int) Math.ceil((double) (event.getRegistration().getStudents().size() + event.getRegistration().getMentors().size()) / teamsDTO.groups());
-        //  int count = 0;
-        int countStudent = 0;
-        int countMentor = 0;
+    private TeamGroup generateGroup(Event event, TeamGroupFilter filter) {
 
-        //poder ver si alguien se queda afuer
-        int e = (event.getRegistration().getStudents().size() + event.getRegistration().getMentors().size());
+        TeamGroup teamGroup = new TeamGroup();
+        Set<Student> studentsNotAccepted = new HashSet<>();
 
-        //  for (int i = 0; i <); i++) {
+        int groups = filter.groups();
 
-        //* el limite de vueltas es la cantidad de registrados total, "pero si no hay student o mentor se termina antes el bucle"
-        for (int i = 0; i <= e; i++) {
+        if (groups < 0)
+            groups = event.getRegistration().getStudents().size() + event.getRegistration().getMentors().size();
+
+        for (int i = 0; i <= groups; i++) {
+            int mentorIndex = i;
 
             Team team = new Team();
 
-            int limitStudent = memberLimit - (memberLimit - teamsDTO.limitStudent());
-            int limitMentor = memberLimit - (memberLimit - teamsDTO.limitMentor());
-            System.out.println("------------");
-            System.out.println("memberLimit " + memberLimit);
-            System.out.println("limitMentor " + limitMentor);
-            System.out.println("limitStudent " + limitStudent);
+            int studentLimit = filter.studentFilter().get(i).quantity();
+            String studentRol = filter.studentFilter().get(i).rol();
+            Set<String> studentTechnologies = filter.studentFilter().get(i).technologies();
 
-            for (int j = 0; j < limitStudent; j++) {
-
-                int index = j + countStudent;
-                System.out.println("student " + event.getRegistration().getStudents().size());
-                System.out.println("index " + index);
-
-                if (index >= event.getRegistration().getStudents().size())
-                    break;
-                Student student = event.getRegistration().getStudents().stream().toList().get(index);
-                team.getStudents().add(student);
-
-
-            }
-
-            for (int j = 0; j < limitMentor; j++) {
-                int index = j + countMentor;
-                System.out.println("metors " + event.getRegistration().getMentors().size());
-                System.out.println("index " + index);
-
-                if (index >= event.getRegistration().getMentors().size()) {
-                    break;
+            for (int j = 0; i < studentLimit; i++) {
+                Student student = event.getRegistration().getStudents().stream().toList().get(j);
+                boolean bol = student.getRol().stream().filter(studentRol::equalsIgnoreCase).toList().isEmpty();
+                if (bol && studentTechnologies.isEmpty()) {
+                    team.getStudents().add(student);
                 }
-
-                Mentor mentor = event.getRegistration().getMentors().stream().toList().get(index);
-                team.getMentors().add(mentor);
+                if (bol && studentTechnologies.retainAll(student.getTechnologies())) {
+                    team.getStudents().add(student);
+                }
+                //
+                //? si el estudiante no cumple los filtro se guarda en una lista de espera.
+                studentsNotAccepted.add(student);
             }
 
-            System.out.println("------------");
 
-            //   count += memberLimit;
+            int mentorLimit = filter.mentorFilter().get(i).quantity();
+            String mentorRol = filter.mentorFilter().get(i).rol();
+            Set<String> mentorTechnologies = filter.mentorFilter().get(i).technologies();
 
-            countMentor += limitMentor;
-            countStudent += limitStudent;
+            for (int j = 0; i < mentorLimit; i++) {
+                if (j > event.getRegistration().getMentors().size()) j = 0;
 
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println(team.getMentors().size());
-            System.out.println(team.getStudents().size());
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaa");
-
-            //* si tems la lista de student y mentor esta vacia significa que no hay que crear mas grupos.
-            if (team.getStudents().isEmpty() && team.getMentors().isEmpty()) {
-                break;
+                Mentor mentor = event.getRegistration().getMentors().stream().toList().get(j);
+                boolean bol = mentor.getRol().stream().filter(studentRol::equalsIgnoreCase).toList().isEmpty();
+                if (bol && mentorTechnologies.isEmpty()) {
+                    team.getMentors().add(mentor);
+                }
+                if (bol && mentorTechnologies.retainAll(mentor.getTechnologies())) {
+                    team.getMentors().add(mentor);
+                }
             }
-            teams.add(team);
+
+
         }
 
-        // ver las incriptos que queador fuera.
-        List<Team> espera = new ArrayList<>();
-
-
-        for (int i = teamsDTO.groups(); i < teams.size(); i++) {
-            System.out.println(teams.size());
-            espera.add(teams.get(i - 1));
-        }
-
-//        System.out.println("-------------------------------------");
-//        System.out.println("-------------------------------------");
-//        System.out.println("lista de espera.");
-//        espera.forEach((x) -> {
-//            System.out.println("team " + x.getId());
-//            x.getStudents().forEach(student -> {
-//                System.out.println(student.getId() + " " + student.getName());
-//
-//            });
-//            x.getMentors().forEach(mentor -> {
-//                System.out.println(mentor.getId() + " " + mentor.getName());
-//            });
-//        });
-//
-//        System.out.println("-------------------------------------");
-//        System.out.println("-------------------------------------");
-//
-//        List<Team> creados = new ArrayList<>();
-//        for (int i = 0; i < teamsDTO.groups() - 1; i++) {
-//            creados.add(teams.get(i));
-//        }
-//
-//
-//        System.out.println("-------------------------------------");
-//        System.out.println("-------------------------------------");
-//        System.out.println("Team creado a partir de " + teamsDTO.groups() + " grupos");
-//        creados.forEach((x) -> {
-//            System.out.println("team " + x.getId());
-//            x.getStudents().forEach(student -> {
-//                System.out.println(student.getId() + " " + student.getName());
-//
-//            });
-//            x.getMentors().forEach(mentor -> {
-//                System.out.println(mentor.getId() + " " + mentor.getName());
-//            });
-//        });
-
-
-        teams.forEach((x) -> {
-            System.out.println("team " + x.getId());
-            x.getStudents().forEach(student -> {
-                System.out.println(student.getId() + " " + student.getName());
-
-            });
-            x.getMentors().forEach(mentor -> {
-                System.out.println(mentor.getId() + " " + mentor.getName());
-            });
-        });
-
-        return null;
+        return teamGroup;
     }
+
 
 }

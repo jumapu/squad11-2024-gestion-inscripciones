@@ -23,9 +23,10 @@ public class Student {
     private User user;
 
     private String name;
-    private Set<String> skills;
+    private String lastName;
+    private Set<String> rol;
+    private Set<String> technologies;
     private Set<String> courses;
-    private Set<String> profiles;
     private String linkedin;
 
     //*Registration
@@ -39,9 +40,9 @@ public class Student {
 
     public boolean areFieldsValid() {
         return this.name != null &&
-                this.skills != null && !this.skills.isEmpty() &&
+                this.technologies != null && !this.technologies.isEmpty() &&
                 this.linkedin != null &&
-                this.profiles != null && !this.profiles.isEmpty() &&
+                this.rol != null && !this.rol.isEmpty() &&
                 this.courses != null && !this.courses.isEmpty();
     }
 

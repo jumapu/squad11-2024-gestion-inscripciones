@@ -18,25 +18,13 @@ public class RegistrationServiceImpl {
     private final UserRepository userRepository;
     private final RegistraionRepository registraionRepository;
 
-    public void registerEvent(Long id) {
+    public void register(Long id) {
         Registration registration = registraionRepository.findById(id)
                 .map(this::setUserEvent)
                 .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT/REGISTRATION", HttpStatus.NOT_FOUND));
         registraionRepository.save(registration);
     }
 
-
-    private void isRegistered(User user, Registration registration) {
-        //! verificamos si ya esta registrado en el evento, si lo esta devuelve un mensaje.
-        //! No se registraria ya que se usa un SET. Solo le informamos al front.
-        if (user.getRol().name().equalsIgnoreCase("studetn") && registration.getStudents().stream().anyMatch(student -> student.getId().equals(user.getStudent().getId()))) {
-            throw new ResponseException("200", "Already registered", HttpStatus.ACCEPTED);
-        }
-
-        if (user.getRol().name().equalsIgnoreCase("mentor") && registration.getMentors().stream().anyMatch(mentor -> mentor.getId().equals(user.getMentor().getId()))) {
-            throw new ResponseException("200", "Already registered", HttpStatus.ACCEPTED);
-        }
-    }
 
     private void isActiveRegister(Registration registration) {
         if (registration.getFinishAt().isBefore(LocalDateTime.now()))
@@ -80,11 +68,20 @@ public class RegistrationServiceImpl {
         throw new ResponseException("505", "INTERNAL SERVER ERROR", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    private void isRegistered(User user, Registration registration) {
+        //! verificamos si ya esta registrado en el evento, si lo esta devuelve un mensaje.
+        //! No se registraria ya que se usa un SET. Solo le informamos al front.
+        if (user.getRol().name().equalsIgnoreCase("studetn") && registration.getStudents().stream().anyMatch(student -> student.getId().equals(user.getStudent().getId()))) {
+            throw new ResponseException("200", "Already registered", HttpStatus.ACCEPTED);
+        }
+
+        if (user.getRol().name().equalsIgnoreCase("mentor") && registration.getMentors().stream().anyMatch(mentor -> mentor.getId().equals(user.getMentor().getId()))) {
+            throw new ResponseException("200", "Already registered", HttpStatus.ACCEPTED);
+        }
+    }
+
     private User getUserContext() {
-        return userRepository.findByEmail(
-                        SecurityContextHolder.getContext().getAuthentication().getName()
-                )
-//                .map(User::getAdmin)
+        return userRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
                 .orElseThrow(() -> new ResponseException("505", "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR));
     }
 

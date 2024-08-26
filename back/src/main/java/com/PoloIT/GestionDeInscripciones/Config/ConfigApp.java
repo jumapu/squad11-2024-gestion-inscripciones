@@ -4,7 +4,6 @@ package com.PoloIT.GestionDeInscripciones.Config;
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -45,8 +44,4 @@ public class ConfigApp {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public ModelMapper ModelMapper() {
-        return new ModelMapper();
-    }
 }

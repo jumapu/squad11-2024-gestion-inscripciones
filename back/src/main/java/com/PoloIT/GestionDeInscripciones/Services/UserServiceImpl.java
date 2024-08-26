@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements IUserServiceIpml{
+public class UserServiceImpl implements IUserServiceIpml {
 
     private final UserRepository userRepository;
 
-    @Override
     public <U> U getUserRolContext(Class<U> userRol) {
         User userContext = getUserDB();
         return switch (userContext.getRol()) {
@@ -24,10 +23,11 @@ public class UserServiceImpl implements IUserServiceIpml{
             default -> throw new ResponseException("403", "Forbidden", HttpStatus.FORBIDDEN);
         };
     }
-    public User getUserDB(){
+
+    public User getUserDB() {
         return userRepository.findByEmail(
-                SecurityContextHolder.getContext().getAuthentication().getName())
-                .orElseThrow(() -> new ResponseException("404", "User", HttpStatus.NOT_FOUND)) ;
+                        SecurityContextHolder.getContext().getAuthentication().getName())
+                .orElseThrow(() -> new ResponseException("404", "User", HttpStatus.NOT_FOUND));
     }
 
 

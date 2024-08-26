@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/'
+const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
 export const userLogin = async (data) => {
     try {
-      const response = await axios.post(`${API}/users/login`, data);
+      const response = await axios.post(`${API}/auth/authenticaation`, data);
       return response.data;
     } catch (error) {
       if (error.response) {

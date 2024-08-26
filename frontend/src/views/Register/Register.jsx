@@ -16,7 +16,7 @@ const Register = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const options = [
     { value: "mentor", label: "Mentor/a" },
-    { value: "egresado", label: "Egresado/a" },
+    { value: "student", label: "Egresado/a" },
   ];  
   return (
     <div>

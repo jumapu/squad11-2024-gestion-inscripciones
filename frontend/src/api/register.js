@@ -21,24 +21,9 @@ export const registerUser = async (data, navigate, selectedOption) => {
     }
   }
 
-  try {
-    axiosInstance
-      .post(`auth/register`, { email, password, name, rol: value })
-      .then((res) => {
-        navigate("/login");
-      });
-  } catch (error) {
-    if (error.response) {
-      console.error("Error response:", error.response.data);
-      toast.error(
-        error.response.data.message || "Los datos ingresados son incorrectos"
-      );
-    } else if (error.request) {
-      console.error("Error request:", error.request);
-      toast.error("No se recibió respuesta del servidor");
-    } else {
-      console.error("Error:", error.message);
-      toast.error("Error al realizar la solicitud de inicio de sesión");
-    }
-  }
+  axiosInstance
+    .post(`auth/register`, { email, password, name, rol: value })
+    .then((res) => {
+      navigate("/login");
+    });
 };

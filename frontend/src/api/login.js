@@ -9,30 +9,18 @@ export const userLogin = async (data, navigate) => {
       return;
     }
   }
-  try {
-    axiosInstance.post(`auth/authentication`, data).then((res) => {
-      if (res.rol === "admin") {
-        navigate("/admindash");
-      } else if (res.rol === "mentor") {
-        navigate("/mentordash");
-      } else if (res.rol === "egresado") {
-        navigate("/egresadodash");
-      } else {
-        navigate("/home");
-      }
-    });
-  } catch (error) {
-    if (error.response) {
-      console.error("Error response:", error.response.data);
-      toast.error(
-        error.response.data.message || "Los datos ingresados son incorrectos"
-      );
-    } else if (error.request) {
-      console.error("Error request:", error.request);
-      toast.error("No se recibió respuesta del servidor");
+
+  axiosInstance.post(`auth/authentication`, data).then((res) => {
+    console.log(res.rol);
+
+    if (res.rol === "admin") {
+      navigate("/admindash");
+    } else if (res.rol === "mentor") {
+      navigate("/mentordash");
+    } else if (res.rol === "student") {
+      navigate("/egresadodash");
     } else {
-      console.error("Error:", error.message);
-      toast.error("Error al realizar la solicitud de inicio de sesión");
+      navigate("/home");
     }
-  }
+  });
 };

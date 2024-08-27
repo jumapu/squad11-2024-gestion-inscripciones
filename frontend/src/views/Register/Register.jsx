@@ -7,17 +7,18 @@ import Select from "react-select";
 import { useForm } from "react-hook-form";
 import { authenticateUser } from "@/utils/authUtils";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../api/register";
 const Register = () => {
+  const [selectedOption, setSelectedOption] = useState(null);
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const onSubmit = (data) => {
-    authenticateUser(data, navigate);    
+    registerUser(data, navigate, selectedOption);
   };
-  const [selectedOption, setSelectedOption] = useState(null);
   const options = [
     { value: "mentor", label: "Mentor/a" },
     { value: "student", label: "Egresado/a" },
-  ];  
+  ];
   return (
     <div>
       <div className="flex flex-col mb-2 register-container">
@@ -48,57 +49,69 @@ const Register = () => {
                     </div>
                     <div className="mt-4 flex flex-row space-x-2">
                       <div className="flex-1">
-                        <Text as="p" size="2" className="mb-1"><Strong>Nombre de Usuario</Strong></Text>
-                        <input style={{ width: "98%", marginBottom: "5px" }}
+                        <Text as="p" size="2" className="mb-1">
+                          <Strong>Nombre de Usuario</Strong>
+                        </Text>
+                        <input
+                          style={{ width: "98%", marginBottom: "5px" }}
                           autoComplete="username"
                           className="campos"
                           name="name"
                           id="name"
                           minLength="4"
                           type="text"
-                          {...register("usuario")}
+                          {...register("name")}
                         />
                       </div>
                     </div>
                     <div className="flex flex-col mb-2">
                       <div className="mt-4 flex flex-col bg-gray-100 rounded-lg p-4 shadow-sm">
                         <div className="mt-4">
-                          <Text as="p" size="2" className="mb-1"><Strong>Email</Strong></Text>
-                          <input style={{ width: "98%", marginBottom: "5px" }}
+                          <Text as="p" size="2" className="mb-1">
+                            <Strong>Email</Strong>
+                          </Text>
+                          <input
+                            style={{ width: "98%", marginBottom: "5px" }}
                             autoComplete="email"
                             size="30"
                             className="campos"
                             type="email"
-                            id='email'
+                            id="email"
                             {...register("email")}
                           />
                         </div>
                         <div className="mt-4">
-                          <Text as="p" size="2" className="mb-1"><Strong>Contraseña</Strong></Text>
-                          <input style={{ width: "98%", marginBottom: "5px" }}
+                          <Text as="p" size="2" className="mb-1">
+                            <Strong>Contraseña</Strong>
+                          </Text>
+                          <input
+                            style={{ width: "98%", marginBottom: "5px" }}
                             autoComplete="new-password"
                             className="campos"
                             type="password"
-                            id='password'
+                            id="password"
                             {...register("password")}
                           />
                         </div>
                         <div className="mt-4">
-                          <Text as="p" size="2" className="mb-1"><Strong>Confirmar Contraseña</Strong></Text>
-                          <input style={{ width: "98%", marginBottom: "15px" }}
+                          <Text as="p" size="2" className="mb-1">
+                            <Strong>Confirmar Contraseña</Strong>
+                          </Text>
+                          <input
+                            style={{ width: "98%", marginBottom: "15px" }}
                             autoComplete="new-password"
                             className="campos"
                             type="password"
-                            id='confirmpassword'
+                            id="confirmpassword"
                             required
                             {...register("confirmpassword")}
                           />
                         </div>
                       </div>
-                    </div>               
+                    </div>
                     <Button className="mt-4 w-full bg-indigo-600 text-white py-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                   Guardar
-                  </Button>
+                      Guardar
+                    </Button>
                   </div>
                 </Flex>
               </form>
@@ -107,7 +120,7 @@ const Register = () => {
         </Container>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

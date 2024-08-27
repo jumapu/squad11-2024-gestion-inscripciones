@@ -7,7 +7,7 @@ import {
   Strong,
   Link,
 } from "@radix-ui/themes";
-import '@radix-ui/themes/styles.css';
+import "@radix-ui/themes/styles.css";
 import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import "./css/login.css";
 import Logo from "@/assets/logo.webp";
+import { userLogin } from "../../api/login";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -22,7 +23,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    authenticateUser(data, signIn, navigate);
+    userLogin(data, navigate);
   };
 
   return (
@@ -42,10 +43,13 @@ const Login = () => {
             </span>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
-            <Card style={{ margin: "10px 5px" }} className="py-8 px-10 shadow-lg rounded-lg">
-              <form onSubmit={handleSubmit(onSubmit)} >
+            <Card
+              style={{ margin: "10px 5px" }}
+              className="py-8 px-10 shadow-lg rounded-lg"
+            >
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
-                  <div>
+                  {/* <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Nombre de Usuario:</Strong>
                     </Text>
@@ -57,8 +61,8 @@ const Login = () => {
                       className="campos"
                       {...register("usuario")}
                     />
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Participa como: </Strong>
                     </Text>
@@ -70,7 +74,7 @@ const Login = () => {
                       className="campos"
                       {...register("rol")}
                     />
-                  </div>
+                  </div> */}
                   <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Email:</Strong>
@@ -101,7 +105,8 @@ const Login = () => {
                     Ingresar
                   </Button>
                   <Text className="crearCuenta">
-                    ¿No tienes una cuenta? <Link href="/registro">Crear Cuenta</Link>
+                    ¿No tienes una cuenta?{" "}
+                    <Link href="/registro">Crear Cuenta</Link>
                   </Text>
                 </Flex>
               </form>
@@ -110,8 +115,7 @@ const Login = () => {
         </Container>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
-
+export default Login;

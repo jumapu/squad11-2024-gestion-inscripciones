@@ -3,7 +3,8 @@ import { toast } from "sonner";
 
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1/", //* Configura la URL base de tu API
+  baseURL:
+    "https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/", //* Configura la URL base de tu API
 });
 
 //* Interceptor para agregar el token a las solicitudes

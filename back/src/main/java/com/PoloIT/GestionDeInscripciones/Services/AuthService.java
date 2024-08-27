@@ -2,8 +2,10 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
 
-public interface AuthService {
-    String authenticate(UserDto userDto);
+import java.util.Map;
 
-    String register(UserDto userDto);
+public interface AuthService {
+    Map<String, String> authenticate(UserDto userDto);
+
+    Map<String, String> register(UserDto userDto);
 }

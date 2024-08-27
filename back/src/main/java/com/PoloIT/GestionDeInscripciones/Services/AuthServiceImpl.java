@@ -16,9 +16,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -33,24 +35,26 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder encoder;
     private final JwtService jwtService;
 
-    public String authenticate(UserDto userDto) {
-        authenticationAccount(userDto);
-        return jwtService.generateJwt(userDto.email());
+    public Map<String, String> authenticate(UserDto userDto) {
+        String rol = authenticationAccount(userDto);
+        return Map.of("jwt", jwtService.generateJwt(userDto.email()), "rol", rol);
     }
 
-    public String register(UserDto userDto) {
+    public Map<String, String> register(UserDto userDto) {
         User user = userRepository.save(fromUser(userDto));
         setRol(user, userDto);
-        return jwtService.generateJwt(userDto.email());
+        return Map.of("JWT", jwtService.generateJwt(userDto.email()), "rol", userDto.rol());
+
     }
 
 
-    private void authenticationAccount(UserDto userDto) {
+    private String authenticationAccount(UserDto userDto) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     userDto.email(),
                     userDto.password()
             ));
+            return authentication.getAuthorities().stream().findFirst().get().toString().toLowerCase();
         } catch (Exception e) {
             if (e.getLocalizedMessage().equals("Bad credentials"))
                 throw new ResponseException("404", "Incorrect password", HttpStatus.NOT_FOUND);

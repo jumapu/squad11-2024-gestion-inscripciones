@@ -9,14 +9,14 @@ export const registerUser = async (data, navigate, selectedOption) => {
     return;
   }
   if (password.length < 7) {
-    toast.error("Las contraseña debe ser mayor  a 8 caracteres.");
+    toast.error("Las contraseña debe ser mayor a 8 caracteres.");
     return;
   }
 
   //* Usar Object.entries() para obtener clave e índice
   for (const [key, value] of Object.entries(data)) {
     if (value.trim() === "" || value == null) {
-      toast.error(`El campo ${key} está vacío. Debe completarlo.`);
+      toast.error(`El campo ${key} está vacío. Falta completar.`);
       return;
     }
   }

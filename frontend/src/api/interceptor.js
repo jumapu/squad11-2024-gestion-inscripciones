@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.data["404"] === "Email in used")
+    if (error?.response?.data["404"] === "Email in use")
       toast.error("El email ya esta se encuentra en uso.");
     if (error?.response?.data["404"] === "Incorrect password")
       toast.error("Contraseña incorrecta.");

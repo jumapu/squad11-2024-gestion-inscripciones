@@ -11,8 +11,6 @@ export const userLogin = async (data, navigate) => {
   }
 
   axiosInstance.post(`auth/authentication`, data).then((res) => {
-    console.log(res.rol);
-
     if (res.rol === "admin") {
       navigate("/admindash");
     } else if (res.rol === "mentor") {

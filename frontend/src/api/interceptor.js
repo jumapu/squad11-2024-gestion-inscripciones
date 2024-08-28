@@ -3,8 +3,7 @@ import { toast } from "sonner";
 
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL:
-    "http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/", //* Configura la URL base de tu API
+  baseURL: "https://squad-95b3.onrender.com/api/v1/", //* Configura la URL base de tu API
 });
 
 //* Interceptor para agregar el token a las solicitudes
@@ -34,8 +33,6 @@ axiosInstance.interceptors.request.use(
 //* Interceptor para capturar el token en la respuesta
 axiosInstance.interceptors.response.use(
   (response) => {
-    console.log(response.data);
-
     //* Verifica si la URL de la solicitud original comienza con '/v1/auth/'
     if (response.data.jwt && response.data.jwt.startsWith("Bearer ")) {
       //* Suponiendo que el token está en response.data.token

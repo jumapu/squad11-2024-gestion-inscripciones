@@ -58,6 +58,8 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.data["404"] === "Email not Found")
       toast.error("Email no registrado.");
 
+    console.log(error);
+
     return Promise.reject(error);
   }
 );

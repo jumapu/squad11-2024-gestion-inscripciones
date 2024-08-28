@@ -3,7 +3,7 @@ import { toast } from "sonner";
 
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/", //* Configura la URL base de tu API
+  baseURL: "https://squad-95b3.onrender.com/api/v1/", //* Configura la URL base de tu API
 });
 
 //* Interceptor para agregar el token a las solicitudes
@@ -26,8 +26,6 @@ axiosInstance.interceptors.request.use(
     return request;
   },
   (error) => {
-    console.log("ERROR DESDE REQUEST INTERCEPTOR");
-
     return Promise.reject(error);
   }
 );
@@ -56,8 +54,6 @@ axiosInstance.interceptors.response.use(
       toast.error("Contraseña incorrecta.");
     if (error?.response?.data["404"] === "Email not Found")
       toast.error("Email no registrado.");
-
-    console.log("ERROR DESDE RESPONSE INTERCEPTOR");
 
     return Promise.reject(error);
   }

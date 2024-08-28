@@ -5,7 +5,7 @@ export const userLogin = async (data, navigate) => {
   //* Usar Object.entries() para obtener clave e índice
   for (const [key, value] of Object.entries(data)) {
     if (value.trim() === "" || value == null) {
-      toast.error(`El campo ${key} está vacío. Debe completarlo.`);
+      toast.error(`El campo ${key} está vacío. Falta completar.`);
       return;
     }
   }

@@ -5,7 +5,7 @@ import { Flex, Button, Text, Strong, Card, Container } from "@radix-ui/themes";
 import { useState } from "react";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { authenticateUser } from "@/utils/authUtils";
+//import { authenticateUser } from "@/utils/authUtils";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../api/register";
 const Register = () => {

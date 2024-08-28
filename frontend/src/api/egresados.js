@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/'
+const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
 
 export const egresadosList= async () => 
 {

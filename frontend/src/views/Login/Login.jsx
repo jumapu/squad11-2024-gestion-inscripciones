@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import "./css/login.css";
 import Logo from "@/assets/logo.webp";
-import { userLogin } from "../../api/login";
+//import { userLogin } from "../../api/login";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -23,7 +23,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    userLogin(data, navigate);
+    authenticateUser(data, signIn, navigate);
   };
 
   return (

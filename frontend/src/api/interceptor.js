@@ -4,7 +4,7 @@ import { toast } from "sonner";
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
   baseURL:
-    "https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/", //* Configura la URL base de tu API
+    "http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/", //* Configura la URL base de tu API
 });
 
 //* Interceptor para agregar el token a las solicitudes
@@ -51,7 +51,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.data["404"] === "Email in used")
+    if (error?.response?.data["404"] === "Email in use")
       toast.error("El email ya esta se encuentra en uso.");
     if (error?.response?.data["404"] === "Incorrect password")
       toast.error("Contraseña incorrecta.");

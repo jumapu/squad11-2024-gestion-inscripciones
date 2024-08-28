@@ -1,6 +1,6 @@
-import { Card, Container, Button } from "@radix-ui/themes";
+import { Card, Container, Button, Link } from "@radix-ui/themes";
 import TablaEventos from "./components/TablaEventos";
-import ModalCrear from "./components/ModalCrear";
+//import ModalCrear from "./components/ModalCrear";
 import logo from "@/assets/logo.webp";
 import "./css/Admindash.css"
 const Admindash = () => {
@@ -17,7 +17,9 @@ const Admindash = () => {
         <span>
           <h1>Eventos</h1>
           <div className="btns">
-            <ModalCrear  />
+            <Link to="modalcrear">
+            <Button className="btn1" >Crear Evento</Button>
+            </Link>
             <Button className="btn2">
               Modificar Evento
             </Button>

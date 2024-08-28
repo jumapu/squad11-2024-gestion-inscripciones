@@ -18,6 +18,7 @@ const Register = () => {
   const options = [
     { value: "mentor", label: "Mentor/a" },
     { value: "student", label: "Egresado/a" },
+    { value: "admin", label: "Admin" },
   ];
   return (
     <div>

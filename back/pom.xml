@@ -11,7 +11,7 @@
     <groupId>com.GestionDeInscripciones</groupId>
     <artifactId>GestionDeInscripciones</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>GestionDeInscripciones</name>
     <url>http://maven.apache.org</url>
     <description>MVP Polo IT</description>

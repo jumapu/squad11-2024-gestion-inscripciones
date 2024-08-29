@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
+const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1/'
 
 export const usuariosList= async () => 
 {

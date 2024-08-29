@@ -12,18 +12,18 @@ import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
-// import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 import "./css/login.css";
 import Logo from "@/assets/logo.webp";
-import {userLogin} from "../../api/login";
+import { userLogin } from "../../api/login";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
- const signIn = userLogin();
+  const signIn = useSignIn();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    authenticateUser(data, signIn, navigate);
+    userLogin(data, navigate);
   };
 
   return (

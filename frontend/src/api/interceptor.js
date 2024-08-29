@@ -1,9 +1,9 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-// Crea una instancia de Axios
+//* Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "https://squad-95b3.onrender.com/api/v1/", //* Configura la URL base de tu API
+  baseURL: "http://localhost:8080/api/v1/", //* Configura la URL base de tu API
 });
 
 //* Interceptor para agregar el token a las solicitudes
@@ -48,13 +48,18 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.data["404"] === "Email in use")
+    //! virificar las response de  errores del back todos!
+
+    if (error?.response?.data["404"] === "Email in used")
       toast.error("El email ya esta se encuentra en uso.");
     if (error?.response?.data["404"] === "Incorrect password")
       toast.error("Contraseña incorrecta.");
     if (error?.response?.data["404"] === "Email not Found")
       toast.error("Email no registrado.");
+    if (error?.response?.data["PASSWORD"])
+      toast.error("Contraseña debe tener 8  caracteres minimos..");
 
+    console.log(error?.response?.data);
     return Promise.reject(error);
   }
 );

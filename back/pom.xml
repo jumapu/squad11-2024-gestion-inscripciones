@@ -50,6 +50,7 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+<!--es nesesario esta dependencia, spring boot no biene con la dependencia de conexion de DB-->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
@@ -72,7 +73,7 @@
         </dependency>
 
         <!-- dependencies jwt -->
-
+<!--por que se repite 3 veces la dependencia "jsonwebtoken"-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>

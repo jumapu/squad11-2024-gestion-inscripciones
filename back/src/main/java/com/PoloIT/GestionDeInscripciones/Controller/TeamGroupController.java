@@ -1,7 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
-import com.PoloIT.GestionDeInscripciones.DTO.TeamsDTO;
-import com.PoloIT.GestionDeInscripciones.Services.TeamsServiceImpl;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilter;
+import com.PoloIT.GestionDeInscripciones.Services.TeamsGroupServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/admin/event/team/")
 @AllArgsConstructor
 public class TeamGroupController {
-    private final TeamsServiceImpl teamsService;
+    private final TeamsGroupServiceImpl teamsService;
 
     @PostMapping("create/{id}")
-    public void createGroups(@PathVariable Long id, @RequestBody TeamsDTO teamsDTO) {
-        teamsService.createTeams(teamsDTO, id);
+    public void createGroups(@PathVariable Long id, @RequestBody TeamGroupFilter teamGroupFilter) {
+        teamsService.createTeams(teamGroupFilter, id);
     }
 }

@@ -24,11 +24,12 @@ public class Mentor {
 
     private String name;
     private String lastName;
-    private String company;
-    private Set<String> skills;
-    private Set<String> profiles;
+    private Set<String> rol;
+    private Set<String> technologies;
     private String linkedin;
 
+    //! crear la compania entidad?
+    private String company;
 
     //*Registration
     @ManyToMany(mappedBy = "mentors")
@@ -42,9 +43,9 @@ public class Mentor {
     public boolean areFieldsValid() {
         return this.name != null &&
                 this.company != null &&
-                this.skills != null && !this.skills.isEmpty() &&
+                this.technologies != null && !this.technologies.isEmpty() &&
                 this.linkedin != null &&
-                this.profiles != null && !this.profiles.isEmpty();
+                this.rol != null && !this.rol.isEmpty();
     }
 
     @Override

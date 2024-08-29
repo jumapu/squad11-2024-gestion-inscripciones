@@ -2,29 +2,19 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.RegistrationDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataListEvents;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataRequestEvent;
-import com.PoloIT.GestionDeInscripciones.DTO.event.DataUpdateEvent;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.RegistraionRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -35,79 +25,47 @@ public class EventServiceImpl {
     private final RegistraionRepository registraionRepository;
     private final EventRepository eventRepository;
 
-    public Event saveEventDB(DataRequestEvent dataRegisterEvent, Admin admin) {
-        return eventRepository.save(new Event(dataRegisterEvent, admin));
-    }
     public void save(EventDTO eventDTO) {
         if (eventRepository.existsByName(eventDTO.name()))
-            throw new ResponseException("Name", "Event NAME in used!", HttpStatus.NOT_ACCEPTABLE);
+            throw new ResponseException("Name", "Event name in used!", HttpStatus.NOT_ACCEPTABLE);
 
-        Event event = Event.builder()
-                .name(eventDTO.name())
-                .registration(Registration.builder()
-                        .finishAt(eventDTO.registration().finishAt())
-                        .createdAt(eventDTO.registration().createdAt())
-                        .build())
-                .description(eventDTO.description())
-                .createdAt(eventDTO.createdAt())
-                .finishAt(eventDTO.finishAt())
-                .isActive(true)
-                .build();
-        event.getRegistration().setEvent(event);
+        Event event = EventDTO.fromEvent(eventDTO);
         eventRepository.save(event);
     }
 
-
-    public void updateEventDB(DataUpdateEvent dataUpdateEvent) {
-        Event event = eventRepository.findById(dataUpdateEvent.id())
-                .orElseThrow(() -> new ResponseException("404","Not Found Event", HttpStatus.NOT_FOUND));
-        event.updateEvent(dataUpdateEvent);
+    public void update(EventDTO eventDTO) {
+        Event event = eventRepository.findById(eventDTO.id()).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        event.update(eventDTO);
     }
 
-    public void deleteEventDB(Long id) {
-        Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseException("404","Not Found Event", HttpStatus.NOT_FOUND));
-        event.deactivateEvent();
+    public void delete(Long id) {
+        Event event = eventRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        eventRepository.deleteById(id);
     }
 
-    public Event getEventDB(Long id) {
-        return eventRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+    public EventDTO get(Long id) {
+        return eventRepository.findById(id)
+                .map(EventDTO::new)
+                .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
     }
 
-    public Page<DataListEvents> listEventsDB(Pageable pageable) {
-        return eventRepository.findAll(pageable).map(DataListEvents::new);
-    }
-    public Map<String, List<EventDTO>> allEvent() {
+    public Map<String, List<EventDTO>> all() {
         List<EventDTO> list = eventRepository.findAll().stream()
-                .map(event -> {
-                    RegistrationDTO registrationDTO = new RegistrationDTO(
-                            event.getRegistration().getCreatedAt()
-                            , event.getRegistration().getFinishAt()
-                            , event.getRegistration().getUpdatedAt(),
-                            event.getRegistration().getStudents().stream()
-                                    .map(student -> new StudentDTO(student.getId(), student.getName(), student.getSkills(), student.getCourses(), student.getProfiles(), student.getLinkedin())).collect(Collectors.toList())
-                            , event.getRegistration().getMentors().stream()
-                            .map(mentor -> new MentorDTO(mentor.getId(), mentor.getName(), mentor.getCompany(), mentor.getLastName(), mentor.getSkills(), mentor.getProfiles(), mentor.getLinkedin())).collect(Collectors.toList())
-                    );
-
-                    return new EventDTO(event.getId(), event.getName(), event.getDescription(), event.getCreatedAt(), event.getFinishAt(), registrationDTO, event.isActive());
-
-                }).toList();
+                .map(EventDTO::new).toList();
         return Map.of("Events", list);
     }
 
-    public Map<String, List<EventDTO>> allEventsActive() {
-
-        System.out.println(allEvent().get("Events").stream().filter(EventDTO::isActive).toList());
+    public Map<String, List<EventDTO>> AllActiveEvent() {
         return Map.of(
                 "Events",
-                allEvent().get("Events").stream().filter(EventDTO::isActive).toList()
+                all().get("Events").stream().filter(EventDTO::isActive).toList()
         );
     }
 
-    public Map<String, List<EventDTO>> allEventsNotActive() {
+    public Map<String, List<EventDTO>> AllInactiveEvent() {
         return Map.of(
                 "Events",
-                allEvent().get("Events").stream().filter(eventDTO -> !eventDTO.isActive()).toList()
+                all().get("Events").stream().filter(eventDTO -> !eventDTO.isActive()).toList()
         );
     }
 

@@ -1,5 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
+import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+
 import java.util.Set;
 
 public record MentorDTO(
@@ -11,13 +13,61 @@ public record MentorDTO(
         Set<String> profiles,
         String linkedin
 ) {
-    public MentorDTO(Long id, String name, String lastName, String company, Set<String> skills, Set<String> profiles, String linkedin) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.company = company;
-        this.skills = skills;
-        this.profiles = profiles;
-        this.linkedin = linkedin;
+
+    //* Constructor que convierte una entidad Mentor a MentorDTO.
+    public MentorDTO(Mentor mentor) {
+        this(mentor.getId(), mentor.getName(), mentor.getLastName(), mentor.getCompany(), mentor.getTechnologies(), mentor.getRol(), mentor.getLinkedin());
+    }
+
+    //* Convierte una entidad Mentor a MentorDTO utilizando el DTO actual.
+    public MentorDTO fromMentor(Mentor mentor) {
+        return new MentorDTO(
+                mentor.getId(),
+                mentor.getName(),
+                mentor.getLastName(),
+                mentor.getCompany(),
+                mentor.getTechnologies(),
+                mentor.getRol(),
+                mentor.getLinkedin()
+        );
+    }
+
+    //* Convierte una entidad Mentor a MentorDTO utilizando el DTO actual.
+    public Mentor toEntity() {
+        return Mentor.builder()
+                .id(this.id)
+                .name(this.name)
+                .lastName(this.lastName)
+                .company(this.company)
+                .technologies(this.skills)
+                .rol(this.profiles)
+                .linkedin(this.linkedin)
+                .build();
+    }
+
+
+    //* Convierte otro MentorDTO a la entidad Mentor.
+    public Mentor toEntity(MentorDTO mentorDTO) {
+        return Mentor.builder()
+                .id(mentorDTO.id)
+                .name(mentorDTO.name)
+                .lastName(mentorDTO.lastName)
+                .company(mentorDTO.company)
+                .technologies(mentorDTO.skills)
+                .rol(mentorDTO.profiles)
+                .linkedin(mentorDTO.linkedin)
+                .build();
+    }
+
+    private Mentor convertMentor() {
+        return Mentor.builder()
+                .id(this.id)
+                .name(this.name)
+                .lastName(this.lastName)
+                .company(this.company)
+                .technologies(this.skills)
+                .rol(this.profiles)
+                .linkedin(this.linkedin)
+                .build();
     }
 }

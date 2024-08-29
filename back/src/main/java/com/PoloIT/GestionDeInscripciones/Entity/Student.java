@@ -23,9 +23,10 @@ public class Student {
     private User user;
 
     private String name;
-    private Set<String> skills;
+    private String lastName;
+    private Set<String> rol;
+    private Set<String> technologies;
     private Set<String> courses;
-    private Set<String> profiles;
     private String linkedin;
 
     //*Registration
@@ -36,14 +37,6 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Team> team;
 
-
-    public boolean areFieldsValid() {
-        return this.name != null &&
-                this.skills != null && !this.skills.isEmpty() &&
-                this.linkedin != null &&
-                this.profiles != null && !this.profiles.isEmpty() &&
-                this.courses != null && !this.courses.isEmpty();
-    }
 
     @Override
     public boolean equals(Object o) {

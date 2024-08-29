@@ -18,9 +18,9 @@ public class RegistrationController {
 
     private final RegistrationServiceImpl registrationService;
 
-    @GetMapping("{id}")
-    public ResponseEntity<Map<String, String>> registerEvent(@PathVariable Long id) {
-        registrationService.registerEvent(id);
+    @GetMapping("{id}" )
+    public ResponseEntity<Map<String, String>> register(@PathVariable Long id) {
+        registrationService.register(id);
         return new ResponseEntity<>(Map.of("Event", "Successfully registered for the event"), HttpStatus.CREATED);
     }
 

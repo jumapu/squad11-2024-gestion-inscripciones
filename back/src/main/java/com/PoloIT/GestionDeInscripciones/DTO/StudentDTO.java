@@ -1,21 +1,48 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
+import com.PoloIT.GestionDeInscripciones.Entity.Student;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Set;
 
 public record StudentDTO(
         Long id,
+        @NotNull(message = "name requerido")
         String name,
-        Set<String> skills,
+        @NotNull(message = "lastname requerido")
+        String lastName,
+        @NotNull(message = "technologies requerido")
+        Set<String> technologies,
+        @NotNull(message = "courses requerido")
         Set<String> courses,
-        Set<String> profiles,
+        @NotNull(message = "rol requerido")
+        Set<String> rol,
+        @NotNull(message = "linkedin requerido")
         String linkedin
 ) {
-    public StudentDTO(Long id, String name, Set<String> skills, Set<String> courses, Set<String> profiles, String linkedin) {
-        this.id = id;
-        this.name = name;
-        this.skills = skills;
-        this.courses = courses;
-        this.profiles = profiles;
-        this.linkedin = linkedin;
+
+    //* Constructor que convierte una entidad Student a StudentDTO.
+    public StudentDTO(Student student) {
+        this(
+                student.getId(),
+                student.getName(),
+                student.getLastName(),
+                student.getTechnologies(),
+                student.getCourses(),
+                student.getRol(),
+                student.getLinkedin()
+        );
+    }
+
+    public static Student fromStudent(StudentDTO studentDTO) {
+        return Student.builder()
+                .id(studentDTO.id)
+                .name(studentDTO.name)
+                .rol(studentDTO.rol)
+                .technologies(studentDTO.technologies)
+                .lastName(studentDTO.lastName)
+                .courses(studentDTO.courses)
+                .linkedin(studentDTO.linkedin)
+                .build();
     }
 }

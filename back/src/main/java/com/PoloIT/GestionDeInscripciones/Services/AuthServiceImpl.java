@@ -7,20 +7,20 @@ import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
-import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import com.PoloIT.GestionDeInscripciones.Jwt.JwtService;
 import com.PoloIT.GestionDeInscripciones.Repository.AdminRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Objects;
 
 @Service
@@ -33,29 +33,29 @@ public class AuthServiceImpl implements AuthService {
     private final StudentRepository studentRepository;
     private final MentorRepository mentorRepository;
     private final PasswordEncoder encoder;
-    private final ModelMapper mapper;
     private final JwtService jwtService;
 
-    public String authenticate(UserDto userDto) {
-        authenticationAccount(userDto);
-        return jwtService.generateJwt(userDto.getEmail());
+    public Map<String, String> authenticate(UserDto userDto) {
+        String rol = authenticationAccount(userDto);
+        return Map.of("jwt", jwtService.generateJwt(userDto.email()), "rol", rol);
     }
 
-    public String register(UserDto userDto) {
-        emailInUsed(userDto);
-        setRol(userRepository.save(toUser(userDto)), userDto);
-        return jwtService.generateJwt(userDto.getEmail());
+    public Map<String, String> register(UserDto userDto) {
+        User user = userRepository.save(fromUser(userDto));
+        setRol(user, userDto);
+        return Map.of("JWT", jwtService.generateJwt(userDto.email()), "rol", userDto.rol());
+
     }
 
 
-    private void authenticationAccount(UserDto userDto) {
+    private String authenticationAccount(UserDto userDto) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    userDto.getEmail(),
-                    userDto.getPassword()
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                    userDto.email(),
+                    userDto.password()
             ));
+            return authentication.getAuthorities().stream().findFirst().get().toString().toLowerCase();
         } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
             if (e.getLocalizedMessage().equals("Bad credentials"))
                 throw new ResponseException("404", "Incorrect password", HttpStatus.NOT_FOUND);
             if (e.getLocalizedMessage().equals("Email not Found"))
@@ -65,7 +65,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void emailInUsed(UserDto userDto) {
-        if (Objects.isNull(userDto.getName()))
+        if (Objects.isNull(userDto.email()))
             throw new ResponseException("404", "Name required", HttpStatus.NOT_FOUND);
 
         //! se puede limitar los admin
@@ -74,19 +74,15 @@ public class AuthServiceImpl implements AuthService {
 //        }
 
 
-        if (userRepository.findByEmail(userDto.getEmail()).isPresent())
+        if (userRepository.findByEmail(userDto.email()).isPresent())
             throw new ResponseException("404", "Email in used", HttpStatus.NOT_ACCEPTABLE);
     }
 
-    private User toUser(UserDto userDto) {
-        checkRol(userDto);
-        userDto.setPassword(encoder.encode(userDto.getPassword()));
-        userDto.setRol(userDto.getRol().toUpperCase());
-        return mapper.map(userDto, User.class);
-    }
-
-    private void checkRol(UserDto userDto) {
-        Rol.fromString(userDto.getRol());
+    private User fromUser(UserDto userDto) {
+        emailInUsed(userDto);
+        User user = UserDto.fromUser(userDto);
+        user.setPassword(encoder.encode(user.getPassword()));
+        return user;
     }
 
     private void setRol(User user, UserDto userDto) {
@@ -94,7 +90,7 @@ public class AuthServiceImpl implements AuthService {
         if (user.getRol().name().equalsIgnoreCase("admin")) {
             adminRepository.save(
                     Admin.builder()
-                            .name(userDto.getName())
+                            .name(userDto.name())
                             .user(user)
                             .build());
             return;

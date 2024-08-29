@@ -110,11 +110,4 @@ public class AuthServiceImpl implements AuthService {
 
         throw new ResponseException("505", "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
-        
-    }
-
-    public void applyNewPassword(ResetPasswordDTO resetPasswordDTO, String token) {
-    }
 }

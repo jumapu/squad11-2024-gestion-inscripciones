@@ -9,8 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class CorsConfig {
-
-    @Value("${frontUri}")
+//    lo comente por que no me dejava ejecutar para las pruvas
+//    @Value("${frontUri}")
     private String uri;
 
     @Bean

@@ -21,6 +21,7 @@ public class JwtService {
     private static final long jwtExpirationDate = 7200000;
 
     public String generateJwt(String email) {
+//        por que esta enserrado en un bloque de codigo
         {
             Map<String, Objects> claims = new HashMap<>();
             return generateJwt(email, claims);

@@ -6,6 +6,7 @@ import {
   Button,
   Strong,
   Link,
+  Heading
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 //import { authenticateUser } from "@/utils/authUtils";
@@ -31,16 +32,17 @@ const Login = () => {
       <Toaster richColors position="top-center" />
 
       <div className="flex-1 flex items-center justify-center">
-        <Container size="2" className="login-container">
-          <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
+        <Container size="2" align="center" className="relative overflow-hidden h-full flex justify-center">
+          <div className="w-1/5 flex items-center justify-center">
             <img
               src={Logo}
               className="max-w-full max-h-full"
               style={{ maxWidth: "12rem", maxHeight: "12rem" }}
             />
-            <span>
-              <h1>Login</h1>
-            </span>
+
+          </div>
+          <div className="text-center py-4">
+            <Heading as="h1" size="8" className="w-full">Login</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
@@ -54,6 +56,7 @@ const Login = () => {
                       <Strong>Email:</Strong>
                     </Text>
                     <input
+                    
                       style={{ width: "98%" }}
                       type="text"
                       name="email"
@@ -75,7 +78,7 @@ const Login = () => {
                       {...register("password")}
                     />
                   </div>
-                  <Button className="mt-4 w-full bg-indigo-600 text-white py-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                     Ingresar
                   </Button>
                   <Text className="crearCuenta">

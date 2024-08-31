@@ -213,3 +213,29 @@ Este proyecto es una aplicación para la gestión de inscripciones con Spring Bo
 1. ***Listar Eventos Activos***
 2. ***Listar Eventos inactivos***
 3. ***Listar todos los Eventos***
+
+### Cambiar Contraseña
+* Se utiliso [spring-boot-starter-mail](https://docs.spring.io/spring-boot/reference/io/email.html) como dependencia para el envio ed mails a los usuarios para que puedan recuperar la contraseña
+
+***Configuracion***
+* Dentro del archivo **_src/main/resources/application.yml_** cofigurar la cuenta de correo que enviara los mails
+* Para crear  
+```yml
+spring:
+  # configuraciones del email del remitente 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email}
+    password: ${email_password}
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  #email de ejemplo para probar /resetPassword
+  mail: ${email_user_ejemplo}
+```

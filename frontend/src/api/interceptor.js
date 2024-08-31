@@ -4,6 +4,7 @@ import { toast } from "sonner";
 //* Crea una instancia de Axios
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080/api/v1/", //* Configura la URL base de tu API
+  //localhost:8080/swagger-ui/index.html#/v3/api-docs
 });
 
 //* Interceptor para agregar el token a las solicitudes

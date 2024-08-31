@@ -8,7 +8,7 @@ import {
   Link,
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { authenticateUser } from "@/utils/authUtils";
+//import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +23,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    userLogin(data, navigate);
+    userLogin(data, signIn, navigate);
   };
 
   return (
@@ -49,32 +49,6 @@ const Login = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
-                  {/* <div>
-                    <Text as="p" size="2" className="mb-1">
-                      <Strong>Nombre de Usuario:</Strong>
-                    </Text>
-                    <input
-                      style={{ width: "98%" }}
-                      type="text"
-                      name="usuario"
-                      placeholder="Usuario"
-                      className="campos"
-                      {...register("usuario")}
-                    />
-                  </div> */}
-                  {/* <div>
-                    <Text as="p" size="2" className="mb-1">
-                      <Strong>Participa como: </Strong>
-                    </Text>
-                    <input
-                      style={{ width: "98%" }}
-                      type="text"
-                      name="rol"
-                      placeholder="Mentor/a o Egresado/a"
-                      className="campos"
-                      {...register("rol")}
-                    />
-                  </div> */}
                   <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Email:</Strong>

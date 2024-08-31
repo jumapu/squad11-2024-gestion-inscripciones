@@ -20,7 +20,7 @@ export const listEventos = createAsyncThunk("eventos/listEventos", async () => {
 
     return eventosConEgresados;
   } catch (error) {
-    console.error("Error buscar citas:", error);
+    console.error("Error al buscar eventos:", error);
     throw error;
   }
 });

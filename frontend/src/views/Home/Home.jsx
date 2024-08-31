@@ -1,42 +1,37 @@
-import NavHome from "./components/NavHome";
-import { slide as Menu } from 'react-burger-menu';
-import { useState } from "react";
-import "./css/home.css";
-import logo from "@/assets/logo.webp";
-import { Link } from "react-router-dom";
-import { Button, Flex } from "@radix-ui/themes";
+import { Container, Text } from "@radix-ui/themes";
+//import { slide as Menu } from 'react-burger-menu';
+import Navbar from "./components/Navbar";
+import Features from "./components/Features";
+import AboutUs from "./components/AboutUs";
+import News from "./components/News";
+import Opinions from "./components/Opinions";
 
 const Home = () => {
-    const [active, setActive] = useState(false);
-    return (
+  return (
+    <Container className="relative gap-2 w-full flex-col" >
+      <Navbar />
+      <section className="pl-12 pr-6 py-20 max-w-lg">
         <div>
-            <Flex className="containerHome">
-                <div className="menuHome">
-                    <Menu width="40%" right isOpen={active} onStateChange={(state) => setActive(state.isOpen)} >
-                        <NavHome isBurgerMenu={true} />
-                    </Menu>
-                </div>
-                <div className="headHome">
-                    <img src={logo} alt="logo" />
-                    <section className="menuNav">
-                        <NavHome isBurgerMenu={false} />
-                    </section>
-                    <div>
-                        <Link to="login">
-                            <Button  className="btnAcceso z-10">Acceso</Button>
-                        </Link>
-                    </div>
-                </div>
-                <section className="bodyHome">
-                    <p className="textHome">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi molestias quasi neque architecto.
-                        Obcaecati omnis deserunt sint consequatur, perspiciatis a veritatis aspernatur autem voluptates
-                        blanditiis accusamus repudiandae maxime natus neque.
-                    </p>
-                </section>
-            </Flex>
+          <Text weight="medium" size="8">Lorem, ipsum dolor sit amet consectetur</Text>
         </div>
-    )
+        <div>
+          <Text> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, consequatur repellendus asperiores facilis voluptas, quibusdam illo omnis ratione amet, quo fuga. Quo dolore adipisci aperiam possimus animi alias ratione odit! </Text>
+        </div>
+      </section>
+      <section>
+        <Features />
+      </section>
+      <section>
+        <AboutUs/>
+      </section>
+      <section>
+        <News/>
+      </section>
+      <section>
+        <Opinions/>
+      </section>
+    </Container>
+  )
 }
-
 export default Home
+

@@ -1,11 +1,11 @@
 import "./css/register.css";
 import { Toaster } from "sonner";
 import Logo from "@/assets/logo.webp";
-import { Flex, Button, Text, Strong, Card, Container } from "@radix-ui/themes";
+import { Flex, Button, Text, Strong, Card, Container, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
-import { authenticateUser } from "@/utils/authUtils";
+//import { authenticateUser } from "@/utils/authUtils";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../api/register";
 const Register = () => {
@@ -23,16 +23,16 @@ const Register = () => {
     <div>
       <div className="flex flex-col mb-2 register-container">
         <Toaster richColors position="top-center" />
-        <Container size="2" className="login-container">
-          <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
+        <Container size="2" align="center" className="relative overflow-hidden h-full flex justify-center">
+          <div className="flex items-center justify-start">
             <img
               src={Logo}
               className="max-w-full max-h-full"
-              style={{ maxWidth: "12rem", maxHeight: "12rem" }}
+              style={{ maxWidth: "10rem", maxHeight: "10rem" }}
             />
-            <span>
-              <h1>Registro</h1>
-            </span>
+          </div>
+          <div className="text-center py-4">
+            <Heading as="h1" size="8">Registro</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card className="p-10 shadow-lg rounded-lg">
@@ -65,7 +65,7 @@ const Register = () => {
                       </div>
                     </div>
                     <div className="flex flex-col mb-2">
-                      <div className="mt-4 flex flex-col bg-gray-100 rounded-lg p-4 shadow-sm">
+                      <div className="flex flex-col rounded-lg shadow-sm">
                         <div className="mt-4">
                           <Text as="p" size="2" className="mb-1">
                             <Strong>Email</Strong>
@@ -109,7 +109,7 @@ const Register = () => {
                         </div>
                       </div>
                     </div>
-                    <Button className="mt-4 w-full bg-indigo-600 text-white py-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                       Guardar
                     </Button>
                   </div>

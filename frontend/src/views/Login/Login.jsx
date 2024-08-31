@@ -6,9 +6,10 @@ import {
   Button,
   Strong,
   Link,
+  Heading
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-import { authenticateUser } from "@/utils/authUtils";
+//import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -23,7 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    userLogin(data, navigate);
+    userLogin(data, signIn, navigate);
   };
 
   return (
@@ -31,16 +32,17 @@ const Login = () => {
       <Toaster richColors position="top-center" />
 
       <div className="flex-1 flex items-center justify-center">
-        <Container size="2" className="login-container">
-          <div className="w-1/5 bg-[#ade8f4] flex items-center justify-center">
+        <Container size="2" align="center" className="relative overflow-hidden h-full flex justify-center">
+          <div className="w-1/5 flex items-center justify-center">
             <img
               src={Logo}
               className="max-w-full max-h-full"
               style={{ maxWidth: "12rem", maxHeight: "12rem" }}
             />
-            <span>
-              <h1>Login</h1>
-            </span>
+
+          </div>
+          <div className="text-center py-4">
+            <Heading as="h1" size="8" className="w-full">Login</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
@@ -49,37 +51,12 @@ const Login = () => {
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
-                  {/* <div>
-                    <Text as="p" size="2" className="mb-1">
-                      <Strong>Nombre de Usuario:</Strong>
-                    </Text>
-                    <input
-                      style={{ width: "98%" }}
-                      type="text"
-                      name="usuario"
-                      placeholder="Usuario"
-                      className="campos"
-                      {...register("usuario")}
-                    />
-                  </div> */}
-                  {/* <div>
-                    <Text as="p" size="2" className="mb-1">
-                      <Strong>Participa como: </Strong>
-                    </Text>
-                    <input
-                      style={{ width: "98%" }}
-                      type="text"
-                      name="rol"
-                      placeholder="Mentor/a o Egresado/a"
-                      className="campos"
-                      {...register("rol")}
-                    />
-                  </div> */}
                   <div>
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Email:</Strong>
                     </Text>
                     <input
+                    
                       style={{ width: "98%" }}
                       type="text"
                       name="email"
@@ -101,7 +78,7 @@ const Login = () => {
                       {...register("password")}
                     />
                   </div>
-                  <Button className="mt-4 w-full bg-indigo-600 text-white py-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
                     Ingresar
                   </Button>
                   <Text className="crearCuenta">

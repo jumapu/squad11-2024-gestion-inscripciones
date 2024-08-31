@@ -6,6 +6,8 @@ export const egresadosList= async () =>
 {
     try {
         const response =  await axios.get(`${API}/egresados/`)
+        // const response = await apiClient.get ('/egresados/')
+        //console.log(response.data);
         return response
     } catch (error) {
         console.error('error al ver los egresados:', error)
@@ -16,6 +18,8 @@ export const egresadosList= async () =>
 export const egresadosPost = async (data) =>{
     try {
         const response = await axios.post(`${API}/egresados/`,data)
+        // const response = await apiClient.post ('/egresados/', data)
+        //console.log(response.data);
         return response
     } catch (error) {
         console.error('error al cargar egresado: ',error)
@@ -26,6 +30,8 @@ export const egresadosPost = async (data) =>{
 export const egresadosOne = async (id) => {
     try {
         const response = await axios.get(`${API}/egresados/${id}`)
+        // const response = await apiClient.get ('/egresados/${id}')
+        //console.log(response.data);
         return response;
     } catch (error) {
         console.error('error al encontrar el egresado:', error);
@@ -36,6 +42,7 @@ export const egresadosOne = async (id) => {
 export const egresadosDelete = async (id) => {
     try {
         const response = await axios.delete(`${API}/egresados/${id}`)
+        // const response = await apiClient.delete ('/egresados/${id}')
         if (response.status === 200) {
             console.log('egresado borrado exitosamente');
         }
@@ -49,6 +56,7 @@ export const egresadosDelete = async (id) => {
 export const egresadosUpdate = async (data) => {
     try {
         const response = await axios.put(`${API}/egrersados/${data.id}`, data)
+        // const response = await apiClient.put ('/egresados/${data.id}',data)
         if (response.status === 200) {
             console.log('Egresado editado exitosamente');
         }
@@ -58,4 +66,3 @@ export const egresadosUpdate = async (data) => {
         throw error
     }
 } 
-    

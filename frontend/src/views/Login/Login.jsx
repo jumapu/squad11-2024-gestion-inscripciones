@@ -42,7 +42,7 @@ const Login = () => {
 
           </div>
           <div className="text-center py-4">
-            <Heading as="h1" size="8" className="w-full">Login</Heading>
+            <Heading as="h1" size="8" className="w-full">Iniciar Sesion</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
@@ -78,7 +78,7 @@ const Login = () => {
                       {...register("password")}
                     />
                   </div>
-                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">
                     Ingresar
                   </Button>
                   <Text className="crearCuenta">

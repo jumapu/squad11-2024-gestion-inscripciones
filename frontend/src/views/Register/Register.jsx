@@ -32,7 +32,7 @@ const Register = () => {
             />
           </div>
           <div className="text-center py-4">
-            <Heading as="h1" size="8">Registro</Heading>
+            <Heading as="h1" size="8">Registrarse</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card className="p-10 shadow-lg rounded-lg">
@@ -109,7 +109,7 @@ const Register = () => {
                         </div>
                       </div>
                     </div>
-                    <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                    <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">
                       Guardar
                     </Button>
                   </div>

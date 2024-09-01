@@ -1,18 +1,12 @@
 spring:
-  # Dev
-  #  datasource:
-  #    url: jdbc:mysql://localhost:3306/squad
-  #    username: root
-  #    password: 123
-  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3306/squad_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
 
   jpa:
     hibernate:
       ddl-auto: update
 
-  #Production
-  datasource:
-    url: jdbc:${DB}
-    username: ${DBUSERNAME}
-    password: ${DBPASS}
-    driver-class-name: com.mysql.cj.jdbc.Driver

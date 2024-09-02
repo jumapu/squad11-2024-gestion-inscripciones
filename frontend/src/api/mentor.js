@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
+//http://localhost:8080/swagger-ui/index.html#/
 
 export const mentorList= async () => 
 {

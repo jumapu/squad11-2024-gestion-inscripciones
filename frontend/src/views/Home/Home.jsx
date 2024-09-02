@@ -1,37 +1,31 @@
-import { Container, Text } from "@radix-ui/themes";
-//import { slide as Menu } from 'react-burger-menu';
 import Navbar from "./components/Navbar";
 import Features from "./components/Features";
 import AboutUs from "./components/AboutUs";
 import News from "./components/News";
-import Opinions from "./components/Opinions";
+import Reviews from "./components/Reviews";
 
-const Home = () => {
+export default function Home() {
+
   return (
-    <Container className="relative gap-2 w-full flex-col" >
+    <div className="bg-white">
       <Navbar />
-      <section className="pl-12 pr-6 py-20 max-w-lg">
-        <div>
-          <Text weight="medium" size="8">Lorem, ipsum dolor sit amet consectetur</Text>
+      <div className="relative isolate max-h-screen px-6 pt-14 lg:px-8">
+        <div className=" max-w-2xl py-32 sm:py-48 lg:py-56">
+          <div className="text-start pt-14">
+            <h1 className="font-medium tracking-tight text-gray-900 text-3xl">
+              Lorem, ipsum dolor sit amet consectetur.
+            </h1>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet
+              fugiat veniam occaecat fugiat aliqua.
+            </p>
+          </div>
         </div>
-        <div>
-          <Text> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consectetur, consequatur repellendus asperiores facilis voluptas, quibusdam illo omnis ratione amet, quo fuga. Quo dolore adipisci aperiam possimus animi alias ratione odit! </Text>
-        </div>
-      </section>
-      <section>
-        <Features />
-      </section>
-      <section>
-        <AboutUs/>
-      </section>
-      <section>
-        <News/>
-      </section>
-      <section>
-        <Opinions/>
-      </section>
-    </Container>
+      </div>
+      <Features/>
+      <AboutUs/>
+      <News/>
+      <Reviews/>
+    </div>
   )
 }
-export default Home
-

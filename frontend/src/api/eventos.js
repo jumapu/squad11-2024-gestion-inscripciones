@@ -2,6 +2,7 @@ import axios from 'axios';
 //import apiClient from './apiClient';
 
 const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
+//http://localhost:8080/swagger-ui/index.html#/
 
 export const eventosList= async () => 
 {

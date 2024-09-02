@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/'
+//http://localhost:8080/swagger-ui/index.html#/
 
 export const egresadosList= async () => 
 {

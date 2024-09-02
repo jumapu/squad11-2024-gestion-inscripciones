@@ -14,9 +14,9 @@ import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
-import "./css/login.css";
-import Logo from "@/assets/logo.webp";
-import { userLogin } from "../../api/login";
+//import "./css/login.css";
+import Logo from "@/components/Logo";
+import { userLogin } from "@/api/login";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -32,22 +32,15 @@ const Login = () => {
       <Toaster richColors position="top-center" />
 
       <div className="flex-1 flex items-center justify-center">
-        <Container size="2" align="center" className="relative overflow-hidden h-full flex justify-center">
-          <div className="w-1/5 flex items-center justify-center">
-            <img
-              src={Logo}
-              className="max-w-full max-h-full"
-              style={{ maxWidth: "12rem", maxHeight: "12rem" }}
-            />
-
-          </div>
+        <Container size="2" align="center" className="relative h-screen flex justify-center">
+          <Logo/>
           <div className="text-center py-4">
-            <Heading as="h1" size="8" className="w-full">Login</Heading>
+            <Heading as="h1" size="8" className="w-full" style={{color:"#1c668f"}}>Iniciar Sesion</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
               style={{ margin: "10px 5px" }}
-              className="py-8 px-10 shadow-lg rounded-lg"
+              className="py-4 px-6 shadow-lg rounded-lg"
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
@@ -78,10 +71,10 @@ const Login = () => {
                       {...register("password")}
                     />
                   </div>
-                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">
                     Ingresar
                   </Button>
-                  <Text className="crearCuenta">
+                  <Text className="w-full text-center">
                     ¿No tienes una cuenta?{" "}
                     <Link href="/registro">Crear Cuenta</Link>
                   </Text>

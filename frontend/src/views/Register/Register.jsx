@@ -1,13 +1,13 @@
 import "./css/register.css";
 import { Toaster } from "sonner";
-import Logo from "@/assets/logo.webp";
+import Logo from "@/components/Logo";
 import { Flex, Button, Text, Strong, Card, Container, Heading } from "@radix-ui/themes";
 import { useState } from "react";
 import Select from "react-select";
 import { useForm } from "react-hook-form";
 //import { authenticateUser } from "@/utils/authUtils";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../../api/register";
+import { registerUser } from "@/api/register";
 const Register = () => {
   const [selectedOption, setSelectedOption] = useState(null);
   const { register, handleSubmit } = useForm();
@@ -21,21 +21,15 @@ const Register = () => {
   ];
   return (
     <div>
-      <div className="flex flex-col mb-2 register-container">
+      <div className="flex flex-col mb-2 h-screen justify-center items-center">
         <Toaster richColors position="top-center" />
-        <Container size="2" align="center" className="relative overflow-hidden h-full flex justify-center">
-          <div className="flex items-center justify-start">
-            <img
-              src={Logo}
-              className="max-w-full max-h-full"
-              style={{ maxWidth: "10rem", maxHeight: "10rem" }}
-            />
-          </div>
+        <Container size="2" align="center" className="relative h-full flex justify-center">
+          <Logo/>
           <div className="text-center py-4">
-            <Heading as="h1" size="8">Registro</Heading>
+            <Heading as="h1" size="8" style={{color:"#1c668f"}} >Registrarse</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
-            <Card className="p-10 shadow-lg rounded-lg">
+            <Card className="p-6 shadow-lg rounded-lg">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
                   <div>
@@ -109,7 +103,7 @@ const Register = () => {
                         </div>
                       </div>
                     </div>
-                    <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                    <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">
                       Guardar
                     </Button>
                   </div>

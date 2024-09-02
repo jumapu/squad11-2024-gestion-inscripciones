@@ -1,37 +1,15 @@
-.login-container {
-    position: relative;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .login-container::before,
+ /* .login-container::before,
   .login-container::after {
     content: '';
     position: absolute;
     width: 150px;
     height: 150px;
     z-index: -1;
-  }
+  } */
   .campos{
     border: 1px solid slategray;
     border-radius: 5px;
     padding: 5px;
     outline:none;
-  }
-  .crearCuenta{
-    width: 100%;
-    text-align: center;
-  }
-  
-  @media (max-width: 768px) {  
-    .login-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-      width: 100%;
-    }
   }
   

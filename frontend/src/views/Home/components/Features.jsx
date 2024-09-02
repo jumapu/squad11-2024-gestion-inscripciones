@@ -8,7 +8,7 @@ const Features = () => {
                 <Text className="w-screen max-w-lg text-wrap text-center">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Consequatur voluptatum alias nemo similique, qui autem quod, error atque odit iure sint tempora nisi! Eum nihil modi, incidunt nisi quisquam ea!</Text>
             </Flex>
             <Flex direction="row" align="center" justify="center" wrap="wrap" gapX="2">
-                <div className=" flex flex-col flex-wrap items-center text-center p-12" >
+                <div className=" flex flex-col flex-wrap items-center text-center" >
                     <div className="bg-slate-300 rounded-full p-2 w-fit h-fit text-center" >
                         <FaWpforms />
                     </div>

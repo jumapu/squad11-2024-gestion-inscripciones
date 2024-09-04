@@ -1,12 +1,4 @@
- /* .login-container::before,
-  .login-container::after {
-    content: '';
-    position: absolute;
-    width: 150px;
-    height: 150px;
-    z-index: -1;
-  } */
-  .campos{
+   .campos{
     border: 1px solid slategray;
     border-radius: 5px;
     padding: 5px;

@@ -43,14 +43,11 @@ public class Student {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Student student = (Student) o;
-        return user != null && user.getId() != null &&
-                user.getId().equals(student.user != null ? student.user.getId() : null);
+        return Objects.equals(id, student.id) && Objects.equals(user, student.user) && Objects.equals(name, student.name) && Objects.equals(lastName, student.lastName) && Objects.equals(rol, student.rol) && Objects.equals(technologies, student.technologies) && Objects.equals(linkedin, student.linkedin);
     }
 
     @Override
     public int hashCode() {
-        return user != null && user.getId() != null ? Objects.hash(user.getId()) : 0;
+        return Objects.hash(id, user, name, lastName, rol, technologies, courses, linkedin);
     }
-
-
 }

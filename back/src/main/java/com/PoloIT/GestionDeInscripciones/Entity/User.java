@@ -1,6 +1,5 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
-import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;

@@ -27,7 +27,10 @@ public class SecurityConfig {
 
         htpp.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/v1/auth/**").permitAll()
+                        auth.requestMatchers("/api/v1/auth/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui.html").permitAll()
                                 .requestMatchers("/api/v1/admin/**").hasAnyAuthority(Rol.ADMIN.name())
                                 .requestMatchers("/api/v1/student/**").hasAnyAuthority(Rol.STUDENT.name())
                                 .requestMatchers("/api/v1/mentor/**").hasAnyAuthority(Rol.MENTOR.name())

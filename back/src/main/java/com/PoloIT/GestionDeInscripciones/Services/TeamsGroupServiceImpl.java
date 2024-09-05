@@ -30,19 +30,18 @@ public class TeamsGroupServiceImpl {
     public void createTeams(TeamGroupFilter filter, Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT/REGISTRATION", HttpStatus.NOT_FOUND));
-//        seedData(event);
-//        System.out.println(teamRepository.findAll().size());
-//        teamRepository.deleteAll();
+        seedData(event);
+        System.out.println(teamRepository.findAll().size());
+        teamRepository.deleteAll();
 
 
-//        event.getRegistration().getStudents().addAll(studentRepository.findAll());
-//        event.getRegistration().getMentors().addAll(mentorRepository.findAll());
-//        eventRepository.save(event);
+        event.getRegistration().getStudents().addAll(studentRepository.findAll());
+        event.getRegistration().getMentors().addAll(mentorRepository.findAll());
+        eventRepository.save(event);
 
 
-//        Set<Team> teams = generateTeams(event, filter);
-//        teamRepository.saveAll(teams);
-
+        Set<Team> teams = generateTeams(event, filter);
+        teamRepository.saveAll(teams);
     }
 
 

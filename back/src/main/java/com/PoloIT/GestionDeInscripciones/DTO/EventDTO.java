@@ -2,6 +2,7 @@ package com.PoloIT.GestionDeInscripciones.DTO;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
+import com.PoloIT.GestionDeInscripciones.Entity.TeamGroup;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -30,7 +31,7 @@ public record EventDTO(
                 event.getDescription(),
                 event.getCreatedAt(),
                 event.getFinishAt(),
-                RegistrationDTO.from(event.getRegistration()),
+                RegistrationDTO.convertRegistrationDTO(event.getRegistration()),
                 event.isActive()
         );
     }
@@ -43,12 +44,16 @@ public record EventDTO(
                         .finishAt(eventDTO.registration().finishAt())
                         .createdAt(eventDTO.registration().createdAt())
                         .build())
+                .teamGroup(TeamGroup.builder()
+                        .updatedAt(eventDTO.registration().createdAt())
+                        .build())
                 .description(eventDTO.description())
                 .createdAt(eventDTO.createdAt())
                 .finishAt(eventDTO.finishAt())
                 .isActive(true)
                 .build();
         event.getRegistration().setEvent(event);
+        event.getTeamGroup().setEvent(event);
         return event;
     }
 }

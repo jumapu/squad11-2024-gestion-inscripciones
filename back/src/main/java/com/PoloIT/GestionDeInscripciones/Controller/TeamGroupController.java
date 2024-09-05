@@ -13,6 +13,7 @@ public class TeamGroupController {
 
     @PostMapping("create/{id}")
     public void createGroups(@PathVariable Long id, @RequestBody TeamGroupFilter teamGroupFilter) {
+
         teamsService.createTeams(teamGroupFilter, id);
     }
 }

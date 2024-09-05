@@ -21,7 +21,7 @@ public record RegistrationDTO(
                 registration.getMentors().stream().map(MentorDTO::new).collect(Collectors.toSet()), registration.getUpdatedAt());
     }
 
-    public static RegistrationDTO from(Registration registration) {
+    public static RegistrationDTO convertRegistrationDTO(Registration registration) {
         return new RegistrationDTO(registration);
     }
 }

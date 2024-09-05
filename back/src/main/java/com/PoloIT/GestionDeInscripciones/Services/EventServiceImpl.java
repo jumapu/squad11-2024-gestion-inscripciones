@@ -28,8 +28,8 @@ public class EventServiceImpl {
     public void save(EventDTO eventDTO) {
         if (eventRepository.existsByName(eventDTO.name()))
             throw new ResponseException("Name", "Event name in used!", HttpStatus.NOT_ACCEPTABLE);
-
         Event event = EventDTO.fromEvent(eventDTO);
+        event.setAdmin(getAdminContext());
         eventRepository.save(event);
     }
 

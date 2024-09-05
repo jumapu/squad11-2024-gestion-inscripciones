@@ -35,7 +35,7 @@ public class Event {
     private Registration registration;
 
     //* RELATIONSHIP WITH TEAMS
-    @OneToOne(mappedBy = "event")
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
     private TeamGroup teamGroup;
 
     //* RELATIONSHIP WITH ADMIN

@@ -7,35 +7,47 @@ import com.PoloIT.GestionDeInscripciones.Entity.*;
 import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import com.PoloIT.GestionDeInscripciones.Repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TeamsGroupServiceImpl {
     private final PasswordEncoder encoder;
-    private final TeamsRepository teamsRepository;
+    private final TeamGroupRepository teamGroupRepository;
     private final EventRepository eventRepository;
     private final StudentRepository studentRepository;
     private final MentorRepository mentorRepository;
     private final UserRepository userRepository;
 
+    private final TeamRepository teamRepository;
+
     public void createTeams(TeamGroupFilter filter, Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT/REGISTRATION", HttpStatus.NOT_FOUND));
+//        seedData(event);
+//        System.out.println(teamRepository.findAll().size());
+//        teamRepository.deleteAll();
 
-        generateGroup(event, filter);
+
+//        event.getRegistration().getStudents().addAll(studentRepository.findAll());
+//        event.getRegistration().getMentors().addAll(mentorRepository.findAll());
+//        eventRepository.save(event);
+
+
+//        Set<Team> teams = generateTeams(event, filter);
+//        teamRepository.saveAll(teams);
 
     }
 
 
-    private Set<Team> generateGroup(Event event, TeamGroupFilter filter) {
+    private Set<Team> generateTeams(Event event, TeamGroupFilter filter) {
         Set<Team> teams = new HashSet<>();
-
 
         List<TeamFilter> studentFilter = filter.studentFilter();
         List<TeamFilter> mentorFilter = filter.mentorFilter();
@@ -48,7 +60,6 @@ public class TeamsGroupServiceImpl {
                 .sorted(Comparator.comparing(Mentor::getId))
                 .toList();
 
-        Set<Student> studentAccepted = new HashSet<>();
 
         Map<String, Integer> indexFiltersStudent = new HashMap<>();
         Map<String, Integer> indexFiltersMentors = new HashMap<>();
@@ -57,6 +68,8 @@ public class TeamsGroupServiceImpl {
 
         for (int i = 0; i < groups; i++) {
             Team team = new Team();
+            team.setStudents(new HashSet<>());
+            team.setMentors(new HashSet<>());
 
             for (TeamFilter filter1 : studentFilter) {
                 int index = indexFiltersStudent.getOrDefault(filter1.rol(), 0);
@@ -73,21 +86,14 @@ public class TeamsGroupServiceImpl {
                     if (student.getRol().stream().anyMatch(s -> s.equalsIgnoreCase(filter1.rol())) && !filter1.technologies().isEmpty()) {
                         list.add(student);
                         indexFiltersStudent.put(filter1.rol(), k + 1);
-                        studentAccepted.add(student);
                         continue;
                     }
 
                     if (student.getRol().stream().anyMatch(s -> s.equalsIgnoreCase(filter1.rol())) && filter1.technologies().isEmpty()) {
                         list.add(student);
                         indexFiltersStudent.put(filter1.rol(), k + 1);
-                        studentAccepted.add(student);
                     }
 
-                }
-
-                if (list.size() < filter1.quantity()) {
-                    System.out.println("solo hay " + list.size() + " " + filter1.rol() + " de los " + filter1.quantity() + " solicitados.");
-                    break;
                 }
 
 
@@ -107,16 +113,15 @@ public class TeamsGroupServiceImpl {
 
 
                 // puede que la cantidad solicitada del rol del mentor no se cumpla. se puede parar o se usa la cantidad que hay, se para y no se continua??
-                if (loopbreak) {
-                    System.out.println("error no hay sufientes " + filter1.rol());
-                    break;
-                }
-
 //                if (loopbreak) {
-//                    limitMentor = mentorsStock;
+//                    break;
 //                }
 
-                // for (int k = index; list.size() < filter1.quantity(); k++) {
+                if (loopbreak) {
+                    log.warn("error no hay sufientes mentores con el rol {} . se utilizara la cantidad disponible", filter1.rol());
+                    limitMentor = mentorsStock;
+                }
+
                 while (list.size() < limitMentor) {
 
                     if (index == mentorList.size()) {
@@ -140,51 +145,27 @@ public class TeamsGroupServiceImpl {
                 }
 
 
-                System.out.println("\n");
-
                 team.getMentors().addAll(list);
             }
 
-            //Error no se completo el grupo
+            //! Error no se completo el grupo
             if (team.getStudents().size() < filter.studentFilter().stream().mapToInt(TeamFilter::quantity).sum()) {
-                System.out.println("Error no se pudo crear el grupo completo");
+                log.warn("Este grupo no cumple la cantidad de estudiantes necesaria");
                 break;
             }
 
-//            Esto es sobre si no se completan los studiantes o mentores con la cantidad deseada se no se guarda el grupo
-//            if (team.getStudents().size() < filter.studentFilter().stream().mapToInt(TeamFilter::quantity).sum() || team.getMentors().size() <filter.mentorFilter().stream().mapToInt(TeamFilter::quantity).sum()){
-//                System.out.println("Error no se pudo crear el grupo completo");
-//                break;
-//            }
 
+            team.setTeamGroup(event.getTeamGroup());
             teams.add(team);
 
         }
 
 
-        System.out.println("\n");
-        System.out.println("Grupos creados " + teams.size());
-        for (Team team : teams) {
-            team.getStudents().forEach(student -> System.out.println(student.getRol().toString() + " " + student.getName()));
-            team.getMentors().forEach(student -> System.out.println(student.getName() + " " + student.getRol()));
-            System.out.println("\n");
-        }
-
-        System.out.println("\n");
-        
-        System.out.println("Estudiantes no Aceptados ");
-        //  studentList.stream().forEach(student -> System.out.println(student.getName() + " fue aceptado ? " + studentAccepted.stream().anyMatch(student1 -> student1.getId().equals(student.getId()))));
-
-        Set<Student> studentNotAccepted = studentList.stream().filter(student -> studentAccepted.stream().noneMatch(student1 -> student1.getId().equals(student.getId()))).collect(Collectors.toSet());
-
-        for (Student student : studentNotAccepted) {
-            System.out.println("El estudiante " + student.getName() + " no fue aceptado");
-        }
-        return null;
+        return teams;
     }
 
 
-    public void seedData() {
+    public void seedData(Event event) {
         List<Student> students = new ArrayList<>();
         List<Mentor> mentors = new ArrayList<>();
 
@@ -200,7 +181,7 @@ public class TeamsGroupServiceImpl {
         }
         for (int i = 13; i <= 17; i++) {
             students.add(createStudent("student" + i, Set.of("UX/UI designer")));
-            }
+        }
 
         // Crear y agregar mentores
         for (int i = 1; i <= 3; i++) {
@@ -211,15 +192,15 @@ public class TeamsGroupServiceImpl {
         }
         for (int i = 6; i <= 8; i++) {
             mentors.add(createMentor("mentor" + i, Set.of("design")));
-            }
+        }
         // Crear y agregar mentores con roles adicionales
         mentors.add(createMentor("mentor9", Set.of("DevOps")));
         mentors.add(createMentor("mentor10", Set.of("Project Manager")));
 
         // Guardar los estudiantes y mentores en la base de datos
-        studentRepository.saveAll(students);
+        ;
         mentorRepository.saveAll(mentors);
-
+        studentRepository.saveAll(students);
     }
 
     private Student createStudent(String username, Set<String> roles) {
@@ -232,7 +213,7 @@ public class TeamsGroupServiceImpl {
                 .name(username)
                 .rol(roles)
                 .build();
-        }
+    }
 
     private Mentor createMentor(String username, Set<String> roles) {
         return Mentor.builder()

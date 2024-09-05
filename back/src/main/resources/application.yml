@@ -1,14 +1,8 @@
+#Los perfiles DEV Y QA funcionan con h2.
+#Perfiles DEV, QA, PROD
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/squad_db
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      maximum-pool-size: 10
+  profiles:
+    active: prod  # Activa el perfil 'PROD' por defecto si no se especifica otro
 
-
-  jpa:
-    hibernate:
-      ddl-auto: update
-      dialect: org.hibernate.dialect.MySQL8Dialect
+#Cuidado con h2 y la entidad user ya que es una palabra reservada por lo visto.
+#En mysql no ocurre este inconveniente.

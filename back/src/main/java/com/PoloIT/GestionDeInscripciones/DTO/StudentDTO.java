@@ -45,4 +45,17 @@ public record StudentDTO(
                 .linkedin(studentDTO.linkedin)
                 .build();
     }
+
+
+    public Student convetStudent() {
+        return Student.builder()
+                .id(this.id)
+                .name(this.name)
+                .rol(this.rol)
+                .technologies(this.technologies)
+                .lastName(this.lastName)
+                .courses(this.courses)
+                .linkedin(this.linkedin)
+                .build();
+    }
 }

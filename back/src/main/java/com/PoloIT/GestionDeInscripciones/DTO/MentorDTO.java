@@ -59,7 +59,7 @@ public record MentorDTO(
                 .build();
     }
 
-    private Mentor convertMentor() {
+    public Mentor convertMentor() {
         return Mentor.builder()
                 .id(this.id)
                 .name(this.name)

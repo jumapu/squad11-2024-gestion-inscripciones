@@ -1,6 +1,8 @@
 #ENV PRODUCTION
 image:
-  directory: /app/images/
+  directory:
+    event: images/events/
+    profile: images/profiles/
 
 spring:
   datasource:

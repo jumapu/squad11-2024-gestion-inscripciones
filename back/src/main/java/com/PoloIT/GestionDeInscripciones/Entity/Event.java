@@ -21,6 +21,7 @@ public class Event {
     private Long id;
     private String name;
     private String description;
+    private String img;
 
     @Column(name = "is_active")
     private boolean isActive;
@@ -37,6 +38,7 @@ public class Event {
     //* RELATIONSHIP WITH TEAMS
     @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
     private TeamGroup teamGroup;
+
 
     //* RELATIONSHIP WITH ADMIN
     @ManyToOne()

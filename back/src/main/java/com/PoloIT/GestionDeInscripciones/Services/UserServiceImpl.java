@@ -14,6 +14,7 @@ public class UserServiceImpl implements IUserServiceIpml {
 
     private final UserRepository userRepository;
 
+
     public <U> U getUserRolContext(Class<U> userRol) {
         User userContext = getUserDB();
         return switch (userContext.getRol()) {

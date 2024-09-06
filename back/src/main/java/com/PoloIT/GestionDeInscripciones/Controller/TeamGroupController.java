@@ -1,6 +1,6 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
-import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilter;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilterDTO;
 import com.PoloIT.GestionDeInscripciones.Services.TeamsGroupServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,8 @@ public class TeamGroupController {
     private final TeamsGroupServiceImpl teamsService;
 
     @PostMapping("create/{id}")
-    public void createGroups(@PathVariable Long id, @RequestBody TeamGroupFilter teamGroupFilter) {
+    public void createGroups(@PathVariable Long id, @RequestBody TeamGroupFilterDTO teamGroupFilterDTO) {
 
-        teamsService.createTeams(teamGroupFilter, id);
+        teamsService.save(teamGroupFilterDTO, id);
     }
 }

@@ -3,6 +3,7 @@ package com.PoloIT.GestionDeInscripciones.DTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.PoloIT.GestionDeInscripciones.Entity.TeamGroup;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -16,10 +17,14 @@ public record EventDTO(
         @NotNull(message = "description required")
         @NotEmpty(message = "description required")
         String description,
+        String imgURL,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime createdAt,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime finishAt,
         @NotNull(message = "registration required")
         RegistrationDTO registration,
+        TeamGroupDTO teamGroup,
         boolean isActive
 ) {
 
@@ -29,9 +34,11 @@ public record EventDTO(
                 event.getId(),
                 event.getName(),
                 event.getDescription(),
+                event.getImg(),
                 event.getCreatedAt(),
                 event.getFinishAt(),
                 RegistrationDTO.convertRegistrationDTO(event.getRegistration()),
+                TeamGroupDTO.converTeamGroupDTO(event.getTeamGroup()),
                 event.isActive()
         );
     }

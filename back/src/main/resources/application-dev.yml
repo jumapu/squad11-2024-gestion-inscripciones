@@ -1,4 +1,6 @@
 #ENV DEVELOPER
+image:
+  directory: ./images/
 
 spring:
   profiles: dev,qa
@@ -15,3 +17,4 @@ spring:
     console:
       enabled: true
       path: /h2-console
+

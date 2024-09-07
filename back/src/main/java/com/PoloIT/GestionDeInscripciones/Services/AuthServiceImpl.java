@@ -2,6 +2,8 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
+import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
@@ -34,6 +36,8 @@ public class AuthServiceImpl implements AuthService {
     private final MentorRepository mentorRepository;
     private final PasswordEncoder encoder;
     private final JwtService jwtService;
+    private final EmailService emailService;
+    private final UserServiceImpl userService;
 
     public Map<String, String> authenticate(UserDto userDto) {
         String rol = authenticationAccount(userDto);
@@ -151,6 +155,24 @@ public class AuthServiceImpl implements AuthService {
         ;
         mentorRepository.saveAll(mentors);
         studentRepository.saveAll(students);
+
+    }
+
+    //[3/9] traigo el usuario de la BD y creo los datos del email
+    public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
+//        el mensaje de exception no deveria ser no found?
+        User user = userRepository.findByEmail(emailResetPasswordDTO.email())
+//                por que se validaria el rol?
+//                .map(user1 -> {
+//                    isValidRol(user1.getRol());
+//                    return user1;
+//                })
+                .orElseThrow(() -> new ResponseException("404", "Email in used", HttpStatus.NOT_ACCEPTABLE));
+        emailService.sendEmail(
+                user.getEmail(),
+                "prueba para reset password",
+                jwtService.generateJwt(user.getEmail())
+        );
     }
 
     private Student createStudent(String username, Set<String> roles) {
@@ -163,6 +185,14 @@ public class AuthServiceImpl implements AuthService {
                 .name(username)
                 .rol(roles)
                 .build();
+    }
+
+    public void applyNewPassword(ResetPasswordDTO resetPasswordDTO) {
+        if (!resetPasswordDTO.confirmPassword().equals(resetPasswordDTO.password()))
+            throw new ResponseException("400", "Passwords do not match", HttpStatus.BAD_REQUEST);
+
+        userService.getUserContext().resetPassword(encoder.encode(resetPasswordDTO.password()));
+
     }
 
     private Mentor createMentor(String username, Set<String> roles) {

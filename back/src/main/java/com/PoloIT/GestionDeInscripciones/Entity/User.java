@@ -90,4 +90,8 @@ public class User implements UserDetails {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+    public void resetPassword(String ecriptPassword) {
+        this.password = ecriptPassword;
+    }
 }

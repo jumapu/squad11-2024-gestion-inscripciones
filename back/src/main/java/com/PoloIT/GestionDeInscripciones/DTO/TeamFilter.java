@@ -14,6 +14,5 @@ public record TeamFilter(
 
 ) {
 
-
 }
 

@@ -16,7 +16,7 @@ public class UserServiceImpl implements IUserServiceIpml {
 
 
     public <U> U getUserRolContext(Class<U> userRol) {
-        User userContext = getUserDB();
+        User userContext = getUserContext();
         return switch (userContext.getRol()) {
             case ADMIN -> userRol.cast(userContext.getAdmin());
             case STUDENT -> userRol.cast(userContext.getStudent());
@@ -25,10 +25,10 @@ public class UserServiceImpl implements IUserServiceIpml {
         };
     }
 
-    public User getUserDB() {
+    public User getUserContext() {
         return userRepository.findByEmail(
                         SecurityContextHolder.getContext().getAuthentication().getName())
-                .orElseThrow(() -> new ResponseException("404", "User", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseException("404", "User no Fount", HttpStatus.NOT_FOUND));
     }
 
 

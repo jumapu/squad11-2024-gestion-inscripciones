@@ -1,5 +1,6 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
+import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import jakarta.validation.constraints.NotNull;
 

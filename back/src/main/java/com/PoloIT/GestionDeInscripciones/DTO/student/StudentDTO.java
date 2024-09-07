@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO;
+package com.PoloIT.GestionDeInscripciones.DTO.student;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import jakarta.validation.constraints.NotNull;
@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
 public record StudentDTO(
+//        no se si es nesesario que no sea nulo
         Long id,
         @NotNull(message = "name requerido")
         String name,

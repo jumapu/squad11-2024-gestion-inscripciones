@@ -31,4 +31,10 @@ public class UserServiceImpl implements IUserServiceIpml {
     }
 
 
+    public void delete(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Studen not Fount", HttpStatus.NOT_FOUND));
+        if (user.isDelete())
+            throw new ResponseException("403", "Student is deleted", HttpStatus.FORBIDDEN);
+        user.setDelete(true);
+    }
 }

@@ -1,9 +1,9 @@
 package com.PoloIT.GestionDeInscripciones.Controller;
 
 
-import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
-import com.PoloIT.GestionDeInscripciones.Entity.Student;
-import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
+import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
+import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -15,28 +15,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/student/")
+@RequestMapping("/api/v1/mentor/")
 @RequiredArgsConstructor
-public class StudentController {
+public class MentorController {
 
-    private final StudentServiceImpl studentService;
+    private final MentorServiceImpl mentorService;
     private final UserServiceImpl userService;
 
     @PatchMapping("update")
-    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody StudentDTO studentDTO) {
-        studentService.update(studentDTO);
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody MentorDTO mentorDTO) {
+        mentorService.update(mentorDTO);
         return new ResponseEntity<>(Map.of("Admin", "Datos actualizados"), HttpStatus.OK);
     }
 
+
     @GetMapping("get")
-    public ResponseEntity<Map<String,StudentDTO>> getStudentById() {
-        StudentDTO body = new StudentDTO(userService.getUserRolContext(Student.class));
+    public ResponseEntity<Map<String,MentorDTO>> getStudentById() {
+        MentorDTO body = new MentorDTO(userService.getUserRolContext(Mentor.class));
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
     }
     @Transactional
     @DeleteMapping("delete")
     public ResponseEntity<Map<String, String>> deleteStudent() {
-        studentService.delete();
-        return new ResponseEntity<>(Map.of("Admin", "Estudiante eliminado"), HttpStatus.OK);
+        mentorService.delete();
+        return new ResponseEntity<>(Map.of("Admin", "Mentor eliminado"), HttpStatus.OK);
     }
 }

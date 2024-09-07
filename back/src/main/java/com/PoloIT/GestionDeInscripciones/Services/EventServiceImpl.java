@@ -7,75 +7,42 @@ import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
+import com.PoloIT.GestionDeInscripciones.Utils.FileEventServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EventServiceImpl {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final FileEventServices fileEventServices;
     private final ObjectMapper objectMapper;
 
-    @Value("${image.directory.event}")
-    private Path directoryPath;
 
-    public void save(String data, MultipartFile file) {
-        EventDTO eventDTO = dataToEventDTO(data);
-        if (eventRepository.existsByName(eventDTO.name()))
-            throw new ResponseException("Name", "Event name in used!", HttpStatus.NOT_ACCEPTABLE);
-
-        Event event = EventDTO.fromEvent(eventDTO);
-        event.setAdmin(getAdminContext());
-        event.setImg(UUID.randomUUID() + "." + StringUtils.getFilenameExtension(file.getOriginalFilename()));
-
+    public void save(String data, MultipartFile file, HttpServletRequest request) {
+        Event event = setEvent(data, request, file);
         eventRepository.save(event);
+    }
 
 
-        try {
-
-            if (!Files.exists(directoryPath)) {
-                Files.createDirectories(directoryPath);
-            }
-
-        } catch (IOException e) {
-            throw new ResponseException("500", "Error creating directory: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        try {
-            File destFile = directoryPath.resolve(event.getImg()).toFile();
-
-            Files.copy(file.getInputStream(), directoryPath.resolve(event.getImg()));
-        } catch (IOException e) {
-            if (e instanceof FileAlreadyExistsException) {
-                throw new ResponseException("404", "A file of that name already exists.", HttpStatus.CONFLICT);
-            }
-            throw new ResponseException("500", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-
+    public void updateImg(Long id, MultipartFile file) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        fileEventServices.saveFile(event.getImg(), file);
     }
 
     public void update(EventDTO eventDTO) {
@@ -88,40 +55,24 @@ public class EventServiceImpl {
         eventRepository.deleteById(id);
     }
 
-    public EventDTO get(Long id, HttpServletRequest request) {
-        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
+    public EventDTO getEvent(Long id) {
+//        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
 
-        Event event = eventRepository.findById(id)
-//                .map(EventDTO::new)
-                .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        //        String url = ServletUriComponentsBuilder
+//                .fromHttpUrl(host)
+//                .path("/api/v1/media/event/")
+//                .path(event.getImg())
+//                .toUriString();
+//        event.setImg(url);
 
-        String url = ServletUriComponentsBuilder
-                .fromHttpUrl(host)
-                .path("/api/v1/admin/event/media/")
-                .path(event.getImg())
-                .toUriString();
-        event.setImg(url);
-        return new EventDTO(event);
+        return eventRepository.findById(id)
+                .map(EventDTO::new)
+                .orElseThrow(() -> new ResponseException("404", "EL EVENTO NO EXISTE!.", HttpStatus.NOT_FOUND));
 
     }
 
     public Resource loadResource(String filename) {
-
-        try {
-
-            Path file = directoryPath.resolve(filename);
-            Resource resource = new UrlResource((file.toUri()));
-
-            if (resource.exists() || resource.isReadable()) {
-                return resource;
-            }
-
-            throw new ResponseException("404", "No existe la imagen " + filename, HttpStatus.NOT_FOUND);
-
-        } catch (MalformedURLException e) {
-
-            throw new ResponseException("404", "No existe la imagen " + filename, HttpStatus.NOT_FOUND);
-        }
+        return fileEventServices.loadResource(filename);
     }
 
     public Map<String, List<EventDTO>> all() {
@@ -144,16 +95,25 @@ public class EventServiceImpl {
         );
     }
 
-    private EventDTO dataToEventDTO(String data) {
-        try {
+    private Event setEvent(String data, HttpServletRequest request, MultipartFile file) {
 
-            return objectMapper.readValue(data, EventDTO.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseException("404", "ERROR EN EL SERVIDOR", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        Event event = dataToEvent(data);
+        event.setAdmin(getAdminContext());
+        event.setImg(fileEventServices.saveFile(file, request));
+        return event;
 
     }
+
+    private Event dataToEvent(String data) {
+        try {
+            EventDTO eventDTO = objectMapper.readValue(data, EventDTO.class);
+            return EventDTO.fromEvent(eventDTO);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new ResponseException("404", "ERROR EN EL SERVIDOR", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     private Admin getAdminContext() {
         return userRepository.findByEmail(

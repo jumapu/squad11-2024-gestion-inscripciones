@@ -25,7 +25,9 @@ public record EventDTO(
         @NotNull(message = "registration required")
         RegistrationDTO registration,
         TeamGroupDTO teamGroup,
-        boolean isActive
+        boolean isActive,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        LocalDateTime updatedAt
 ) {
 
 
@@ -39,7 +41,8 @@ public record EventDTO(
                 event.getFinishAt(),
                 RegistrationDTO.convertRegistrationDTO(event.getRegistration()),
                 TeamGroupDTO.converTeamGroupDTO(event.getTeamGroup()),
-                event.isActive()
+                event.isActive(),
+                event.getUpdatedAt()
         );
     }
 
@@ -58,6 +61,7 @@ public record EventDTO(
                 .createdAt(eventDTO.createdAt())
                 .finishAt(eventDTO.finishAt())
                 .isActive(true)
+                .updatedAt(eventDTO.updatedAt)
                 .build();
         event.getRegistration().setEvent(event);
         event.getTeamGroup().setEvent(event);

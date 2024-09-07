@@ -6,15 +6,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 
@@ -28,33 +24,24 @@ public class EventController {
 
     @PostMapping("save")
     public ResponseEntity<Map<String, String>> registerEvent(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
-        eventServiceImpl.save(data, file);
+        eventServiceImpl.save(data, file, request);
 
 
         return new ResponseEntity<>(Map.of("Event", "Save Event"), HttpStatus.CREATED);
     }
 
-    @GetMapping("/media/{filename:.+}")
-    @ResponseBody
-    public ResponseEntity<Resource> loadRecibo(@PathVariable String filename) throws IOException, IOException {
-        Resource file = eventServiceImpl.loadResource(filename);
-        String contentType = Files.probeContentType(file.getFile().toPath());
-
-        //! este es para descargar archivos
-//        return ResponseEntity
-//                .ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, contentType)
-//                .body(file);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType)
-                .body(file);
-
-
-    }
 
     @PatchMapping("update")
     @Transactional
     public ResponseEntity<Map<String, String>> patchEvent(@RequestBody @Valid EventDTO dataUpdateEvent) {
+        eventServiceImpl.update(dataUpdateEvent);
+        return new ResponseEntity<>(Map.of("Event", "updated Event"), HttpStatus.ACCEPTED);
+    }
 
+    @PatchMapping("update/{id}")
+    @Transactional
+    public ResponseEntity<Map<String, String>> patchEventIMG(@RequestPart("file") MultipartFile file, @PathVariable Long id) {
+        eventServiceImpl.updateImg(id, file);
         return new ResponseEntity<>(Map.of("Event", "updated Event"), HttpStatus.ACCEPTED);
     }
 
@@ -66,7 +53,7 @@ public class EventController {
     }
 
 
-    @GetMapping("all/notActive")
+    @GetMapping("all/")
     public ResponseEntity<Map<String, List<EventDTO>>> listEventsNotActive() {
         Map<String, List<EventDTO>> body = eventServiceImpl.AllInactiveEvent();
         return new ResponseEntity<>(body, HttpStatus.OK);
@@ -81,7 +68,7 @@ public class EventController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Map<String, EventDTO>> getEvent(@PathVariable Long id) {
-        EventDTO body = eventServiceImpl.get(id, request);
+        EventDTO body = eventServiceImpl.getEvent(id);
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
     }
 
@@ -90,5 +77,7 @@ public class EventController {
         eventServiceImpl.delete(id);
         return new ResponseEntity<>(Map.of("Event", "Event eliminated"), HttpStatus.ACCEPTED);
     }
+
+
 }
 

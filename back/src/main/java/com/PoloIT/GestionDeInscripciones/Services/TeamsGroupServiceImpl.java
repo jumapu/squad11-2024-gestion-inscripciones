@@ -1,17 +1,21 @@
 package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
+import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.TeamFilter;
 import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilterDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Entity.Team;
-import com.PoloIT.GestionDeInscripciones.Repository.*;
+import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,8 +24,6 @@ import java.util.*;
 @Slf4j
 @RequiredArgsConstructor
 public class TeamsGroupServiceImpl {
-    private final PasswordEncoder encoder;
-    private final TeamGroupRepository teamGroupRepository;
     private final EventRepository eventRepository;
     private final StudentRepository studentRepository;
     private final MentorRepository mentorRepository;
@@ -30,10 +32,11 @@ public class TeamsGroupServiceImpl {
 
     public void save(TeamGroupFilterDTO filter, Long id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL EVENTO", HttpStatus.NOT_FOUND));
 
+        System.out.println(event.getTeamGroup().getTeams().size());
         //!Carga register
-//        setRegister(event);
+        setRegister(event);
 
         if (event.getTeamGroup().getTeams() != null) {
             teamRepository.deleteAll(event.getTeamGroup().getTeams());
@@ -43,41 +46,61 @@ public class TeamsGroupServiceImpl {
         teamRepository.saveAll(teams);
     }
 
-    private Map<String, List<Student>> getStudentDontTeam(Long id) {
+    public Map<String, List<StudentDTO>> getStudentDontTeam(Long id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL EVENTO", HttpStatus.NOT_FOUND));
 
-        List<Student> studentsNotInTeams = event.getRegistration().getStudents().stream()
+        List<StudentDTO> studentsNotInTeams = event.getRegistration().getStudents().stream()
                 .filter(student -> event.getTeamGroup().getTeams().stream()
                         .noneMatch(team -> team.getStudents().contains(student)))
+                .map(StudentDTO::new)
                 .toList();
 
-        return Map.of("Student ", studentsNotInTeams);
+        return Map.of("Lista de estudiantes diponibles ", studentsNotInTeams);
     }
 
-    private void editTeam(Team team, Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+    public Map<String, TeamDTO> getTeam(Long id) {
+        TeamDTO teamDTO = teamRepository.findById(id)
+                .map(TeamDTO::new)
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND));
 
-        if (teamExists(event, team)) {
-            System.out.println("Error: Team not found in event");
-        }
-        teamRepository.save(team);
+        return Map.of("Grupo", teamDTO);
+
     }
 
-    private void deleteTeam(Team team, Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+    //    public void update(TeamDTO teamDTO, Long id) {
+    public void update(TeamDTO teamDTO) {
+//        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+//
+//
+//        teamRepository.save(team);
 
-        if (teamExists(event, team)) {
-            System.out.println("Error: Team not found in event");
-        }
+        if (teamExists(teamDTO.id()))
+            throw new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND);
 
-        teamRepository.delete(team);
+        teamRepository.save(TeamDTO.converTeam(teamDTO));
+    }
+
+    //    public void delete(Long idTeam, Long id) {
+    public void delete(Long id) {
+        //        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+//
+//        if (teamExists(event, idTeam)) {
+//            throw new ResponseException("404", "No puede eliminar un grupo de un evento al que no le pertenece", HttpStatus.NOT_FOUND);
+//        }
+//
+//        teamRepository.deleteById(idTeam);
+
+        if (teamExists(id))
+            throw new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND);
+
+        teamRepository.deleteById(id);
     }
 
 
-    private Set<Team> generateTeams(Event event, TeamGroupFilterDTO filter) {
+    public Set<Team> generateTeams(Event event, TeamGroupFilterDTO filter) {
         Set<Team> teams = new HashSet<>();
 
         List<TeamFilter> studentFilter = filter.studentFilter();
@@ -195,10 +218,18 @@ public class TeamsGroupServiceImpl {
         return teams;
     }
 
-
-    private boolean teamExists(Event event, Team team) {
-        return event.getTeamGroup().getTeams().stream().noneMatch(team1 -> team1.getId().equals(team.getId()));
+    private boolean teamExists(Long id) {
+        return !teamRepository.existsById(id);
     }
+
+
+//    private boolean teamExists(Event event, Long idTeam) {
+//        return event.getTeamGroup().getTeams().stream().noneMatch(team1 -> team1.getId().equals(idTeam));
+//    }
+//
+//    private boolean teamExists(Event event, Team team) {
+//        return event.getTeamGroup().getTeams().stream().noneMatch(team1 -> team1.getId().equals(team.getId()));
+//    }
 
     private void setRegister(Event event) {
         event.getRegistration().getStudents().addAll(studentRepository.findAll());

@@ -29,6 +29,7 @@ public class MentorController {
     }
 
     // se repite con el de student, podria hacerlo en el userController    @GetMapping("get")
+    @GetMapping("get")
     public ResponseEntity<Map<String,MentorDTO>> getStudentById() {
         MentorDTO body = new MentorDTO(userService.getUserRolContext(Mentor.class));
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);

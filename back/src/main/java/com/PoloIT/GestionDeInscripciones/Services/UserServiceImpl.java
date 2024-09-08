@@ -4,14 +4,14 @@ import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseExcept
 import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserServiceIpml {
 
     private final UserRepository userRepository;

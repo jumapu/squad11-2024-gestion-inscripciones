@@ -6,10 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Set;
 
 public record StudentDTO(
-//        no se si es nesesario que no sea nulo
         Long id,
         @NotNull(message = "name requerido")
         String name,
+        String img,
         @NotNull(message = "lastname requerido")
         String lastName,
         @NotNull(message = "technologies requerido")
@@ -20,6 +20,7 @@ public record StudentDTO(
         Set<String> rol,
         @NotNull(message = "linkedin requerido")
         String linkedin
+
 ) {
 
     //* Constructor que convierte una entidad Student a StudentDTO.
@@ -27,6 +28,7 @@ public record StudentDTO(
         this(
                 student.getId(),
                 student.getName(),
+                student.getImgUrl(),
                 student.getLastName(),
                 student.getTechnologies(),
                 student.getCourses(),
@@ -44,6 +46,19 @@ public record StudentDTO(
                 .lastName(studentDTO.lastName)
                 .courses(studentDTO.courses)
                 .linkedin(studentDTO.linkedin)
+                .build();
+    }
+
+
+    public Student convetStudent() {
+        return Student.builder()
+                .id(this.id)
+                .name(this.name)
+                .rol(this.rol)
+                .technologies(this.technologies)
+                .lastName(this.lastName)
+                .courses(this.courses)
+                .linkedin(this.linkedin)
                 .build();
     }
 }

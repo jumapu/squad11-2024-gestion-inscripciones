@@ -1,41 +1,107 @@
 package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
+import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.TeamFilter;
-import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilter;
-import com.PoloIT.GestionDeInscripciones.Entity.*;
-import com.PoloIT.GestionDeInscripciones.Enums.Rol;
-import com.PoloIT.GestionDeInscripciones.Repository.*;
+import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilterDTO;
+import com.PoloIT.GestionDeInscripciones.Entity.Event;
+import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+import com.PoloIT.GestionDeInscripciones.Entity.Student;
+import com.PoloIT.GestionDeInscripciones.Entity.Team;
+import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class TeamsGroupServiceImpl {
-    private final PasswordEncoder encoder;
-    private final TeamsRepository teamsRepository;
     private final EventRepository eventRepository;
     private final StudentRepository studentRepository;
     private final MentorRepository mentorRepository;
-    private final UserRepository userRepository;
 
-    public void createTeams(TeamGroupFilter filter, Long id) {
+    private final TeamRepository teamRepository;
+
+    public void save(TeamGroupFilterDTO filter, Long id) {
         Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT/REGISTRATION", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL EVENTO", HttpStatus.NOT_FOUND));
 
-        generateGroup(event, filter);
+        System.out.println(event.getTeamGroup().getTeams().size());
+        //!Carga register
+        setRegister(event);
+
+        if (event.getTeamGroup().getTeams() != null) {
+            teamRepository.deleteAll(event.getTeamGroup().getTeams());
+        }
+
+        Set<Team> teams = generateTeams(event, filter);
+        teamRepository.saveAll(teams);
+    }
+
+    public Map<String, List<StudentDTO>> getStudentDontTeam(Long id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL EVENTO", HttpStatus.NOT_FOUND));
+
+        List<StudentDTO> studentsNotInTeams = event.getRegistration().getStudents().stream()
+                .filter(student -> event.getTeamGroup().getTeams().stream()
+                        .noneMatch(team -> team.getStudents().contains(student)))
+                .map(StudentDTO::new)
+                .toList();
+
+        return Map.of("Lista de estudiantes diponibles ", studentsNotInTeams);
+    }
+
+    public Map<String, TeamDTO> getTeam(Long id) {
+        TeamDTO teamDTO = teamRepository.findById(id)
+                .map(TeamDTO::new)
+                .orElseThrow(() -> new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND));
+
+        return Map.of("Grupo", teamDTO);
 
     }
 
+    //    public void update(TeamDTO teamDTO, Long id) {
+    public void update(TeamDTO teamDTO) {
+//        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+//
+//
+//        teamRepository.save(team);
 
-    private Set<Team> generateGroup(Event event, TeamGroupFilter filter) {
+        if (teamExists(teamDTO.id()))
+            throw new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND);
+
+        teamRepository.save(TeamDTO.converTeam(teamDTO));
+    }
+
+    //    public void delete(Long idTeam, Long id) {
+    public void delete(Long id) {
+        //        Event event = eventRepository.findById(id)
+//                .orElseThrow(() -> new ResponseException("404", "ID NOT FOUND EVENT", HttpStatus.NOT_FOUND));
+//
+//        if (teamExists(event, idTeam)) {
+//            throw new ResponseException("404", "No puede eliminar un grupo de un evento al que no le pertenece", HttpStatus.NOT_FOUND);
+//        }
+//
+//        teamRepository.deleteById(idTeam);
+
+        if (teamExists(id))
+            throw new ResponseException("404", "NO EXISTE EL GRUPO", HttpStatus.NOT_FOUND);
+
+        teamRepository.deleteById(id);
+    }
+
+
+    public Set<Team> generateTeams(Event event, TeamGroupFilterDTO filter) {
         Set<Team> teams = new HashSet<>();
-
 
         List<TeamFilter> studentFilter = filter.studentFilter();
         List<TeamFilter> mentorFilter = filter.mentorFilter();
@@ -48,7 +114,6 @@ public class TeamsGroupServiceImpl {
                 .sorted(Comparator.comparing(Mentor::getId))
                 .toList();
 
-        Set<Student> studentAccepted = new HashSet<>();
 
         Map<String, Integer> indexFiltersStudent = new HashMap<>();
         Map<String, Integer> indexFiltersMentors = new HashMap<>();
@@ -57,6 +122,8 @@ public class TeamsGroupServiceImpl {
 
         for (int i = 0; i < groups; i++) {
             Team team = new Team();
+            team.setStudents(new HashSet<>());
+            team.setMentors(new HashSet<>());
 
             for (TeamFilter filter1 : studentFilter) {
                 int index = indexFiltersStudent.getOrDefault(filter1.rol(), 0);
@@ -73,21 +140,14 @@ public class TeamsGroupServiceImpl {
                     if (student.getRol().stream().anyMatch(s -> s.equalsIgnoreCase(filter1.rol())) && !filter1.technologies().isEmpty()) {
                         list.add(student);
                         indexFiltersStudent.put(filter1.rol(), k + 1);
-                        studentAccepted.add(student);
                         continue;
                     }
 
                     if (student.getRol().stream().anyMatch(s -> s.equalsIgnoreCase(filter1.rol())) && filter1.technologies().isEmpty()) {
                         list.add(student);
                         indexFiltersStudent.put(filter1.rol(), k + 1);
-                        studentAccepted.add(student);
                     }
 
-                }
-
-                if (list.size() < filter1.quantity()) {
-                    System.out.println("solo hay " + list.size() + " " + filter1.rol() + " de los " + filter1.quantity() + " solicitados.");
-                    break;
                 }
 
 
@@ -107,16 +167,15 @@ public class TeamsGroupServiceImpl {
 
 
                 // puede que la cantidad solicitada del rol del mentor no se cumpla. se puede parar o se usa la cantidad que hay, se para y no se continua??
-                if (loopbreak) {
-                    System.out.println("error no hay sufientes " + filter1.rol());
-                    break;
-                }
-
 //                if (loopbreak) {
-//                    limitMentor = mentorsStock;
+//                    break;
 //                }
 
-                // for (int k = index; list.size() < filter1.quantity(); k++) {
+                if (loopbreak) {
+                    log.warn("error no hay sufientes mentores con el rol {} . se utilizara la cantidad disponible", filter1.rol());
+                    limitMentor = mentorsStock;
+                }
+
                 while (list.size() < limitMentor) {
 
                     if (index == mentorList.size()) {
@@ -140,111 +199,42 @@ public class TeamsGroupServiceImpl {
                 }
 
 
-                System.out.println("\n");
-
                 team.getMentors().addAll(list);
             }
 
-            //Error no se completo el grupo
+            //! Error no se completo el grupo
             if (team.getStudents().size() < filter.studentFilter().stream().mapToInt(TeamFilter::quantity).sum()) {
-                System.out.println("Error no se pudo crear el grupo completo");
+                log.warn("Este grupo no cumple la cantidad de estudiantes necesaria");
                 break;
             }
 
-//            Esto es sobre si no se completan los studiantes o mentores con la cantidad deseada se no se guarda el grupo
-//            if (team.getStudents().size() < filter.studentFilter().stream().mapToInt(TeamFilter::quantity).sum() || team.getMentors().size() <filter.mentorFilter().stream().mapToInt(TeamFilter::quantity).sum()){
-//                System.out.println("Error no se pudo crear el grupo completo");
-//                break;
-//            }
 
+            team.setTeamGroup(event.getTeamGroup());
             teams.add(team);
 
         }
 
 
-        System.out.println("\n");
-        System.out.println("Grupos creados " + teams.size());
-        for (Team team : teams) {
-            team.getStudents().forEach(student -> System.out.println(student.getRol().toString() + " " + student.getName()));
-            team.getMentors().forEach(student -> System.out.println(student.getName() + " " + student.getRol()));
-            System.out.println("\n");
-        }
+        return teams;
+    }
 
-        System.out.println("\n");
-
-        System.out.println("Estudiantes no Aceptados ");
-        //  studentList.stream().forEach(student -> System.out.println(student.getName() + " fue aceptado ? " + studentAccepted.stream().anyMatch(student1 -> student1.getId().equals(student.getId()))));
-
-        Set<Student> studentNotAccepted = studentList.stream().filter(student -> studentAccepted.stream().noneMatch(student1 -> student1.getId().equals(student.getId()))).collect(Collectors.toSet());
-
-        for (Student student : studentNotAccepted) {
-            System.out.println("El estudiante " + student.getName() + " no fue aceptado");
-        }
-        return null;
+    private boolean teamExists(Long id) {
+        return !teamRepository.existsById(id);
     }
 
 
-    public void seedData() {
-        List<Student> students = new ArrayList<>();
-        List<Mentor> mentors = new ArrayList<>();
+//    private boolean teamExists(Event event, Long idTeam) {
+//        return event.getTeamGroup().getTeams().stream().noneMatch(team1 -> team1.getId().equals(idTeam));
+//    }
+//
+//    private boolean teamExists(Event event, Team team) {
+//        return event.getTeamGroup().getTeams().stream().noneMatch(team1 -> team1.getId().equals(team.getId()));
+//    }
 
-        // Crear y agregar estudiantes
-        for (int i = 1; i <= 5; i++) {
-            students.add(createStudent("student" + i, Set.of("java developer", "python developer")));
-        }
-        for (int i = 6; i <= 7; i++) {
-            students.add(createStudent("student" + i, Set.of("QA")));
-        }
-        for (int i = 8; i <= 12; i++) {
-            students.add(createStudent("student" + i, Set.of("frontend developer")));
-        }
-        for (int i = 13; i <= 17; i++) {
-            students.add(createStudent("student" + i, Set.of("UX/UI designer")));
-            }
-
-        // Crear y agregar mentores
-        for (int i = 1; i <= 3; i++) {
-            mentors.add(createMentor("mentor" + i, Set.of("java developer")));
-        }
-        for (int i = 4; i <= 5; i++) {
-            mentors.add(createMentor("mentor" + i, Set.of("QA")));
-        }
-        for (int i = 6; i <= 8; i++) {
-            mentors.add(createMentor("mentor" + i, Set.of("design")));
-            }
-        // Crear y agregar mentores con roles adicionales
-        mentors.add(createMentor("mentor9", Set.of("DevOps")));
-        mentors.add(createMentor("mentor10", Set.of("Project Manager")));
-
-        // Guardar los estudiantes y mentores en la base de datos
-        studentRepository.saveAll(students);
-        mentorRepository.saveAll(mentors);
+    private void setRegister(Event event) {
+        event.getRegistration().getStudents().addAll(studentRepository.findAll());
+        event.getRegistration().getMentors().addAll(mentorRepository.findAll());
+        eventRepository.save(event);
 
     }
-
-    private Student createStudent(String username, Set<String> roles) {
-        return Student.builder()
-                .user(User.builder()
-                        .password(encoder.encode("12345678"))
-                        .email(username + "@gmail.com")
-                        .rol(Rol.STUDENT)
-                        .build())
-                .name(username)
-                .rol(roles)
-                .build();
-        }
-
-    private Mentor createMentor(String username, Set<String> roles) {
-        return Mentor.builder()
-                .user(User.builder()
-                        .password(encoder.encode("12345678"))
-                        .email(username + "@gmail.com")
-                        .rol(Rol.MENTOR)
-                        .build())
-                .rol(roles)
-                .name(username)
-                .build();
-    }
-
-
 }

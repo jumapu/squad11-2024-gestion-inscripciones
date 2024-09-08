@@ -31,7 +31,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    private boolean isDelete=false;
+    private boolean isDelete = false;
 
     //* RELATIONSHIP WITH THE INFORMATION OF EACH ROLE (no additional column in User)
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

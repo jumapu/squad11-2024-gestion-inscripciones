@@ -1,11 +1,10 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class TeamGroup {
     @Id
     private Long id;
@@ -23,6 +23,8 @@ public class TeamGroup {
     @JoinColumn(name = "event_id")
     private Event event;
 
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "teamGroup")
     private Set<Team> teams;

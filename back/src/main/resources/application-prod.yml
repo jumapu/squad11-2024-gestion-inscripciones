@@ -1,0 +1,18 @@
+#ENV PRODUCTION
+image:
+  directory: /app/images/
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/squad_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # create-drop
+      dialect: org.hibernate.dialect.MySQL8Dialect

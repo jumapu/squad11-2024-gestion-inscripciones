@@ -20,7 +20,20 @@ public record MentorDTO(
     }
 
     //* Convierte una entidad Mentor a MentorDTO utilizando el DTO actual.
-    public static Mentor fromMentor(MentorDTO mentorDTO) {
+    public static MentorDTO fromMentor(Mentor mentor) {
+        return new MentorDTO(
+                mentor.getId(),
+                mentor.getName(),
+                mentor.getLastName(),
+                mentor.getCompany(),
+                mentor.getTechnologies(),
+                mentor.getRol(),
+                mentor.getLinkedin()
+        );
+    }
+
+    //* Convierte otro MentorDTO a la entidad Mentor.
+    public static Mentor toEntity(MentorDTO mentorDTO) {
         return Mentor.builder()
                 .id(mentorDTO.id)
                 .name(mentorDTO.name)
@@ -30,12 +43,30 @@ public record MentorDTO(
                 .rol(mentorDTO.profiles)
                 .linkedin(mentorDTO.linkedin)
                 .build();
-    };
     }
 
     //* Convierte una entidad Mentor a MentorDTO utilizando el DTO actual.
+    public Mentor toEntity() {
+        return Mentor.builder()
+                .id(this.id)
+                .name(this.name)
+                .lastName(this.lastName)
+                .company(this.company)
+                .technologies(this.skills)
+                .rol(this.profiles)
+                .linkedin(this.linkedin)
+                .build();
+    }
 
-
-
-    //* Convierte otro MentorDTO a la entidad Mentor.
-
+    public Mentor convertMentor() {
+        return Mentor.builder()
+                .id(this.id)
+                .name(this.name)
+                .lastName(this.lastName)
+                .company(this.company)
+                .technologies(this.skills)
+                .rol(this.profiles)
+                .linkedin(this.linkedin)
+                .build();
+    }
+}

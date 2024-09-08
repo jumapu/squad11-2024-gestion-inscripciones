@@ -5,11 +5,11 @@ import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseExcept
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
-import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
+import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import com.PoloIT.GestionDeInscripciones.Jwt.JwtService;
 import com.PoloIT.GestionDeInscripciones.Repository.AdminRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
@@ -23,8 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -96,6 +95,9 @@ public class AuthServiceImpl implements AuthService {
     private void setRol(User user, UserDto userDto) {
 
         if (user.getRol().name().equalsIgnoreCase("admin")) {
+
+            //!Quitar en Prod
+            seedData();
             adminRepository.save(
                     Admin.builder()
                             .name(userDto.name())
@@ -118,7 +120,47 @@ public class AuthServiceImpl implements AuthService {
 
         throw new ResponseException("505", "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-//[3/9] traigo el usuario de la BD y creo los datos del email
+
+
+    public void seedData() {
+        List<Student> students = new ArrayList<>();
+        List<Mentor> mentors = new ArrayList<>();
+
+        // Crear y agregar estudiantes
+        for (int i = 1; i <= 5; i++) {
+            students.add(createStudent("student" + i, Set.of("java developer", "python developer")));
+        }
+        for (int i = 6; i <= 7; i++) {
+            students.add(createStudent("student" + i, Set.of("QA")));
+        }
+        for (int i = 8; i <= 12; i++) {
+            students.add(createStudent("student" + i, Set.of("frontend developer")));
+        }
+        for (int i = 13; i <= 17; i++) {
+            students.add(createStudent("student" + i, Set.of("UX/UI designer")));
+        }
+
+        // Crear y agregar mentores
+        for (int i = 1; i <= 3; i++) {
+            mentors.add(createMentor("mentor" + i, Set.of("java developer")));
+        }
+        for (int i = 4; i <= 5; i++) {
+            mentors.add(createMentor("mentor" + i, Set.of("QA")));
+        }
+        for (int i = 6; i <= 8; i++) {
+            mentors.add(createMentor("mentor" + i, Set.of("design")));
+        }
+        // Crear y agregar mentores con roles adicionales
+        mentors.add(createMentor("mentor9", Set.of("DevOps")));
+        mentors.add(createMentor("mentor10", Set.of("Project Manager")));
+
+        // Guardar los estudiantes y mentores en la base de datos
+        ;
+        mentorRepository.saveAll(mentors);
+        studentRepository.saveAll(students);
+
+    }
+
     public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
 //        el mensaje de exception no deveria ser no found?
         User user = userRepository.findByEmail(emailResetPasswordDTO.email())
@@ -134,13 +176,37 @@ public class AuthServiceImpl implements AuthService {
                 jwtService.generateJwt(user.getEmail(),jwtExpirationResetPassword)
         );
     }
-//[9/9] verifico que las contraseña y la guardo en la DB
-    public void applyNewPassword(ResetPasswordDTO resetPasswordDTO) {
-//pase el metodo de isPasswordsMatch() directamente al parametro.
-        if (!resetPasswordDTO.confirmPassword().equals(resetPasswordDTO.password()))
-            throw new ResponseException("400", "Passwords do not match", HttpStatus.BAD_REQUEST);
-        userService.getUserContext().resetPassword(encoder.encode(resetPasswordDTO.password()));
+
+    private Student createStudent(String username, Set<String> roles) {
+        return Student.builder()
+                .user(User.builder()
+                        .password(encoder.encode("12345678"))
+                        .email(username + "@gmail.com")
+                        .rol(Rol.STUDENT)
+                        .build())
+                .name(username)
+                .rol(roles)
+                .build();
     }
 
+    public void applyNewPassword(ResetPasswordDTO resetPasswordDTO) {
+        if (!resetPasswordDTO.confirmPassword().equals(resetPasswordDTO.password()))
+            throw new ResponseException("400", "Passwords do not match", HttpStatus.BAD_REQUEST);
+
+        userService.getUserContext().resetPassword(encoder.encode(resetPasswordDTO.password()));
+
+    }
+
+    private Mentor createMentor(String username, Set<String> roles) {
+        return Mentor.builder()
+                .user(User.builder()
+                        .password(encoder.encode("12345678"))
+                        .email(username + "@gmail.com")
+                        .rol(Rol.MENTOR)
+                        .build())
+                .rol(roles)
+                .name(username)
+                .build();
+    }
 
 }

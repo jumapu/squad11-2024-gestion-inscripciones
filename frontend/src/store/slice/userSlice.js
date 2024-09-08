@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import { userLogin } from "@/api/login";
-
+// Listar usuarios
 export const listUser = createAsyncThunk("usuarios/user", async () => {
   try {
-    const response = await userLogin();
-    
+    const response = await userLogin();    
     const userData = response.data;
     console.log(userData)
 
@@ -14,7 +13,7 @@ export const listUser = createAsyncThunk("usuarios/user", async () => {
     throw error;
   }
 });
-
+// Slice de usuarios
 const userSlice = createSlice({
   name: "user",
   initialState: {
@@ -33,6 +32,6 @@ const userSlice = createSlice({
     
   },
 });
-
+// Exportar acciones y reducer
 export const { clearUserData } = userSlice.actions;
 export default userSlice.reducer;

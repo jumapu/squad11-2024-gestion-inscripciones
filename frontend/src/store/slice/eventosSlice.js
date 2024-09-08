@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { eventosList } from "@/api/eventos";
 import { egresadosOne } from "@/api/egresados";
-
-export const listEventos = createAsyncThunk("eventos/listEventos", async () => {
+//Listar eventos
+export const listeventos = createAsyncThunk("eventos/listEventos", async () => {
   try {
     const response = await eventosList();
     const eventoData = response.data;
@@ -31,15 +31,32 @@ const eventoSlice = createSlice({
     eventoData: [],
     loading: false,
     error: null,
+    eventoCount: 0,
   },
-  reducers: {},
+  reducers: {
+    clearEventoData: (state) => {
+      state.eventoData = [];
+      state.eventoCount = 0; // Limpiar el conteo
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(listEventos.fulfilled, (state, action) => {
+    builder.addCase(listeventos.fulfilled, (state, action) => {
       state.loading = "exito";
       state.eventoData = action.payload;
+      state.eventoCount = action.payload.length;
+    });
+    builder.addCase(listeventos.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(listeventos.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error.message; // Manejar errores
     });
   },
 });
 
+// Conteo de eventos
+export const selectEventoCount = (state) => state.evento.eventoCount;
+//acciones y reducer
 export const { clearEventoData } = eventoSlice.actions;
 export default eventoSlice.reducer;

@@ -3,13 +3,13 @@ package com.PoloIT.GestionDeInscripciones.Services;
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserServiceIpml {
 
     private final UserRepository userRepository;
@@ -32,4 +32,10 @@ public class UserServiceImpl implements IUserServiceIpml {
     }
 
 
+    public void delete(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResponseException("404", "Studen not Fount", HttpStatus.NOT_FOUND));
+        if (user.isDelete())
+            throw new ResponseException("403", "Student is deleted", HttpStatus.FORBIDDEN);
+        user.setDelete(true);
+    }
 }

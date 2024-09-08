@@ -15,6 +15,7 @@ import com.PoloIT.GestionDeInscripciones.Repository.AdminRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
+import com.PoloIT.GestionDeInscripciones.Utils.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -158,7 +159,6 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    //[3/9] traigo el usuario de la BD y creo los datos del email
     public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
 //        el mensaje de exception no deveria ser no found?
         User user = userRepository.findByEmail(emailResetPasswordDTO.email())

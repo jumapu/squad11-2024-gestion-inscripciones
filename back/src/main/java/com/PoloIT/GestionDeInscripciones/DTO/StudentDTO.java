@@ -9,6 +9,7 @@ public record StudentDTO(
         Long id,
         @NotNull(message = "name requerido")
         String name,
+        String img,
         @NotNull(message = "lastname requerido")
         String lastName,
         @NotNull(message = "technologies requerido")
@@ -19,6 +20,7 @@ public record StudentDTO(
         Set<String> rol,
         @NotNull(message = "linkedin requerido")
         String linkedin
+
 ) {
 
     //* Constructor que convierte una entidad Student a StudentDTO.
@@ -26,6 +28,7 @@ public record StudentDTO(
         this(
                 student.getId(),
                 student.getName(),
+                student.getImgUrl(),
                 student.getLastName(),
                 student.getTechnologies(),
                 student.getCourses(),

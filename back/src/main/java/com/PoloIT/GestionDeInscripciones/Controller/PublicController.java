@@ -2,6 +2,7 @@ package com.PoloIT.GestionDeInscripciones.Controller;
 
 
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
+import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class PublicController {
     private final EventServiceImpl eventServiceImpl;
+    private final StudentServiceImpl studentService;
 
     @GetMapping("/event/{filename:.+}")
     @ResponseBody
@@ -37,7 +39,7 @@ public class PublicController {
     @GetMapping("/profile/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadProfile(@PathVariable String filename) throws IOException, IOException {
-        Resource file = eventServiceImpl.loadResource(filename);
+        Resource file = studentService.loadResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
 
         //! este es para descargar archivos

@@ -19,8 +19,8 @@ import java.nio.file.Path;
 import java.util.UUID;
 
 @Service
-public class FileEventServices {
-    @Value("${image.directory.event}")
+public class FileUserServices {
+    @Value("${image.directory.profile}")
     private Path directoryPath;
 
     public String saveFile(MultipartFile file, HttpServletRequest request) {
@@ -47,16 +47,15 @@ public class FileEventServices {
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         String url = ServletUriComponentsBuilder
                 .fromHttpUrl(host)
-                .path("/api/v1/media/event/")
+                .path("/api/v1/media/profile/")
                 .path(fileName)
                 .toUriString();
 
         return url;
     }
 
-
     public void saveFile(String fileName, MultipartFile file) {
-        String result = fileName.substring(fileName.indexOf("event/") + "event/".length());
+        String result = fileName.substring(fileName.indexOf("profile/") + "profile/".length());
         Path filePath = directoryPath.resolve(result);
 
         try {
@@ -77,8 +76,8 @@ public class FileEventServices {
             throw new ResponseException("500", "Error saving file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-
     }
+
 
     public Resource loadResource(String filename) {
 

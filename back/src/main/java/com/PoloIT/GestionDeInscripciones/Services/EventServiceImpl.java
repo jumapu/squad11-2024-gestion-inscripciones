@@ -56,15 +56,6 @@ public class EventServiceImpl {
     }
 
     public EventDTO getEvent(Long id) {
-//        String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
-
-        //        String url = ServletUriComponentsBuilder
-//                .fromHttpUrl(host)
-//                .path("/api/v1/media/event/")
-//                .path(event.getImg())
-//                .toUriString();
-//        event.setImg(url);
-
         return eventRepository.findById(id)
                 .map(EventDTO::new)
                 .orElseThrow(() -> new ResponseException("404", "EL EVENTO NO EXISTE!.", HttpStatus.NOT_FOUND));

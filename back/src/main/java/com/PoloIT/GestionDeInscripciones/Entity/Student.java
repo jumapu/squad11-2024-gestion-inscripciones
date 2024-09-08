@@ -28,7 +28,7 @@ public class Student {
     private Set<String> technologies;
     private Set<String> courses;
     private String linkedin;
-
+    private String imgUrl;
     //*Registration
     @ManyToMany(mappedBy = "students")
     private Set<Registration> registrations;

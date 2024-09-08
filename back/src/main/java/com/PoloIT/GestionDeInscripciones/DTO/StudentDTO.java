@@ -19,11 +19,14 @@ public record StudentDTO(
         @NotNull(message = "rol requerido")
         Set<String> rol,
         @NotNull(message = "linkedin requerido")
-        String linkedin
-
+        String linkedin,
+        String dni,
+        String phone,
+        LocalDate birthdate,
+        String nationality,
+        String graduationYear
 ) {
 
-    //* Constructor que convierte una entidad Student a StudentDTO.
     public StudentDTO(Student student) {
         this(
                 student.getId(),
@@ -33,7 +36,12 @@ public record StudentDTO(
                 student.getTechnologies(),
                 student.getCourses(),
                 student.getRol(),
-                student.getLinkedin()
+                student.getLinkedin(),
+                student.getDni(),
+                student.getPhone(),
+                student.getBirthdate(),
+                student.getNationality(),
+                student.getGraduationYear()
         );
     }
 
@@ -41,24 +49,35 @@ public record StudentDTO(
         return Student.builder()
                 .id(studentDTO.id)
                 .name(studentDTO.name)
+                .imgUrl(studentDTO.img)
                 .rol(studentDTO.rol)
                 .technologies(studentDTO.technologies)
                 .lastName(studentDTO.lastName)
                 .courses(studentDTO.courses)
                 .linkedin(studentDTO.linkedin)
+                .graduationYear(studentDTO.graduationYear)
+                .dni(studentDTO.dni)
+                .phone(studentDTO.phone)
+                .birthdate(studentDTO.birthdate)
+                .nationality(studentDTO.nationality)
                 .build();
     }
 
-
-    public Student convetStudent() {
+    public Student convertStudent() {
         return Student.builder()
                 .id(this.id)
                 .name(this.name)
+                .imgUrl(this.img)
                 .rol(this.rol)
                 .technologies(this.technologies)
                 .lastName(this.lastName)
                 .courses(this.courses)
                 .linkedin(this.linkedin)
+                .graduationYear(this.graduationYear)
+                .dni(this.dni)
+                .phone(this.phone)
+                .birthdate(this.birthdate)
+                .nationality(this.nationality)
                 .build();
     }
 }

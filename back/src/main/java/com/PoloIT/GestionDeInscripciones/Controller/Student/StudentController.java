@@ -1,7 +1,7 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Student;
 
 
-import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;

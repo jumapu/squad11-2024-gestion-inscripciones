@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Services;
+package com.PoloIT.GestionDeInscripciones.Utils;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;

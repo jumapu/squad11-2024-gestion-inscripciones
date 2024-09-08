@@ -1,42 +1,62 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Admin;
 
 import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/admin/user/")
 @RequiredArgsConstructor
-public class AdminController {
+public class UserController {
     private final UserServiceImpl userService;
     private final StudentServiceImpl studentService;
-
+    private final HttpServletRequest request;
     private final MentorServiceImpl mentorService;
 
+    @PostMapping("save/student")
+    public ResponseEntity<Map<String, String>> registerStudent(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
+        userService.registerStudent(data, file, request);
+        return new ResponseEntity<>(Map.of("Usuario", "Se creo el usuario."), HttpStatus.OK);
+    }
+
+    @PostMapping("save/mentor")
+    public ResponseEntity<Map<String, String>> registerMentor(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
+        userService.registerMentor(data, file, request);
+        return new ResponseEntity<>(Map.of("Usuario", "Se creo el usuario."), HttpStatus.OK);
+    }
+
     @Transactional
-    @DeleteMapping("deleteUser/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
         userService.delete(id);
         return new ResponseEntity<>(Map.of("Admin", "user eliminado"), HttpStatus.OK);
     }
 
-    @GetMapping("getUser/{id}")
+    @GetMapping("student/{id}")
     public ResponseEntity<Map<String, StudentDTO>> getStudentById(@PathVariable Long id) {
         StudentDTO body = studentService.getById(id);
         return new ResponseEntity<>(Map.of("User", body), HttpStatus.OK);
     }
 
-    @GetMapping("user")
+    @GetMapping("mentor/{id}")
+    public ResponseEntity<Map<String, MentorDTO>> getMentorById(@PathVariable Long id) {
+        MentorDTO body = mentorService.getById(id);
+        return new ResponseEntity<>(Map.of("User", body), HttpStatus.OK);
+    }
+
+    @GetMapping("")
     public ResponseEntity<Map<String, Object>> allUser(@PathVariable Long id) {
         Map<String, List<MentorDTO>> allMentor = mentorService.allMentor();
         Map<String, List<StudentDTO>> allStudent = studentService.allStudent();

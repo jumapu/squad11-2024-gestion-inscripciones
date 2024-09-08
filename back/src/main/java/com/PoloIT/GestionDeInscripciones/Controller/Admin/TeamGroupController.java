@@ -1,6 +1,6 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Admin;
 
-import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.TeamDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.TeamGroupFilterDTO;
 import com.PoloIT.GestionDeInscripciones.Services.TeamsGroupServiceImpl;

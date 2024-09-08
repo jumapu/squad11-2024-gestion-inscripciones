@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class EmailService {
 
     private final JavaMailSender emailSender;
-//[4/9] traigo las configuracione del remitente del email
+    //[4/9] traigo las configuracione del remitente del email
     @Value("${mail}")
     private String userEmailEjemplo;
 

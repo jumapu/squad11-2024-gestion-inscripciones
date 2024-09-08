@@ -1,9 +1,9 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Public;
 
 
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Services.AuthServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;

@@ -71,4 +71,9 @@ public class StudentServiceImpl {
     public void delete() {
         userService.getUserContext().setDelete(true);
     }
+
+
+    public void delete() {
+        userService.getUserContext().setDelete(true);
+    }
 }

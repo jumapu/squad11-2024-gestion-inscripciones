@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.DTO;
+package com.PoloIT.GestionDeInscripciones.DTO.password;
 
 import jakarta.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;

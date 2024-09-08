@@ -3,8 +3,9 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
@@ -38,16 +39,19 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final EmailService emailService;
     private final UserServiceImpl userService;
+//como funciona la duracion de los tokens, quien controla la duracion de los mismos
+    private static final long jwtExpirationSesion = 7200000;
+    private static final long jwtExpirationResetPassword = 300000;
 
     public Map<String, String> authenticate(UserDto userDto) {
         String rol = authenticationAccount(userDto);
-        return Map.of("jwt", jwtService.generateJwt(userDto.email()), "rol", rol);
+        return Map.of("jwt", jwtService.generateJwt(userDto.email(),jwtExpirationResetPassword), "rol", rol);
     }
 
     public Map<String, String> register(UserDto userDto) {
         User user = userRepository.save(fromUser(userDto));
         setRol(user, userDto);
-        return Map.of("JWT", jwtService.generateJwt(userDto.email()), "rol", userDto.rol());
+        return Map.of("JWT", jwtService.generateJwt(userDto.email(),jwtExpirationSesion), "rol", userDto.rol());
 
     }
 
@@ -127,7 +131,7 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendEmail(
                 user.getEmail(),
                 "prueba para reset password",
-                jwtService.generateJwt(user.getEmail())
+                jwtService.generateJwt(user.getEmail(),jwtExpirationResetPassword)
         );
     }
 //[9/9] verifico que las contraseña y la guardo en la DB
@@ -137,4 +141,6 @@ public class AuthServiceImpl implements AuthService {
             throw new ResponseException("400", "Passwords do not match", HttpStatus.BAD_REQUEST);
         userService.getUserContext().resetPassword(encoder.encode(resetPasswordDTO.password()));
     }
+
+
 }

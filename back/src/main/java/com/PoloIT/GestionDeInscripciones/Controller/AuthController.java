@@ -2,8 +2,9 @@ package com.PoloIT.GestionDeInscripciones.Controller;
 
 
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Services.AuthServiceImpl;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -50,4 +51,5 @@ public class AuthController {
         userService.applyNewPassword(resetPasswordDTO);
         return new ResponseEntity<>(Map.of("msg", "The password was changed successfully"), HttpStatus.ACCEPTED);
     }
+
 }

@@ -1,11 +1,13 @@
 package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
+import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements IUserServiceIpml {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     public <U> U getUserRolContext(Class<U> userRol) {
         User userContext = getUserContext();
@@ -36,5 +39,14 @@ public class UserServiceImpl implements IUserServiceIpml {
         if (user.isDelete())
             throw new ResponseException("403", "Student is deleted", HttpStatus.FORBIDDEN);
         user.setDelete(true);
+    }
+
+    public void updatePassword(UpdatePasswordDTO updatePasswordDTO) {
+        User user = this.getUserContext();
+        if (!encoder.matches(updatePasswordDTO.oldPassword(), user.getPassword()))
+            throw new ResponseException("401", "Incorrect old password", HttpStatus.UNAUTHORIZED);
+        if (!updatePasswordDTO.confirmPassword().equals(updatePasswordDTO.newPassword()))
+            throw new ResponseException("400", "Passwords do not match", HttpStatus.BAD_REQUEST);
+        user.setPassword(encoder.encode(updatePasswordDTO.newPassword()));
     }
 }

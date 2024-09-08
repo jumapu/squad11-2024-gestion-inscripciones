@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Admin;
 
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
@@ -53,7 +53,7 @@ public class EventController {
     }
 
 
-    @GetMapping("all/")
+    @GetMapping("all/notActive")
     public ResponseEntity<Map<String, List<EventDTO>>> listEventsNotActive() {
         Map<String, List<EventDTO>> body = eventServiceImpl.AllInactiveEvent();
         return new ResponseEntity<>(body, HttpStatus.OK);

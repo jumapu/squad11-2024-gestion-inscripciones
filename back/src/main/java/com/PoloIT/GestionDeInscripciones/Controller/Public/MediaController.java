@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Public;
 
 
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
@@ -13,18 +13,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @RestController
-@RequestMapping("/api/v1/media/")
+@RequestMapping("/api/v1/public/")
 @RequiredArgsConstructor
-public class PublicController {
+public class MediaController {
     private final EventServiceImpl eventServiceImpl;
     private final StudentServiceImpl studentService;
 
-    @GetMapping("/event/{filename:.+}")
+    @GetMapping("/media/event/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadEvent(@PathVariable String filename) throws IOException, IOException {
         Resource file = eventServiceImpl.loadResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
-
         //! este es para descargar archivos
 //        return ResponseEntity
 //                .ok()
@@ -33,10 +32,9 @@ public class PublicController {
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(file);
 
-
     }
 
-    @GetMapping("/profile/{filename:.+}")
+    @GetMapping("/media/profile/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadProfile(@PathVariable String filename) throws IOException, IOException {
         Resource file = studentService.loadResource(filename);
@@ -52,6 +50,4 @@ public class PublicController {
 
 
     }
-
-
 }

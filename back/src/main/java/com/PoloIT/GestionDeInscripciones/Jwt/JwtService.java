@@ -18,16 +18,16 @@ import java.util.Objects;
 public class JwtService {
 
     private static final String private_key = "2ns7utNmJSCwdrx6KZpVEqUFdyoHMJoqGXQR7328y2Fi4UL2ggCKS4d8ZRIw8QHL";
-    private static final long jwtExpirationDate = 7200000; //!  2hs
 
-    public String generateJwt(String email) {
+    public String generateJwt(String email, long jwtExpiration) {
+//        por que esta enserrado en un bloque de codigo
         {
             Map<String, Objects> claims = new HashMap<>();
-            return generateJwt(email, claims);
+            return generateJwt(email, claims, jwtExpiration);
         }
     }
 
-    public String generateJwt(String email, Map<String, Objects> claims) {
+    public String generateJwt(String email, Map<String, Objects> claims, long jwtExpirationDate) {
         Date cuurentDate = new Date();
         Date ExpirateDate = new Date(cuurentDate.getTime() + jwtExpirationDate);
 

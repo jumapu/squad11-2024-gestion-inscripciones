@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Student;
 
 
 import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;

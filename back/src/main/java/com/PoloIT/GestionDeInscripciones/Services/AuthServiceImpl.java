@@ -3,8 +3,8 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
@@ -30,6 +30,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private static final long jwtExpirationSesion = 7200000;
+    private static final long jwtExpirationResetPassword = 300000;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
@@ -42,13 +44,13 @@ public class AuthServiceImpl implements AuthService {
 
     public Map<String, String> authenticate(UserDto userDto) {
         String rol = authenticationAccount(userDto);
-        return Map.of("jwt", jwtService.generateJwt(userDto.email()), "rol", rol);
+        return Map.of("jwt", jwtService.generateJwt(userDto.email(), jwtExpirationResetPassword), "rol", rol);
     }
 
     public Map<String, String> register(UserDto userDto) {
         User user = userRepository.save(fromUser(userDto));
         setRol(user, userDto);
-        return Map.of("JWT", jwtService.generateJwt(userDto.email()), "rol", userDto.rol());
+        return Map.of("JWT", jwtService.generateJwt(userDto.email(), jwtExpirationSesion), "rol", userDto.rol());
 
     }
 
@@ -171,7 +173,7 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendEmail(
                 user.getEmail(),
                 "prueba para reset password",
-                jwtService.generateJwt(user.getEmail())
+                jwtService.generateJwt(user.getEmail(), jwtExpirationResetPassword)
         );
     }
 

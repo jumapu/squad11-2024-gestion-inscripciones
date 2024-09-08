@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller;
+package com.PoloIT.GestionDeInscripciones.Controller.Mentor;
 
 
 import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
@@ -30,10 +30,11 @@ public class MentorController {
 
 
     @GetMapping("get")
-    public ResponseEntity<Map<String,MentorDTO>> getStudentById() {
+    public ResponseEntity<Map<String, MentorDTO>> getStudentById() {
         MentorDTO body = new MentorDTO(userService.getUserRolContext(Mentor.class));
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
     }
+
     @Transactional
     @DeleteMapping("delete")
     public ResponseEntity<Map<String, String>> deleteStudent() {

@@ -2,7 +2,6 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
-import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
@@ -62,6 +61,13 @@ public class EventServiceImpl {
 
     }
 
+    public List<EventDTO> myEvents(Long id) {
+        return eventRepository.findAll().stream()
+                .filter(event -> event.getTeamGroup().getTeams().stream().anyMatch(team -> team.getStudents().stream().anyMatch(student -> student.getId().equals(id))))
+                .map(EventDTO::new)
+                .toList();
+    }
+
     public Resource loadResource(String filename) {
         return fileEventServices.loadResource(filename);
     }
@@ -89,7 +95,7 @@ public class EventServiceImpl {
     private Event setEvent(String data, HttpServletRequest request, MultipartFile file) {
 
         Event event = dataToEvent(data);
-        event.setAdmin(getAdminContext());
+        event.setAdmin(getUserContext().getAdmin());
         event.setImg(fileEventServices.saveFile(file, request));
         return event;
 
@@ -106,11 +112,10 @@ public class EventServiceImpl {
     }
 
 
-    private Admin getAdminContext() {
+    private User getUserContext() {
         return userRepository.findByEmail(
                         SecurityContextHolder.getContext().getAuthentication().getName()
                 )
-                .map(User::getAdmin)
                 .orElseThrow(() -> new ResponseException("505", "Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR));
     }
 

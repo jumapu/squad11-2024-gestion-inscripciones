@@ -3,6 +3,7 @@ package com.PoloIT.GestionDeInscripciones.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 
@@ -24,11 +25,16 @@ public class Student {
 
     private String name;
     private String lastName;
+    private String dni;
+    private String phone;
+    private LocalDate birthdate;
+    private String nationality;
+    private String graduationYear;
     private Set<String> rol;
     private Set<String> technologies;
     private Set<String> courses;
     private String linkedin;
-
+    private String imgUrl;
     //*Registration
     @ManyToMany(mappedBy = "students")
     private Set<Registration> registrations;
@@ -37,6 +43,9 @@ public class Student {
     @ManyToMany(mappedBy = "students")
     private Set<Team> team;
 
+    //*ONGS
+    @ManyToMany(mappedBy = "students")
+    private Set<Ong> ongs;
 
     @Override
     public boolean equals(Object o) {

@@ -1,8 +1,9 @@
-package com.PoloIT.GestionDeInscripciones.DTO.student;
+package com.PoloIT.GestionDeInscripciones.DTO;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 public record StudentDTO(

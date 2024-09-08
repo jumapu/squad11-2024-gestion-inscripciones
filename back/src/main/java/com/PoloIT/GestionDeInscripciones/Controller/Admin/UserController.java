@@ -2,11 +2,13 @@ package com.PoloIT.GestionDeInscripciones.Controller.Admin;
 
 import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.password.UpdatePasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +77,12 @@ public class UserController {
     public ResponseEntity<Map<String, List<MentorDTO>>> allMentors() {
         Map<String, List<MentorDTO>> body = mentorService.allMentor();
         return new ResponseEntity<>(body, HttpStatus.OK);
+    }
+    @Transactional
+    @PostMapping("updatePassword")
+    public ResponseEntity<Map<String, String>> updatePassword(@Valid @RequestBody UpdatePasswordDTO updatePasswordDTO) {
+        userService.updatePassword(updatePasswordDTO);
+        return new ResponseEntity<>(Map.of("msg", "The password was updated successfully"), HttpStatus.ACCEPTED);
     }
 
 }

@@ -18,11 +18,11 @@ import java.util.Objects;
 public class JwtService {
 
     private static final String private_key = "2ns7utNmJSCwdrx6KZpVEqUFdyoHMJoqGXQR7328y2Fi4UL2ggCKS4d8ZRIw8QHL";
-//pase el tiempo de expiracion al AuthenticService
+
     public String generateJwt(String email, long jwtExpiration) {
         {
             Map<String, Objects> claims = new HashMap<>();
-            return generateJwt(email, claims,jwtExpiration);
+            return generateJwt(email, claims, jwtExpiration);
         }
     }
 

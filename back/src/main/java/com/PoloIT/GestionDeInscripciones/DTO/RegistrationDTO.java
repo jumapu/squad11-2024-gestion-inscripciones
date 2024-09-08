@@ -1,6 +1,5 @@
 package com.PoloIT.GestionDeInscripciones.DTO;
 
-import com.PoloIT.GestionDeInscripciones.DTO.student.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
@@ -25,7 +24,7 @@ public record RegistrationDTO(
         this(registration.getCreatedAt(), registration.getFinishAt(), registration.getStudents().stream().map(StudentDTO::new).collect(Collectors.toSet()),
                 registration.getMentors().stream().map(MentorDTO::new).collect(Collectors.toSet()), registration.getUpdatedAt());
     }
-    //para que es este metodo, si ya tienes el constructor, de este record, para crear una instancia de RegistrationDTO
+
     public static RegistrationDTO convertRegistrationDTO(Registration registration) {
         return new RegistrationDTO(registration);
     }

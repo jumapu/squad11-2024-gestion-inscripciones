@@ -3,7 +3,6 @@ package com.PoloIT.GestionDeInscripciones.Services;
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
-import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import com.PoloIT.GestionDeInscripciones.Utils.FileUserServices;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -67,7 +65,7 @@ public class StudentServiceImpl {
                 .toList();
         return Map.of("Estudiantes", studentDTOS);
     }
-
+//user service ya tiene el getUserContext()
 
 
     public void delete() {

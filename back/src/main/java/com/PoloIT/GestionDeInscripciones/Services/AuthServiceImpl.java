@@ -3,8 +3,8 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EmailResetPasswordDTO;
-import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.UserDto;
+import com.PoloIT.GestionDeInscripciones.DTO.password.ResetPasswordDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Admin;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
@@ -15,6 +15,7 @@ import com.PoloIT.GestionDeInscripciones.Repository.AdminRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
+import com.PoloIT.GestionDeInscripciones.Utils.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,6 +30,8 @@ import java.util.*;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
+    private static final long jwtExpirationSesion = 7200000;
+    private static final long jwtExpirationResetPassword = 300000;
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
@@ -38,19 +41,16 @@ public class AuthServiceImpl implements AuthService {
     private final JwtService jwtService;
     private final EmailService emailService;
     private final UserServiceImpl userService;
-//como funciona la duracion de los tokens, quien controla la duracion de los mismos
-    private static final long jwtExpirationSesion = 7200000;
-    private static final long jwtExpirationResetPassword = 300000;
 
     public Map<String, String> authenticate(UserDto userDto) {
         String rol = authenticationAccount(userDto);
-        return Map.of("jwt", jwtService.generateJwt(userDto.email(),jwtExpirationResetPassword), "rol", rol);
+        return Map.of("jwt", jwtService.generateJwt(userDto.email(), jwtExpirationResetPassword), "rol", rol);
     }
 
     public Map<String, String> register(UserDto userDto) {
         User user = userRepository.save(fromUser(userDto));
         setRol(user, userDto);
-        return Map.of("JWT", jwtService.generateJwt(userDto.email(),jwtExpirationSesion), "rol", userDto.rol());
+        return Map.of("JWT", jwtService.generateJwt(userDto.email(), jwtExpirationSesion), "rol", userDto.rol());
 
     }
 
@@ -173,7 +173,7 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendEmail(
                 user.getEmail(),
                 "prueba para reset password",
-                jwtService.generateJwt(user.getEmail(),jwtExpirationResetPassword)
+                jwtService.generateJwt(user.getEmail(), jwtExpirationResetPassword)
         );
     }
 

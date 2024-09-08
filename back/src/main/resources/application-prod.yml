@@ -1,4 +1,6 @@
 #ENV PRODUCTION
+image:
+  directory: /app/images/
 
 spring:
   datasource:

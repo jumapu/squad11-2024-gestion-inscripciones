@@ -26,7 +26,7 @@ public class TeamGroup {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "teamGroup", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teamGroup")
     private Set<Team> teams;
 
 

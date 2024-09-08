@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Entity
 public class Team {
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "team_mentors",
             joinColumns = @JoinColumn(name = "team_id"),
@@ -20,7 +20,7 @@ public class Team {
     )
     private Set<Mentor> mentors;
     ;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     @JoinTable(
             name = "team_students",
             joinColumns = @JoinColumn(name = "team_id"),

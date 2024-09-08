@@ -1,6 +1,7 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,9 +22,13 @@ public class Event {
     private Long id;
     private String name;
     private String description;
+    private String img;
 
     @Column(name = "is_active")
+    @JsonProperty("isActive")
     private boolean isActive;
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -31,12 +36,13 @@ public class Event {
     private LocalDateTime finishAt;
 
     //* RELATIONSHIP WITH REGISTRATION
-    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private Registration registration;
 
     //* RELATIONSHIP WITH TEAMS
-    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     private TeamGroup teamGroup;
+
 
     //* RELATIONSHIP WITH ADMIN
     @ManyToOne()

@@ -43,7 +43,7 @@ const egresadoSlice = createSlice({
   },
 });
 // Conteo de egresados
-export const selectEgresadoCount = (state) => state.mentor.mentorCount;
+export const selectEgresadoCount = (state) => state.egresado.egresadoCount;
 // Exportar acciones y reducer
 export const { clearEgresadoData } = egresadoSlice.actions;
 export default egresadoSlice.reducer;

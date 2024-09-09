@@ -5,9 +5,6 @@ const Dashboard = () => {
   return (
    <div>    
     <DashboardDrawer/>
-    
-
-
    </div>
   );
 };

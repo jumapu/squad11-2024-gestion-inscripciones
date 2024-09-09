@@ -11,7 +11,7 @@ export const listmentors = createAsyncThunk("mentors/listMentors", async () => {
   try {
     const response = await mentorsList();
     const mentorData = response.data;
-
+    console.log(response.data);
     return mentorData;
   } catch (error) {
     console.error("Error buscar mentores:", error);
@@ -35,9 +35,10 @@ const mentorSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(listmentors.fulfilled, (state, action) => {
-      state.loading = "exito";
+      state.loading = false;
       state.mentorData = action.payload;
-      state.mentorCount = action.payload.length; //calcula y almacena la longitud de la lista recibida
+      state.mentorCount = action.payload.length;
+      console.log(state.mentorCount) //calcula y almacena la longitud de la lista recibida
     });
     builder.addCase(listmentors.pending, (state) => {
       state.loading = true;

@@ -11,17 +11,27 @@ import { styled } from '@mui/material/styles';
 // import { selectMentorCount } from '@/store/slice/mentorSlice';
 // import { selectEventoCount } from "@/store/slice/eventosSlice";
 // import { selectEgresadoCount } from '@/store/slice/egresadoSlice';
+// import { selectTeamCount } from "@/store/slice/teamSlice";
 
 export default function DashboardCard() {
+const mentorCount = 20;
+const eventoCount = 3;
+const egresadoCount = 150;
+const teamCount = 15;
+    // const mentorCount = useSelector(selectMentorCount);
+    // const eventoCount = useSelector(selectEventoCount);
+    // const egresadoCount = useSelector(selectEgresadoCount);
+    // const teamCount = useSelector(selectTeamCount);
+
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',
         ...theme.typography.body2,
         textAlign: 'center',
         display: "flex",
         flexDirection: "row",
-        alignItems: " center",
+        alignItems: "center",
         justifyContent: "space-around",
-        padding: theme.spacing(1),
+        padding: theme.spacing(0.5),
         color: theme.palette.text.secondary,
         ...theme.applyStyles('dark', {
             backgroundColor: '#1A2027',
@@ -29,15 +39,13 @@ export default function DashboardCard() {
     }));
 
     const datos = [
-        { icon: <GiGraduateCap />, text: "Egresados", total: 'egresadoCount' },
-        { icon: <MdOutlineGroup />, text: "Mentores", total: 'mentorCount' },
-        { icon: <IoCalendar />, text: "Eventos", total: 'eventoCount' },
-        { icon: <RiTeamFill />, text: "Squads", total: 'teamCount' }
+        { icon: <GiGraduateCap />, text: "Egresados", total: egresadoCount },
+        { icon: <MdOutlineGroup />, text: "Mentores", total: mentorCount },
+        { icon: <IoCalendar />, text: "Eventos", total: eventoCount },
+        { icon: <RiTeamFill />, text: "Squads", total: teamCount }
     ];
-
-    // const mentorCount = useSelector(selectMentorCount);
-    // const eventoCount = useSelector(selectEventoCount);
-    // const egresadoCount = useSelector(selectEgresadoCount);
+   
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
@@ -55,7 +63,7 @@ export default function DashboardCard() {
                                     {item.total}
                                 </Typography>
                             </Box>
-                        </Item>
+                        </Item>    
                     </Grid>
                 ))}
             </Grid>

@@ -21,6 +21,8 @@ import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import Avatar from '@mui/material/Avatar';
 import DashboardCard from './DashboardCard';
+import DashboardChart from './DashboardChart';
+import DashboardCalendar from './DashboardCalendar';
 
 const drawerWidth = 240;
 
@@ -76,8 +78,8 @@ function DashboardDrawer() {
     return (
 
         <Box sx={{
-            width: { sm: `calc(100% - ${drawerWidth}px)` },
-            ml: { sm: `${drawerWidth}px` },
+            width: { sm: `calc(100vw - ${drawerWidth}px)`, md:'screen' },
+            ml: { sm: `${drawerWidth}px`},
         }}>
             <CssBaseline />
             <Box
@@ -130,12 +132,11 @@ function DashboardDrawer() {
                         }}
                         >Administrador</Typography>
                     </Box>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+                    <Avatar alt="" src="/static/images/avatar/1.jpg" />
                 </Box>
             </Box>
             <Box>
                 <Drawer
-
                     variant="temporary"
                     open={mobileOpen}
                     onTransitionEnd={handleDrawerTransitionEnd}
@@ -163,9 +164,11 @@ function DashboardDrawer() {
             </Box>
             <Box
                 component="main"
-                sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+                sx={{ flexGrow: 1, p: 3 }}>
                 <Toolbar />                
                 <DashboardCard/>
+                <DashboardChart/>
+                <DashboardCalendar/>
             </Box>
         </Box>
     );

@@ -1,18 +1,16 @@
-// Lógica para gestionar la información utilizando Redux Toolkit. 
+// Lógica para gestionar la información utilizando Redux Toolkit.
 // Permite:
 // Obtener datos de mentores de manera asíncrona mediante una acción.
 // Almacenar esos datos en el estado de la aplicación.
 // Manejar el estado de carga y posibles errores.
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { mentorsList } from "@/api/mentor";
+import { mentorsList } from "@/api/admin/mentor";
 //Thunk para listar mentores
 export const listmentors = createAsyncThunk("mentors/listMentors", async () => {
   try {
     const response = await mentorsList();
-    const mentorData = response.data;
-    console.log(response.data);
-    return mentorData;
+    return response;
   } catch (error) {
     console.error("Error buscar mentores:", error);
     throw error;
@@ -38,7 +36,7 @@ const mentorSlice = createSlice({
       state.loading = false;
       state.mentorData = action.payload;
       state.mentorCount = action.payload.length;
-      console.log(state.mentorCount) //calcula y almacena la longitud de la lista recibida
+      console.log(state.mentorCount); //calcula y almacena la longitud de la lista recibida
     });
     builder.addCase(listmentors.pending, (state) => {
       state.loading = true;

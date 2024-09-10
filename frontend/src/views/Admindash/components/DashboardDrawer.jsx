@@ -20,9 +20,6 @@ import { PiGearFill } from "react-icons/pi";
 import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import Avatar from '@mui/material/Avatar';
-import DashboardCard from './DashboardCard';
-import DashboardChart from './DashboardChart';
-import DashboardCalendar from './DashboardCalendar';
 
 const drawerWidth = 240;
 
@@ -80,6 +77,7 @@ function DashboardDrawer() {
         <Box sx={{
             width: { sm: `calc(100vw - ${drawerWidth}px)`, md:'screen' },
             ml: { sm: `${drawerWidth}px`},
+            maxWidth: "1440px",
         }}>
             <CssBaseline />
             <Box
@@ -119,7 +117,7 @@ function DashboardDrawer() {
                     sx={ {  
                          display: { xs: 'none', sm: 'block' } ,
                         flexDirection: "column",
-                        textAlign: "right",                       
+                        textAlign: "right",             
                     }}
                     >
                         <Typography>Fulano de Tal</Typography>
@@ -162,14 +160,7 @@ function DashboardDrawer() {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />                
-                <DashboardCard/>
-                <DashboardChart/>
-                <DashboardCalendar/>
-            </Box>
+           
         </Box>
     );
 }

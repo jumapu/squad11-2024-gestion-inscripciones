@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2';
 import Typography from '@mui/material/Typography';
 import { GiGraduateCap } from "react-icons/gi";
 import { MdOutlineGroup } from "react-icons/md";
@@ -31,7 +30,8 @@ const teamCount = 15;
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-around",
-        padding: theme.spacing(0.5),
+        padding: theme.spacing(1),
+        width: "150px",
         color: theme.palette.text.secondary,
         ...theme.applyStyles('dark', {
             backgroundColor: '#1A2027',
@@ -48,12 +48,12 @@ const teamCount = 15;
     
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={{ xs: 2, md: 2 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+            <Box display={"flex"} flexDirection={"row"} gap={2} flexWrap={"wrap"}>
                 {datos.map((item, index) => (
-                    <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
-                        <Item>
+                    <Box key={index} >
+                        <Item >
                             <Box>
-                                {item.icon}
+                                {item.icon }
                             </Box>
                             <Box>
                                 <Typography>
@@ -64,9 +64,9 @@ const teamCount = 15;
                                 </Typography>
                             </Box>
                         </Item>    
-                    </Grid>
+                    </Box>
                 ))}
-            </Grid>
+            </Box>
         </Box>
     );
 }

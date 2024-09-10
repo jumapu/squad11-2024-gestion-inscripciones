@@ -18,18 +18,17 @@ import java.util.Objects;
 public class JwtService {
 
     private static final String private_key = "2ns7utNmJSCwdrx6KZpVEqUFdyoHMJoqGXQR7328y2Fi4UL2ggCKS4d8ZRIw8QHL";
+    private static final long jwtExpiration = 7200000;
+    private static final long jwtExpirationResetPassword = 300000;
 
-    public String generateJwt(String email, long jwtExpiration) {
-//        por que esta enserrado en un bloque de codigo
-        {
-            Map<String, Objects> claims = new HashMap<>();
-            return generateJwt(email, claims, jwtExpiration);
-        }
+    public String generateJwt(String email) {
+        Map<String, Objects> claims = new HashMap<>();
+        return generateJwt(email, claims);
     }
 
-    public String generateJwt(String email, Map<String, Objects> claims, long jwtExpirationDate) {
+    public String generateJwt(String email, Map<String, Objects> claims) {
         Date cuurentDate = new Date();
-        Date ExpirateDate = new Date(cuurentDate.getTime() + jwtExpirationDate);
+        Date ExpirateDate = new Date(cuurentDate.getTime() + jwtExpiration);
 
         String token = Jwts.builder()
                 .claims(claims)
@@ -39,6 +38,20 @@ public class JwtService {
                 .signWith(getKey(), SignatureAlgorithm.HS256).
                 compact();
 
+
+        return "Bearer " + token;
+    }
+
+    public String tokenResetPassword(String email) {
+        Date cuurentDate = new Date();
+        Date ExpirateDate = new Date(cuurentDate.getTime() + jwtExpirationResetPassword);
+
+        String token = Jwts.builder()
+                .subject(email)
+                .issuedAt(cuurentDate)
+                .expiration(ExpirateDate)
+                .signWith(getKey(), SignatureAlgorithm.HS256).
+                compact();
 
         return "Bearer " + token;
     }

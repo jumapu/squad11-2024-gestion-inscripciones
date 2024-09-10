@@ -94,7 +94,7 @@ public class UserServiceImpl implements IUserServiceIpml {
     private Mentor dataToMentor(String data) {
         try {
             MentorDTO mentorDTO = objectMapper.readValue(data, MentorDTO.class);
-            return MentorDTO.toEntity(mentorDTO);
+            return MentorDTO.fromMentor(mentorDTO);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new ResponseException("404", "ERROR EN EL SERVIDOR", HttpStatus.INTERNAL_SERVER_ERROR);

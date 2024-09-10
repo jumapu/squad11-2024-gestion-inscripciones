@@ -37,7 +37,7 @@ public record MentorDTO(
     }
 
     //* Convierte una entidad Mentor a MentorDTO utilizando el DTO actual.
-    public static MentorDTO fromMentor(Mentor mentor) {
+    public static MentorDTO fromMentorDTO(Mentor mentor) {
         return new MentorDTO(
                 mentor.getId(),
                 mentor.getName(),
@@ -54,7 +54,7 @@ public record MentorDTO(
     }
 
     //* Convierte un MentorDTO a la entidad Mentor.
-    public static Mentor toEntity(MentorDTO mentorDTO) {
+    public static Mentor fromMentor(MentorDTO mentorDTO) {
         return Mentor.builder()
                 .id(mentorDTO.id)
                 .name(mentorDTO.name)

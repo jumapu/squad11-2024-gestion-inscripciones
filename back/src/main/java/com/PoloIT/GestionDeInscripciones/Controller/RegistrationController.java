@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller.Student;
+package com.PoloIT.GestionDeInscripciones.Controller;
 
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/event/")
 @AllArgsConstructor
-public class EventController {
+public class RegistrationController {
 
     private final EventServiceImpl eventService;
     private final RegistrationServiceImpl registrationService;
@@ -32,13 +32,6 @@ public class EventController {
     public ResponseEntity<Map<String, List<EventDTO>>> myEvents(@PathVariable Long id) {
         List<EventDTO> body = eventService.myEvents(id);
         return new ResponseEntity<>(Map.of("Mis eventos", body), HttpStatus.CREATED);
-    }
-
-
-    @GetMapping("all")
-    public ResponseEntity<Map<String, List<EventDTO>>> allEvent(@PathVariable Long id) {
-        Map<String, List<EventDTO>> body = eventService.all();
-        return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
 

@@ -18,7 +18,7 @@ export default function DashboardChart() {
         }),
     }));
     return (
-        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} flexGrow={1} marginTop={3} justifyContent={"space-around"} alignItems={"center"}>
+        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} flexGrow={1} marginTop={3} justifyContent={"space-around"} alignItems={"start"}>
             <Box display={'flex'} flexDirection={'row'} flexWrap={"wrap"} gap={2}>
                 <Item>
                     <Typography>

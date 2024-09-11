@@ -22,7 +22,7 @@ export default function DateCalendarValue() {
     }));
   
     return (
-        <Box display={'flex'} flexDirection={'row'} marginTop={3}>
+        <Box display={'flex'} alignItems={"start"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>          
           <Item>
             <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />

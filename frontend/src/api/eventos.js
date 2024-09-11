@@ -1,13 +1,13 @@
 import axios from 'axios';
 //import apiClient from './apiClient';
 
-const API='https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
-//http://localhost:8080/swagger-ui/index.html#/
+const API='https://squad-docker.onrender.com/api'
+//http://localhost:8080/v3/api-docs
 
 export const eventosList= async () => 
 {
     try {
-        const response =  await axios.get(`${API}/evento/`) 
+        const response =  await axios.get(`${API}/v1/admin/event/all`) 
         // const response = await apiClient.get ('/evento/')
         //console.log(response.data);
         return response
@@ -17,9 +17,35 @@ export const eventosList= async () =>
     }
 }
 
+export const eventosActivos= async () => 
+    {
+        try {
+            const response =  await axios.get(`${API}/v1/admin/event/all/active`) 
+            // const response = await apiClient.get ('/evento/')
+            //console.log(response.data);
+            return response
+        } catch (error) {
+            console.error('error al ver los eventos:', error)
+            throw error
+        }
+    }
+
+    export const eventosNoActivos= async () => 
+        {
+            try {
+                const response =  await axios.get(`${API}/v1/admin/event/all/notActive`) 
+                // const response = await apiClient.get ('/evento/')
+                //console.log(response.data);
+                return response
+            } catch (error) {
+                console.error('error al ver los eventos:', error)
+                throw error
+            }
+        }
+
 export const eventosPost = async (data) =>{
     try {
-        const response = await axios.post(`${API}/evento/`,data)
+        const response = await axios.post(`${API}/v1/admin/event/save`,data)
         // const response = await apiClient.post ('/evento', data)
         //console.log(response.data);
         return response
@@ -31,7 +57,7 @@ export const eventosPost = async (data) =>{
 
 export const eventosOne = async (id) => {
     try {
-        const response = await axios.get(`${API}/evento/${id}`)
+        const response = await axios.get(`${API}/v1/admin/event/${id}`)
         // const response = await apiClient.get ('/evento/${id}')
         //console.log(response.data);
         return response;
@@ -43,7 +69,7 @@ export const eventosOne = async (id) => {
 
 export const eventosDelete = async (id) => {
     try {
-        const response = await axios.delete(`${API}/evento/${id}`)
+        const response = await axios.delete(`${API}/v1/admin/event/${id}`)
          // const response = await apiClient.delete ('/evento/${id}')
         if (response.status === 200) {
             console.log('evento borrado exitosamente');
@@ -57,7 +83,7 @@ export const eventosDelete = async (id) => {
 
 export const eventosUpdate = async (data) => {
     try {
-        const response = await axios.put(`${API}/evento/${data.id}`, data)
+        const response = await axios.patch(`${API}/v1/admin/event/update/${data.id}`, data)
          // const response = await apiClient.put ('/evento/${data.id}',data)
         if (response.status === 200) {
             console.log('Evento editado exitosamente');

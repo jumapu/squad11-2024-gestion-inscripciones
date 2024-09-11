@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API='http://gestioninscripciones.us-east-2.elasticbeanstalk.com/'
-//http://localhost:8080/swagger-ui/index.html#/
+const API='https://squad-docker.onrender.com/api/v1'
+//https://squad-docker.onrender.com/
 
 export const adminsList= async () => 
 {

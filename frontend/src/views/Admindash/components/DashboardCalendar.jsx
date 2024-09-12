@@ -8,23 +8,21 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
 export default function DateCalendarValue() {
-    const [value, setValue] = useState(dayjs('2022-04-17'));
+    const [value, setValue] = useState(dayjs('2023-12-25'));
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',
         ...theme.typography.body2,
         padding: theme.spacing(1),
         color: theme.palette.text.secondary,
-        width: '100%',
+        maxWidth: '400px',
         flexGrow: 1,
-        marginTop: theme.spacing(3),
-        marginRight: theme.spacing(2),
         ...theme.applyStyles('dark', {
             backgroundColor: '#1A2027',
         }),
     }));
   
     return (
-        <Box display={'flex'} flexDirection={'row'}>
+        <Box display={'flex'} alignItems={"start"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>          
           <Item>
             <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />

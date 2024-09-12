@@ -4,8 +4,8 @@ import { toast } from "sonner";
 
 //* Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1", //* Configura la URL base de tu API
-  //localhost:8080/swagger-ui/index.html#/
+  baseURL: "https://squad-docker.onrender.com/api/v1", //* Configura la URL base de tu API
+  //http://localhost:8080/v3/api-docs
   //v3/api-docs
 });
 

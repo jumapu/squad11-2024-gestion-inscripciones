@@ -20,13 +20,10 @@ import { PiGearFill } from "react-icons/pi";
 import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import Avatar from '@mui/material/Avatar';
-import DashboardCard from './DashboardCard';
-import DashboardChart from './DashboardChart';
-import DashboardCalendar from './DashboardCalendar';
 
 const drawerWidth = 240;
 
-function DashboardDrawer() {
+function NavAndDrawer() {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
 
@@ -78,8 +75,9 @@ function DashboardDrawer() {
     return (
 
         <Box sx={{
-            width: { sm: `calc(100vw - ${drawerWidth}px)`, md:'screen' },
-            ml: { sm: `${drawerWidth}px`},
+            width: { sm: `calc(100vw - ${drawerWidth}px)`, md: 'screen' },
+            ml: { sm: `${drawerWidth}px` },
+            maxWidth: "1440px",
         }}>
             <CssBaseline />
             <Box
@@ -95,43 +93,30 @@ function DashboardDrawer() {
                     aria-label="open drawer"
                     edge="start"
                     onClick={handleDrawerToggle}
-                    sx={{ mr: 2, gap:"1rem", display: { sm: 'none' } }}
+                    sx={{ mr: 2, gap: "1rem", display: { sm: 'none' } }}
                 >
                     <IoMenu />
                 </IconButton>
-                <Typography variant="h6" noWrap component="div"
-                    sx={{
-                        padding: "1.5rem",
-                        gap: "2rem",
-                    }}
-                >
-                    Dashboard
-                </Typography>
+
                 <Box
                     sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "1.5rem",
-                        gap: "1rem"
+                        display: { xs: 'none', sm: 'block' },
+                        flexDirection: "column",
+                        textAlign: "right",
+                        justifyContent: "flex-end",
                     }}
                 >
-                    <Box 
-                    sx={ {  
-                         display: { xs: 'none', sm: 'block' } ,
-                        flexDirection: "column",
-                        textAlign: "right",                       
-                    }}
-                    >
-                        <Typography>Fulano de Tal</Typography>
-                        <Typography component="div" 
-                        sx={{
-                            fontSize: "0.85rem",
-                            color: "slategrey",
-                            opacity: .5,
-                            fontWeight: "500",
-                        }}
-                        >Administrador</Typography>
+                </Box>
+                <Box display={"flex"} flexDirection={"row"} paddingX={"1rem"}>
+                    <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-end"} paddingX={"2rem"}>
+                        <Typography>
+                            Fulano de Tal
+                        </Typography>
+                        <Typography fontSize={"0.85rem"} color='slategray'>
+                            Administrador
+                        </Typography>
                     </Box>
+
                     <Avatar alt="" src="/static/images/avatar/1.jpg" />
                 </Box>
             </Box>
@@ -162,16 +147,9 @@ function DashboardDrawer() {
                     {drawer}
                 </Drawer>
             </Box>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, p: 3 }}>
-                <Toolbar />                
-                <DashboardCard/>
-                <DashboardChart/>
-                <DashboardCalendar/>
-            </Box>
+
         </Box>
     );
 }
 
-export default DashboardDrawer;
+export default NavAndDrawer;

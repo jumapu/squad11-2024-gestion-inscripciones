@@ -1,8 +1,6 @@
 import axiosInstance from "./interceptor.js";
 import { toast } from "sonner";
 
-
-
 export const userLogin = async (data, signIn, navigate) => {
   //* Usar Object.entries() para obtener clave e índice
   for (const [key, value] of Object.entries(data)) {
@@ -11,7 +9,7 @@ export const userLogin = async (data, signIn, navigate) => {
       return;
     }
   }
- 
+
   axiosInstance.post(`auth/authentication`, data).then((res) => {
     console.log(res);
     signIn({
@@ -23,9 +21,10 @@ export const userLogin = async (data, signIn, navigate) => {
         rol: data?.rol,
         email: data?.email,
       },
-    })
+    });
     if (res.rol === "admin") {
-      toast.error("Este usuario no tiene permisos suficientes para poder acceder");
+      //   toast.error("Este usuario no tiene permisos suficientes para poder acceder");
+      navigate("/admindash");
       return;
     }
 

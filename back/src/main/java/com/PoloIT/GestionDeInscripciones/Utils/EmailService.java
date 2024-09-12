@@ -1,6 +1,5 @@
 package com.PoloIT.GestionDeInscripciones.Utils;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -10,8 +9,8 @@ public class EmailService {
 
     private final JavaMailSender emailSender;
     //[4/9] traigo las configuracione del remitente del email
-    @Value("${mail}")
-    private String userEmailEjemplo;
+//    @Value("${mail}")
+    private String userEmailEjemplo = "";
 
     //creo el contructor por que al usar @AllArgsConstructor me crea una instancia de userEmailEjemplo mas que y no me permite tomar el valor de aplication.yml con @Value
     public EmailService(JavaMailSender emailSender) {

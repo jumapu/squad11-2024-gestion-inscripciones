@@ -3,8 +3,12 @@ package com.PoloIT.GestionDeInscripciones.Services;
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
+import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Entity.User;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
+import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import com.PoloIT.GestionDeInscripciones.Utils.FileEventServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,10 +31,25 @@ import java.util.Map;
 public class EventServiceImpl {
 
     private final UserRepository userRepository;
+    private final StudentRepository studentRepository;
+    private final MentorRepository mentorRepository;
     private final EventRepository eventRepository;
     private final FileEventServices fileEventServices;
     private final ObjectMapper objectMapper;
 
+
+    //! para luz que haga las pruebas
+    public void registerUserEvent(Long id) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
+        List<Student> students = studentRepository.findAll();
+        List<Mentor> mentors = mentorRepository.findAll();
+
+        event.getRegistration().getStudents().addAll(students);
+        event.getRegistration().getMentors().addAll(mentors);
+
+        eventRepository.save(event);
+    }
 
     public void save(String data, MultipartFile file, HttpServletRequest request) {
         Event event = setEvent(data, request, file);

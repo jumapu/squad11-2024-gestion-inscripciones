@@ -2,7 +2,7 @@
 #Perfiles DEV, QA, PROD
 spring:
   profiles:
-    active: cristian  # Activa el perfil 'PROD' por defecto si no se especifica otro
+    active: qa
 
 #Cuidado con h2 y la entidad user ya que es una palabra reservada por lo visto.
 #En mysql no ocurre este inconveniente.

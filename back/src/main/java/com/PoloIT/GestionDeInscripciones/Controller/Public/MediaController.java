@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 @RestController
-@RequestMapping("/api/v1/public/")
+@RequestMapping("/api/v1/public/media/")
 @RequiredArgsConstructor
 public class MediaController {
     private final EventServiceImpl eventServiceImpl;
     private final StudentServiceImpl studentService;
 
-    @GetMapping("/media/event/{filename:.+}")
+    @GetMapping("event/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadEvent(@PathVariable String filename) throws IOException, IOException {
         Resource file = eventServiceImpl.loadResource(filename);
@@ -34,7 +34,7 @@ public class MediaController {
 
     }
 
-    @GetMapping("/media/profile/{filename:.+}")
+    @GetMapping("profile/{filename:.+}")
     @ResponseBody
     public ResponseEntity<Resource> loadProfile(@PathVariable String filename) throws IOException, IOException {
         Resource file = studentService.loadResource(filename);

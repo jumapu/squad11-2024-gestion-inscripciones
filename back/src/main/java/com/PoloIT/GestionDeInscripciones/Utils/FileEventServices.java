@@ -47,7 +47,7 @@ public class FileEventServices {
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         String url = ServletUriComponentsBuilder
                 .fromHttpUrl(host)
-                .path("/api/v1/media/event/")
+                .path("/api/v1/public/media/event/")
                 .path(fileName)
                 .toUriString();
 

@@ -95,8 +95,6 @@ public class AuthServiceImpl implements AuthService {
 
         if (user.getRol().name().equalsIgnoreCase("admin")) {
 
-            //!Quitar en Prod
-            seedData();
             adminRepository.save(
                     Admin.builder()
                             .name(userDto.name())
@@ -160,6 +158,30 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
+    private Mentor createMentor(String username, Set<String> roles) {
+        return Mentor.builder()
+                .user(User.builder()
+                        .password(encoder.encode("12345678"))
+                        .email(username + "@gmail.com")
+                        .rol(Rol.MENTOR)
+                        .build())
+                .rol(roles)
+                .name(username)
+                .build();
+    }
+
+    private Student createStudent(String username, Set<String> roles) {
+        return Student.builder()
+                .user(User.builder()
+                        .password(encoder.encode("12345678"))
+                        .email(username + "@gmail.com")
+                        .rol(Rol.STUDENT)
+                        .build())
+                .name(username)
+                .rol(roles)
+                .build();
+    }
+
     public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
 //        el mensaje de exception no deveria ser no found?
         User user = userRepository.findByEmail(emailResetPasswordDTO.email())
@@ -176,17 +198,6 @@ public class AuthServiceImpl implements AuthService {
         );
     }
 
-    private Student createStudent(String username, Set<String> roles) {
-        return Student.builder()
-                .user(User.builder()
-                        .password(encoder.encode("12345678"))
-                        .email(username + "@gmail.com")
-                        .rol(Rol.STUDENT)
-                        .build())
-                .name(username)
-                .rol(roles)
-                .build();
-    }
 
     public void applyNewPassword(ResetPasswordDTO resetPasswordDTO) {
         if (!resetPasswordDTO.confirmPassword().equals(resetPasswordDTO.password()))
@@ -194,18 +205,6 @@ public class AuthServiceImpl implements AuthService {
 
         userService.getUserContext().resetPassword(encoder.encode(resetPasswordDTO.password()));
 
-    }
-
-    private Mentor createMentor(String username, Set<String> roles) {
-        return Mentor.builder()
-                .user(User.builder()
-                        .password(encoder.encode("12345678"))
-                        .email(username + "@gmail.com")
-                        .rol(Rol.MENTOR)
-                        .build())
-                .rol(roles)
-                .name(username)
-                .build();
     }
 
 }

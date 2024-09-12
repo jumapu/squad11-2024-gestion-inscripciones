@@ -1,9 +1,10 @@
-#ENV DEVELOPER
+#ENV PRODUCTION
 image:
-  directory: ./images/
+  directory:
+    event: images/events/
+    profile: images/profiles/
 
 spring:
-  profiles: dev,qa
   datasource:
     url: jdbc:h2:mem:testdb;
     username: sa
@@ -18,3 +19,20 @@ spring:
       enabled: true
       path: /h2-console
 
+  #[5/9] seteo configuraciones del remitente del email
+  # configuraciones del remitente del email
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email}
+    password: ${email_password}
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#email de ejemplo para probar /resetPassword
+mail: ${email_user_ejemplo}

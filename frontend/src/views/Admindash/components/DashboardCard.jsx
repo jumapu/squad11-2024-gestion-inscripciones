@@ -6,8 +6,8 @@ import { IoCalendar } from "react-icons/io5";
 import { RiTeamFill } from "react-icons/ri";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
-import { selectMentorCount } from "@/store/slice/mentorSlice";
+// import { useSelector } from "react-redux";
+// import { selectMentorCount } from "@/store/slice/mentorSlice";
 // import { selectEventoCount } from "@/store/slice/eventosSlice";
 // import { selectEgresadoCount } from '@/store/slice/egresadoSlice';
 // import { selectTeamCount } from "@/store/slice/teamSlice";
@@ -16,10 +16,11 @@ export default function DashboardCard() {
   const eventoCount = 3;
   const egresadoCount = 150;
   const teamCount = 15;
-  const mentorCount = useSelector(selectMentorCount);
-  // const eventoCount = useSelector(selectEventoCount);
-  // const egresadoCount = useSelector(selectEgresadoCount);
-  // const teamCount = useSelector(selectTeamCount);
+  const mentorCount = 20;
+// const mentorCount = useSelector(selectMentorCount);
+//   const eventoCount = useSelector(selectEventoCount);
+//   const egresadoCount = useSelector(selectEgresadoCount);
+//   const teamCount = useSelector(selectTeamCount);
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',

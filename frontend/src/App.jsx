@@ -6,7 +6,6 @@ import Egresadosdash from "./views/Egresadosdash/Egresadosdash";
 import Mentordash from "./views/Mentordash/Mentordash";
 import AdminHome from "./views/Admindash/AdminHome";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
-import Dashboard from "./views/Admindash/components/Dashboard";
 import Egresados from "./views/Admindash/Egresados";
 
 function App() {
@@ -17,7 +16,6 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Register />} />
         <Route path="/admindash" element={<AdminHome />}></Route> 
-        <Route path="/admindash/dashboard" element={<Dashboard />}></Route> 
         <Route path="/admindash/egresados" element={<Egresados />}></Route> 
         <Route element={<AuthOutlet fallbackPath="/login" />}>
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>

@@ -1,7 +1,7 @@
 // import { Outlet} from 'react-router-dom';
-import NavAndDrawer from './components/NavAndDrawer';
-import DashboardCard from './components/DashboardCard';
-import DashboardChart from './components/DashboardChart';
+import NavAndDrawer from './NavAndDrawer';
+import DashboardCard from './DashboardCard';
+import DashboardChart from './DashboardChart';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -15,6 +15,7 @@ const Dashboard = () => {
         component="main"
         sx={{ flexGrow: 1, p: 3 }}
       >
+        
         <Box sx={{
           width: { sm: `calc(100vw - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },

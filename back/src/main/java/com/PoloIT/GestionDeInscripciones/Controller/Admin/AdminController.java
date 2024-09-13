@@ -4,6 +4,7 @@ import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,4 +29,5 @@ public class AdminController {
         StudentDTO body = studentService.getById(id);
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.PoloIT.GestionDeInscripciones.Controller.Admin;
+package com.PoloIT.GestionDeInscripciones.Controller;
 
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
@@ -24,9 +24,8 @@ public class EventController {
 
     @PostMapping("save")
     public ResponseEntity<Map<String, String>> registerEvent(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
+//data es el Json que contioene los datos de la entidad que se maneja en el controlador
         eventServiceImpl.save(data, file, request);
-
-
         return new ResponseEntity<>(Map.of("Event", "Save Event"), HttpStatus.CREATED);
     }
 

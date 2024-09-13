@@ -4,7 +4,6 @@ import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseExcept
 import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
-import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import com.PoloIT.GestionDeInscripciones.Utils.FileUserServices;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +22,6 @@ import java.util.Objects;
 public class StudentServiceImpl {
     private final StudentRepository studentRepository;
     private final UserServiceImpl userService;
-    private final UserRepository userRepository;
     private final FileUserServices fileUserServices;
 
     public void update(StudentDTO studentDTO) {
@@ -67,13 +65,8 @@ public class StudentServiceImpl {
     }
 //user service ya tiene el getUserContext()
 
-
     public void delete() {
         userService.getUserContext().setDelete(true);
     }
 
-
-    public void delete() {
-        userService.getUserContext().setDelete(true);
-    }
 }

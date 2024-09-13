@@ -20,7 +20,7 @@ public record TeamDTO(
     public static Team converTeam(TeamDTO teamDTO) {
         return Team.builder()
                 .students(teamDTO.students.stream().map(StudentDTO::fromStudent).collect(Collectors.toSet()))
-                .mentors(teamDTO.mentors.stream().map(MentorDTO::convertMentor).collect(Collectors.toSet()))
+                .mentors(teamDTO.mentors.stream().map(MentorDTO::toEntity).collect(Collectors.toSet()))
                 .id(teamDTO.id)
                 .build();
     }

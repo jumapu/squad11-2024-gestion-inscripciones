@@ -35,6 +35,7 @@ public class UserController {
 
     @PostMapping("save/mentor")
     public ResponseEntity<Map<String, String>> registerMentor(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
+//no entiendo que datos se se guardan en Data
         userService.registerMentor(data, file, request);
         return new ResponseEntity<>(Map.of("Usuario", "Se creo el usuario."), HttpStatus.OK);
     }

@@ -43,7 +43,7 @@ public class UserController {
     @DeleteMapping("{id}")
     public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
         userService.delete(id);
-        return new ResponseEntity<>(Map.of("Admin", "user eliminado"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "user eliminado"), HttpStatus.OK);
     }
 
     @GetMapping("student/{id}")

@@ -1,5 +1,6 @@
 package com.PoloIT.GestionDeInscripciones.Entity;
 
+import com.PoloIT.GestionDeInscripciones.DTO.admin.AdminUpdateDTO;
 import com.PoloIT.GestionDeInscripciones.Enums.Rol;
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,6 +49,11 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Student student;
 
+    public User(AdminUpdateDTO adminUpdateDTO) {
+        this.email = adminUpdateDTO.email();
+    }
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(rol.name()));
@@ -61,7 +67,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return this.email;
-
     }
 
     @Override
@@ -100,5 +105,9 @@ public class User implements UserDetails {
 
     public void resetPassword(String ecriptPassword) {
         this.password = ecriptPassword;
+    }
+
+    public void update(AdminUpdateDTO adaminUpdateDTO) {
+        this.email = adaminUpdateDTO.email();
     }
 }

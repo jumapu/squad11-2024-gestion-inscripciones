@@ -1,6 +1,11 @@
 package com.PoloIT.GestionDeInscripciones.Controller.Admin;
 
+import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
 import com.PoloIT.GestionDeInscripciones.DTO.StudentDTO;
+import com.PoloIT.GestionDeInscripciones.DTO.admin.AdminUpdateDTO;
+import com.PoloIT.GestionDeInscripciones.Entity.User;
+import com.PoloIT.GestionDeInscripciones.Services.AdminServiceImpl;
+import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
 import jakarta.transaction.Transactional;
@@ -18,16 +23,29 @@ import java.util.Map;
 public class AdminController {
     private final UserServiceImpl userService;
     private final StudentServiceImpl studentService;
+    private final MentorServiceImpl mentorServiceImpl;
+    private final AdminServiceImpl adminService;
     @Transactional
     @DeleteMapping("deleteUser/{id}")
-    public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return new ResponseEntity<>(Map.of("Admin", "user eliminado"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "user eliminado"), HttpStatus.OK);
     }
-    @GetMapping("getUser/{id}")
-    public ResponseEntity<Map<String, StudentDTO>> getStudentById(@PathVariable Long id) {
+    @GetMapping("getStudent/{id}")
+    public ResponseEntity<Map<String, StudentDTO>> getStudentByID(@PathVariable Long id) {
         StudentDTO body = studentService.getById(id);
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
+    }
+    @GetMapping("getMentor/{id}")
+    public ResponseEntity<Map<String, MentorDTO>> getMentorByID(@PathVariable Long id) {
+        MentorDTO body = mentorServiceImpl.getById(id);
+        return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
+    }
+    @Transactional
+    @PatchMapping("update")
+    public ResponseEntity<Map<String, String>> update(@Valid @RequestBody AdminUpdateDTO adminUpdateDTO) {
+        adminService.update(adminUpdateDTO);
+        return new ResponseEntity<>(Map.of("update", "Datos actualizados"), HttpStatus.OK);
     }
 
 }

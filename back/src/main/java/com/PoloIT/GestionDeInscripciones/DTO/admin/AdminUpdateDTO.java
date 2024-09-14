@@ -9,16 +9,15 @@ public record AdminUpdateDTO(
         Long id,
         @NotNull(message = "name requerido")
         String name,
+        String email,
         String img,
         @NotNull(message = "lastname requerido")
         String lastName,
-        @NotNull(message = "rol requerido")
-        Set<String> rol,
         @NotNull(message = "linkedin requerido")
-        String linkedin,
-        String dni,
-        String phone,
-        LocalDate birthdate,
-        String nationality
+        String linkedin
+//        String dni,
+//        String phone,
+//        LocalDate birthdate,
+//        String nationality
 ) {
 }

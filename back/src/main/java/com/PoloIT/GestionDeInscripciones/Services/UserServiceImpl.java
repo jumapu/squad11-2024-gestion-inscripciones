@@ -108,4 +108,8 @@ public class UserServiceImpl implements IUserServiceIpml {
     }
 
 
+    public User getUserByID(Long id) {
+        return userRepository.findById(id).
+                orElseThrow(() -> new ResponseException("404", "User no Fount", HttpStatus.NOT_FOUND));
+    }
 }

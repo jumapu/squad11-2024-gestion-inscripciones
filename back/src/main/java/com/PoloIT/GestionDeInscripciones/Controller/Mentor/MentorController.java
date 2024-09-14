@@ -25,7 +25,7 @@ public class MentorController {
     @PatchMapping("update")
     public ResponseEntity<Map<String, String>> update(@Valid @RequestBody MentorDTO mentorDTO) {
         mentorService.update(mentorDTO);
-        return new ResponseEntity<>(Map.of("Admin", "Datos actualizados"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "Datos actualizados"), HttpStatus.OK);
     }
 
 
@@ -39,6 +39,6 @@ public class MentorController {
     @DeleteMapping("delete")
     public ResponseEntity<Map<String, String>> deleteStudent() {
         mentorService.delete();
-        return new ResponseEntity<>(Map.of("Admin", "Mentor eliminado"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "Mentor eliminado"), HttpStatus.OK);
     }
 }

@@ -28,7 +28,7 @@ public class StudentController {
     @PatchMapping("update")
     public ResponseEntity<Map<String, String>> update(@Valid @RequestBody StudentDTO studentDTO) {
         studentService.update(studentDTO);
-        return new ResponseEntity<>(Map.of("Admin", "Datos actualizados"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "Datos actualizados"), HttpStatus.OK);
     }
 
     @GetMapping("get")
@@ -48,6 +48,6 @@ public class StudentController {
     @DeleteMapping("delete")
     public ResponseEntity<Map<String, String>> deleteStudent() {
         studentService.delete();
-        return new ResponseEntity<>(Map.of("Admin", "Estudiante eliminado"), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("update", "Estudiante eliminado"), HttpStatus.OK);
     }
 }

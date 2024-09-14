@@ -1,12 +1,9 @@
-import axios from 'axios'
+import axiosInstance from './interceptor.js'
 
-const API="https://squad-docker.onrender.com/api/v1"
-
-//'https://gestioninscripciones.us-east-2.elasticbeanstalk.com/api/v1'
 export const mentorsList= async () => 
 {
     try {
-        const response =  await axios.get(`${API}mentor/get`)
+        const response =  await axiosInstance.get(`mentor/get`)
         // const response = await apiClient.get ('/mentor/)
         //console.log(response.data);
         return response
@@ -18,7 +15,7 @@ export const mentorsList= async () =>
 
 export const mentorPost = async (data) =>{
     try {
-        const response = await axios.post(`${API}mentor/`,data)
+        const response = await axiosInstance.post(`mentor/`,data)
         // const response = await apiClient.post ('/mentor/', data)
         //console.log(response.data);
         return response
@@ -28,9 +25,9 @@ export const mentorPost = async (data) =>{
     }
 }
 
-export const mentorOne = async (id) => {
+export const mentorOne = async () => {
     try {
-        const response = await axios.get(`${API}mentor/get/${id}`)
+        const response = await axiosInstance.get(`mentor/get/`)
         // const response = await apiClient.get ('/mentor/${id}')
         //console.log(response.data);
         return response;
@@ -42,7 +39,7 @@ export const mentorOne = async (id) => {
 
 export const mentorDelete = async (id) => {
     try {
-        const response = await axios.delete(`${API}mentor/delete/${id}`)
+        const response = await axiosInstance.delete(`mentor/delete/${id}`)
         // const response = await apiClient.delete ('/mentor/${id}')
         if (response.status === 200) {
             console.log('mentor borrado exitosamente');
@@ -56,7 +53,7 @@ export const mentorDelete = async (id) => {
 
 export const mentorUpdate = async (data) => {
     try {
-        const response = await axios.patch(`${API}mentor/update/${data.id}`, data)
+        const response = await axiosInstance.patch(`mentor/update/`, data)
         // const response = await apiClient.put ('/mentor/${data.id}',data)
         if (response.status === 200) {
             console.log('mentor editado exitosamente');

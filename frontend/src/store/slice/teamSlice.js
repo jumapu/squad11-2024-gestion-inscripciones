@@ -20,14 +20,16 @@ export const listteams = createAsyncThunk("teams/listTeams", async () => {
 });
 //Slice de teams
 const teamSlice = createSlice({
-  name: "team",
+  name: "teams",
   initialState: {
-    teamData: [],
     loading: false,
     error: null,
     teamCount: 0, //total de teams
   },
   reducers: {
+    incrementarTeamCount:(state)=>{
+      state.teamCount+= 1;
+    },
     clearTeamData: (state) => {
       state.teamData = [];
       state.teamCount = 0; // Limpiar también el conteo
@@ -35,7 +37,7 @@ const teamSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(listteams.fulfilled, (state, action) => {
-      state.loading = "exito";
+      state.loading = false;
       state.teamData = action.payload;
       state.teamCount = action.payload.length; //calcula y almacena la longitud de la lista recibida
     });
@@ -50,7 +52,10 @@ const teamSlice = createSlice({
 });
 
 // Conteo de teams
-export const selectTeamCount = (state) => state.team.teamCount;
+export const selectTeamCount  = (state) => {
+  console.log(state);
+  return state.teams.teamCount;
+}
 // Exportar acciones y reducer
 export const { clearTeamData } = teamSlice.actions;
 export default teamSlice.reducer;

@@ -1,10 +1,9 @@
 import axios from "axios";
-import { set } from "react-hook-form";
 import { toast } from "sonner";
 
 //* Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "https://squad-docker.onrender.com/api/v1", //* Configura la URL base de tu API
+  baseURL: "http://localhost:8080/api/v1", //* Configura la URL base de tu API
   //http://localhost:8080/v3/api-docs
   //v3/api-docs
 });

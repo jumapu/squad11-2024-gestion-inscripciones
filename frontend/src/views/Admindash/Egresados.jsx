@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
+import EgresadosTable from "./components/EgresadosTable";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -104,6 +105,7 @@ const Egresados = () => {
             </Box>
           </Stack>
         </Box>
+        <EgresadosTable/>
       </Box>
 
     </div >

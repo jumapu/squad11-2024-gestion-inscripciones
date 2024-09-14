@@ -17,16 +17,17 @@ export const listUser = createAsyncThunk("usuarios/user", async () => {
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    userData: [],
     loading: false,
     error: null,
   },
   reducers: {
-   
+    incrementarTeamCount:(state)=>{
+      state.teamCount+= 1;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(listUser.fulfilled, (state, action) => {
-      state.loading = "exito";
+      state.loading = false;
       state.userData = action.payload;
     });
     

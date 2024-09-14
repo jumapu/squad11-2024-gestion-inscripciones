@@ -5,7 +5,7 @@
 // Manejar el estado de carga y posibles errores.
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { mentorsList } from "@/api/admin/mentor";
+import { mentorsList } from "@/api/mentor.js";
 //Thunk para listar mentores
 export const listmentors = createAsyncThunk("mentors/listMentors", async () => {
   try {
@@ -20,12 +20,14 @@ export const listmentors = createAsyncThunk("mentors/listMentors", async () => {
 const mentorSlice = createSlice({
   name: "mentor",
   initialState: {
-    mentorData: [],
     loading: false,
     error: null,
     mentorCount: 0, //total de mentores
   },
   reducers: {
+    incrementarMentorCount:(state)=>{
+      state.mentorCount+= 1;
+    },
     clearMentorData: (state) => {
       state.mentorData = [];
       state.mentorCount = 0; // Limpiar también el conteo
@@ -49,7 +51,10 @@ const mentorSlice = createSlice({
 });
 
 // Conteo de mentores
-export const selectMentorCount = (state) => state.mentor.mentorCount;
+export const selectMentorCount = (state) => {
+  console.log(state);
+  return state.mentors.mentorCount;
+}
 // Exportar acciones y reducer
 export const { clearMentorData } = mentorSlice.actions;
 export default mentorSlice.reducer;

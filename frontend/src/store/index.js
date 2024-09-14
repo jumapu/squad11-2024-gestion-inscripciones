@@ -4,7 +4,10 @@ import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import userReducer from './slice/userSlice';
 import eventosReducer from './slice/eventosSlice';
-import egresadoReducer from './slice/egresadoSlice'
+import egresadoReducer from './slice/egresadoSlice';
+import mentorReducer from './slice/mentorSlice';
+import teamReducer from './slice/teamSlice';
+import adminReducer from "./slice/adminSlice";
 
 const persistConfig = {
   key: 'root',
@@ -15,8 +18,11 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     user: userReducer,
+    mentor: mentorReducer,
     eventos: eventosReducer,
-    egresado: egresadoReducer
+    egresado: egresadoReducer,
+    team: teamReducer,
+    admin: adminReducer,
 });
 
 

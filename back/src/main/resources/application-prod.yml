@@ -1,6 +1,8 @@
 #ENV PRODUCTION
 image:
-  directory: /app/images/
+  directory:
+    event: images/events/
+    profile: images/profiles/
 
 spring:
   datasource:
@@ -16,3 +18,22 @@ spring:
     hibernate:
       ddl-auto: update  # create-drop
       dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+  #[5/9] seteo configuraciones del remitente del email
+  # configuraciones del remitente del email
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email}
+    password: ${email_password}
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#email de ejemplo para probar /resetPassword
+mail: ${email_user_ejemplo}

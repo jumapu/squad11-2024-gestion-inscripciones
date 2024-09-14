@@ -35,7 +35,6 @@ public class UserController {
 
     @PostMapping("save/mentor")
     public ResponseEntity<Map<String, String>> registerMentor(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
-//no entiendo que datos se se guardan en Data
         userService.registerMentor(data, file, request);
         return new ResponseEntity<>(Map.of("Usuario", "Se creo el usuario."), HttpStatus.OK);
     }
@@ -63,18 +62,16 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> allUser(@PathVariable Long id) {
         Map<String, List<MentorDTO>> allMentor = mentorService.allMentor();
         Map<String, List<StudentDTO>> allStudent = studentService.allStudent();
-
-
         return new ResponseEntity<>(Map.of("Student", allStudent, "Mentors", allMentor), HttpStatus.OK);
     }
 
-    @GetMapping("student")
+    @GetMapping("students")
     public ResponseEntity<Map<String, List<StudentDTO>>> allStudent() {
         Map<String, List<StudentDTO>> body = studentService.allStudent();
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
-    @GetMapping("mentor")
+    @GetMapping("mentors")
     public ResponseEntity<Map<String, List<MentorDTO>>> allMentors() {
         Map<String, List<MentorDTO>> body = mentorService.allMentor();
         return new ResponseEntity<>(body, HttpStatus.OK);

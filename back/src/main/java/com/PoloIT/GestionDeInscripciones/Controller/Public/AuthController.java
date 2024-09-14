@@ -37,7 +37,6 @@ public class AuthController {
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
-    //[1/9]se encarga de enviar un enlace de restablecimiento de contraseña a la direcciónde correo electrónico asociada a un usuario
     @PostMapping("sendResetPassword")
     public ResponseEntity<Map<String, String>> sendResetPassword(@Valid() @RequestBody EmailResetPasswordDTO emailResetPasswordDTO) {
         userService.sendPasswordResetLink(emailResetPasswordDTO);
@@ -45,7 +44,6 @@ public class AuthController {
     }
 
     @Transactional
-//[7/9]Este controlador se encarga de aplicar el nuevo password del usuario después de que se ha enviado el enlace de restablecimiento de contraseña
     @PostMapping("resetPassword")
     public ResponseEntity<Map<String, String>> resetPassword(@Valid @RequestBody ResetPasswordDTO resetPasswordDTO) {
 //        para que se usa el token enviado

@@ -29,7 +29,7 @@ public class MentorServiceImpl {
         if (Objects.isNull(mentorDTO.id()))
             throw new ResponseException("404", "Id requerido", HttpStatus.NOT_FOUND);
 
-        Mentor mentor = MentorDTO.toEntity(mentorDTO);
+        Mentor mentor = MentorDTO.fromMentor(mentorDTO);
 
         mentor.setId(userService.getUserRolContext(Mentor.class).getId());
         return mentor;
@@ -45,7 +45,7 @@ public class MentorServiceImpl {
                 .stream().map(MentorDTO::new)
                 .sorted(Comparator.comparing(MentorDTO::id))
                 .toList();
-        return Map.of("Estudiantes", mentorDTOS);
+        return Map.of("Mentores", mentorDTOS);
     }
 
     public void delete() {

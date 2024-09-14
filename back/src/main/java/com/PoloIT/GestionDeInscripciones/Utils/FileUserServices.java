@@ -47,7 +47,7 @@ public class FileUserServices {
         String host = request.getRequestURL().toString().replace(request.getRequestURI(), "");
         String url = ServletUriComponentsBuilder
                 .fromHttpUrl(host)
-                .path("/api/v1/media/profile/")
+                .path("/api/v1/public/media/profile/")
                 .path(fileName)
                 .toUriString();
 

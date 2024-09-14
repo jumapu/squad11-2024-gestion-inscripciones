@@ -72,7 +72,7 @@ const Navbar = () => {
                 </div>
                 <div className="py-6">
                   <a
-                    href="#"
+                    href="/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-lg font-bold leading-7 text-sky-800 hover:bg-sky-50"
                   >
                     Log in

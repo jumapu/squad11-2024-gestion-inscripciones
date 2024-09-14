@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { egresadosList } from "@/api/egresados";
+import { egresadosList } from "@/api/egresados.js";
 
 export const listegresados = createAsyncThunk("egresados/listEgresados", async () => {
   try {
@@ -8,7 +8,7 @@ export const listegresados = createAsyncThunk("egresados/listEgresados", async (
 
     return egresadoData;
   } catch (error) {
-    console.error("Error buscar egresados:", error);
+    console.error("Error al buscar egresados:", error);
     throw error;
   }
 });
@@ -16,12 +16,14 @@ export const listegresados = createAsyncThunk("egresados/listEgresados", async (
 const egresadoSlice = createSlice({
   name: "egresado",
   initialState: {
-    egresadoData: [],
     loading: false,
     error: null,
     egresadoCount: 0,
   },
   reducers: {
+    incrementarEgresadoCount:(state)=>{
+      state.egresadoCount+= 1;
+    },
     clearEgresadoData: (state) => {
       state.egresadoData = [];
       state.egresadoCount = 0; // Limpiar el conteo
@@ -29,7 +31,7 @@ const egresadoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(listegresados.fulfilled, (state, action) => {
-      state.loading = "exito";
+      state.loading = false;
       state.egresadoData = action.payload;
       state.egresadoCount = action.payload.length;
     });

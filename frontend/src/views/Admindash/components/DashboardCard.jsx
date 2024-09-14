@@ -6,21 +6,29 @@ import { IoCalendar } from "react-icons/io5";
 import { RiTeamFill } from "react-icons/ri";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-// import { useSelector } from "react-redux";
-// import { selectMentorCount } from "@/store/slice/mentorSlice";
-// import { selectEventoCount } from "@/store/slice/eventosSlice";
-// import { selectEgresadoCount } from '@/store/slice/egresadoSlice';
-// import { selectTeamCount } from "@/store/slice/teamSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { selectMentorCount } from "@/store/slice/mentorSlice";
+import { selectEventoCount } from "@/store/slice/eventosSlice";
+import { selectEgresadoCount } from '@/store/slice/egresadoSlice';
+import { selectTeamCount } from "@/store/slice/teamSlice";
+import { listeventos } from "@/store/slice/eventosSlice";
+import { listteams } from '@/store/slice/teamSlice';
+import { listegresados } from "@/store/slice/egresadoSlice";
+import { listmentors } from "@/store/slice/mentorSlice";
 
 export default function DashboardCard() {
-  const eventoCount = 3;
-  const egresadoCount = 150;
-  const teamCount = 15;
-  const mentorCount = 20;
-// const mentorCount = useSelector(selectMentorCount);
-//   const eventoCount = useSelector(selectEventoCount);
-//   const egresadoCount = useSelector(selectEgresadoCount);
-//   const teamCount = useSelector(selectTeamCount);
+    const dispatch = useDispatch();
+
+    // Cargar eventos cuando el componente se monta
+    useEffect(() => {
+        dispatch(listeventos(), listteams(), listegresados(), listmentors());
+    }, [dispatch]);
+
+    const mentorCount = useSelector(selectMentorCount);
+    const eventoCount = useSelector(selectEventoCount);
+    const egresadoCount = useSelector(selectEgresadoCount);
+    const teamCount = useSelector(selectTeamCount);
 
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',
@@ -42,28 +50,24 @@ export default function DashboardCard() {
         { icon: <GiGraduateCap />, text: "Egresados", total: egresadoCount },
         { icon: <MdOutlineGroup />, text: "Mentores", total: mentorCount },
         { icon: <IoCalendar />, text: "Eventos", total: eventoCount },
-        { icon: <RiTeamFill />, text: "Squads", total: teamCount }
+        { icon: <RiTeamFill />, text: "Squads", total: 
+        teamCount }
     ];
-   
-    
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Box display={"flex"} flexDirection={"row"} gap={2} flexWrap={"wrap"}>
                 {datos.map((item, index) => (
-                    <Box key={index} >
-                        <Item >
+                    <Box key={index}>
+                        <Item>
                             <Box>
-                                {item.icon }
+                                {item.icon}
                             </Box>
                             <Box>
-                                <Typography>
-                                    {item.text}
-                                </Typography>
-                                <Typography>
-                                    {item.total}
-                                </Typography>
+                                <Typography>{item.text}</Typography>
+                                <Typography>{item.total}</Typography>
                             </Box>
-                        </Item>    
+                        </Item>
                     </Box>
                 ))}
             </Box>

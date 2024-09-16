@@ -24,7 +24,7 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(listadmins.fulfilled, (state, action) => {
-      state.loading = "exito";
+      state.loading = false;
       state.adminData = action.payload;
     });
   },

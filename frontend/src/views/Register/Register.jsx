@@ -33,7 +33,7 @@ const Register = () => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
                   <div>
-                    <div>
+                    <div width='90%'>
                       <Select
                         className="campos"
                         defaultValue={selectedOption}

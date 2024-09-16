@@ -1,17 +1,19 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-//* Crea una instancia de Axios
+// Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1", //* Configura la URL base de tu API
-  //http://localhost:8080/v3/api-docs
-  //v3/api-docs
+  baseURL: "http://localhost:8080/api/v1", // Configura la URL base de tu API
+  httpsAgent: false, // Disable HTTPS
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-//* Interceptor para agregar el token a las solicitudes
+// Interceptor para agregar el token a las solicitudes
 axiosInstance.interceptors.request.use(
   (request) => {
-    const token = localStorage.getItem("token"); //* Obtén el token desde donde lo tengas almacenado
+    const token = localStorage.getItem("token"); // Obtén el token desde donde lo tengas almacenado
 
     if (token) {
       request.headers["Authorization"] = token;
@@ -47,14 +49,14 @@ axiosInstance.interceptors.response.use(
   (error) => {
     //! virificar las response de  errores del back todos!
 
-    if (error?.response?.data["404"] === "Email in used")
+    if (error?.response?.data["404"] === "Email in use")
       toast.error("El email ya esta se encuentra en uso.");
     if (error?.response?.data["404"] === "Incorrect password")
       toast.error("Contraseña incorrecta.");
     if (error?.response?.data["404"] === "Email not Found")
       toast.error("Email no registrado.");
     if (error?.response?.data["PASSWORD"])
-      toast.error("Contraseña debe tener 8  caracteres minimos..");
+      toast.error("La contraseña debe tener como minimo 8 caracteres..");
 
     console.log(error?.response?.data);
     return Promise.reject(error);

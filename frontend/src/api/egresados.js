@@ -4,7 +4,7 @@ import axiosInstance from './interceptor.js'
 export const egresadosList= async () => 
 {
     try {
-        const response =  await axiosInstance.get(`/student/get`)
+        const response =  await axiosInstance.get(`/admin/user/students`)
         // const response = await apiClient.get ('/egresados/')
         //console.log(response.data);
         return response
@@ -26,9 +26,9 @@ export const egresadosImgPost = async (data) =>{
     }
 }
 
-export const egresadosOne = async () => {
+export const egresadosOne = async (id) => {
     try {
-        const response = await axiosInstance.get(`/student/get`)
+        const response = await axiosInstance.get(`/student/get ${id}`)
         // const response = await apiClient.get ('/egresados/${id}')
         //console.log(response.data);
         return response;
@@ -54,7 +54,7 @@ export const egresadosDelete = async (id) => {
 
 export const egresadosUpdate = async () => {
     try {
-        const response = await axiosInstance.patch(`/student/patch`)
+        const response = await axiosInstance.patch(`/student/update`)
         // const response = await apiClient.put ('/egresados/${data.id}',data)
         if (response.status === 200) {
             console.log('Egresado editado exitosamente');

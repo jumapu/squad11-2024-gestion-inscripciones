@@ -4,7 +4,7 @@ import { IoCalendar } from "react-icons/io5";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../api/interceptor.js";
+import axiosInstance from "@/api/interceptor.js";
 export default function DashboardCard() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",

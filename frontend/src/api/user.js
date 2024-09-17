@@ -1,12 +1,9 @@
-import axios from 'axios'
-
-const API='https://squad-docker.onrender.com/api/v1'
-//http://localhost:8080/v3/api-docs
+import axiosInstance from './interceptor'
 
 export const usuariosEgresadosList= async () => 
 {
     try {
-        const response =  await axios.get(`${API}/admin/user/students`)
+        const response =  await axiosInstance.get(`/admin/user/students`)
         return response
     } catch (error) {
         console.error('error al ver los Egresados:', error)
@@ -16,7 +13,7 @@ export const usuariosEgresadosList= async () =>
 export const usuariosMentoresList= async () => 
     {
         try {
-            const response =  await axios.get(`${API}/admin/user/mentors`)
+            const response =  await axiosInstance.get(`/admin/user/mentors`)
             return response
         } catch (error) {
             console.error('error al ver los mentores:', error)
@@ -27,7 +24,7 @@ export const usuariosMentoresList= async () =>
     export const usuarioMentorOne = async (id) => 
         {
             try {
-                const response =  await axios.get(`${API}/admin/user/mentor/${id}`)
+                const response =  await axiosInstance.get(`/admin/user/mentor/${id}`)
                 return response
             } catch (error) {
                 console.error('error al ver el Mentor:', error)
@@ -38,7 +35,7 @@ export const usuariosMentoresList= async () =>
         export const usuarioEgresadoOne = async (id) => 
             {
                 try {
-                    const response =  await axios.get(`${API}/admin/user/student${id}`)
+                    const response =  await axiosInstance.get(`/admin/user/student${id}`)
                     return response
                 } catch (error) {
                     console.error('error al ver el Egresado:', error)
@@ -48,7 +45,7 @@ export const usuariosMentoresList= async () =>
 
 export const usuarioMentorPost = async () =>{
     try {
-        const response = await axios.post(`${API}/admin/user/save/mentor`)
+        const response = await axiosInstance.post(`/admin/user/save/mentor`)
         return response
     } catch (error) {
         console.error('error al cargar mentor: ',error)
@@ -57,7 +54,7 @@ export const usuarioMentorPost = async () =>{
 }
 export const usuarioEgresadoPost = async () =>{
     try {
-        const response = await axios.post(`${API}/admin/user/save/student`)
+        const response = await axiosInstance.post(`/admin/user/save/student`)
         return response
     } catch (error) {
         console.error('error al cargar Egresado: ',error)
@@ -68,7 +65,7 @@ export const usuarioEgresadoPost = async () =>{
 
 export const usuariosDelete = async (id) => {
     try {
-        const response = await axios.delete(`${API}/admin/users/${id}`)
+        const response = await axiosInstance.delete(`/admin/users/${id}`)
         if (response.status === 200) {
             console.log('usuario borrado exitosamente');
         }
@@ -81,7 +78,7 @@ export const usuariosDelete = async (id) => {
 
 export const usuariosUpdate = async (data) => {
     try {
-        const response = await axios.put(`${API}/users/${data.id}`, data)
+        const response = await axiosInstance.put(`/users/${data.id}`, data)
         if (response.status === 200) {
             console.log('Usuario editado exitosamente');
         }

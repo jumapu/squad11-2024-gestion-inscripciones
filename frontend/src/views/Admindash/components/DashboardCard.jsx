@@ -1,35 +1,11 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { GiGraduateCap } from "react-icons/gi";
-import { MdOutlineGroup } from "react-icons/md";
 import { IoCalendar } from "react-icons/io5";
-import { RiTeamFill } from "react-icons/ri";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { selectMentorCount } from "@/store/slice/mentorSlice";
-import { selectEventoCount } from "@/store/slice/eventosSlice";
-import { selectEgresadoCount } from '@/store/slice/egresadoSlice';
-import { selectTeamCount } from "@/store/slice/teamSlice";
-import { listeventos } from "@/store/slice/eventosSlice";
-import { listteams } from '@/store/slice/teamSlice';
-import { listegresados } from "@/store/slice/egresadoSlice";
-import { listmentors } from "@/store/slice/mentorSlice";
+import { useEffect, useState } from "react";
 
 export default function DashboardCard() {
-    const dispatch = useDispatch();
-
-    // Cargar eventos cuando el componente se monta
-    useEffect(() => {
-        dispatch(listeventos(), listteams(), listegresados(), listmentors());
-    }, [dispatch]);
-
-    const mentorCount = useSelector(selectMentorCount);
-    const eventoCount = useSelector(selectEventoCount);
-    const egresadoCount = useSelector(selectEgresadoCount);
-    const teamCount = useSelector(selectTeamCount);
-
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',
         ...theme.typography.body2,
@@ -46,13 +22,46 @@ export default function DashboardCard() {
         }),
     }));
 
+    const [eventos, setEventos] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchEventosApi = async () => {
+            setError(null);
+            setIsLoading(true);
+            try {
+                const endpoint = 'http://localhost:8080/api/v1/admin/event/all?format=json';
+                const response = await fetch(endpoint);
+                console.log(response);
+                if (!response.ok) {
+                    throw new Error("Error en la peticion");
+                }
+                const data = await response.json();
+                setEventos(data);
+            } catch (error) {
+                setError("Hubo un error");
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        
+        fetchEventosApi();
+    }, []);
+
+    const eventoCount = eventos.length;
+
     const datos = [
-        { icon: <GiGraduateCap />, text: "Egresados", total: egresadoCount },
-        { icon: <MdOutlineGroup />, text: "Mentores", total: mentorCount },
         { icon: <IoCalendar />, text: "Eventos", total: eventoCount },
-        { icon: <RiTeamFill />, text: "Squads", total: 
-        teamCount }
     ];
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (isLoading) {
+        return <div>Cargando...</div>;
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>

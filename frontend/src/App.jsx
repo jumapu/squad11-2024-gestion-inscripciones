@@ -7,6 +7,7 @@ import Mentordash from "./views/Mentordash/Mentordash";
 import AdminHome from "./views/Admindash/AdminHome";
 import AuthOutlet from "@auth-kit/react-router/AuthOutlet";
 import Egresados from "./views/Admindash/Egresados";
+import AdminLogin from "./views/AdminLogin/AdminLogin";
 
 function App() {
   return (
@@ -14,13 +15,14 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/adminlogin" element={<AdminLogin />} />
         <Route path="/registro" element={<Register />} />
-        <Route path="/admindash" element={<AdminHome />}></Route> 
-        <Route path="/admindash/egresados" element={<Egresados />}></Route> 
+
         <Route element={<AuthOutlet fallbackPath="/login" />}>
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>
           <Route path="/mentordash" element={<Mentordash />}></Route>
-          
+          <Route path="/admindash" element={<AdminHome />}></Route>
+          <Route path="/admindash/egresados" element={<Egresados />}></Route>
         </Route>
       </Routes>
     </>

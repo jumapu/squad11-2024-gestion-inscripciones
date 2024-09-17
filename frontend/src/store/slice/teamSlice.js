@@ -5,7 +5,7 @@
 // Manejar el estado de carga y posibles errores.
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { teamsList } from "@/api/team";
+import { teamsList } from "@/api/team.js";
 //Thunk para listar mentores
 export const listteams = createAsyncThunk("teams/listTeams", async () => {
   try {
@@ -14,17 +14,18 @@ export const listteams = createAsyncThunk("teams/listTeams", async () => {
 
     return teamData;
   } catch (error) {
-    console.error("Error buscar squad:", error);
+    console.error("Error al buscar squad:", error);
     throw error;
   }
 });
 //Slice de teams
 const teamSlice = createSlice({
-  name: "teams",
+  name: "team",
   initialState: {
     loading: false,
     error: null,
     teamCount: 0, //total de teams
+    teamData: [],
   },
   reducers: {
     incrementarTeamCount:(state)=>{

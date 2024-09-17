@@ -1,65 +1,123 @@
-import { DataGrid } from '@mui/x-data-grid';
-import Paper from '@mui/material/Paper';
-// import { IoIosInformation } from "react-icons/io";
-// import { GoPencil } from "react-icons/go";
-// import { IoTrashOutline } from "react-icons/io5";
+import { useState, useEffect } from 'react';
+import { IconButton, Tooltip } from "@radix-ui/themes";
+import '@radix-ui/themes/styles.css';
+import { IoIosInformation } from "react-icons/io";
+import { IoPencil } from "react-icons/io5";
+import { IoTrashOutline } from "react-icons/io5";
+import { Link } from 'react-router-dom';
+import DataTable from 'react-data-table-component';
 
-const drawerWidth = 240;
+
+const customStyles = {
+  table: {
+    style: {
+      width: '100%',
+      justifyContent: "around",
+      responsive: true,
+    }
+  },
+  headCells: {
+    style: {
+      fontSize: "1rem",
+      justifyContent: "center",
+    },
+    rows: {
+      style: {
+        height: '55px',
+        maxWidth: '98vw',
+        justify: 'center',
+        align: "center",
+        responsive: true,
+      },
+    }
+  },
+  cells: {
+    style: {
+      textAlign: "center",
+      justifyContent: 'center',
+      responsive: false,
+    }
+  },
+};
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
   {
-    field: 'email',
-    headerName: 'Email',
-    type: 'text',
-    width: 180,
+    name: 'ID',
+    selector: row => row.id,
   },
   {
-    field: 'role',
-    headerName: 'Rol',
-    sortable: false,
-    width: 80,
-    // valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    name: 'Nombre',
+    selector: row => row.name,
   },
   {
-    field: 'team',
-    headerName: 'Squad',
-    sortable: false,
-    width: 100,
-    // valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    name: 'Apellido',
+    selector: row => row.surname,
   },
   {
-    field: 'actions',
-    headerName: 'Actions',
-    sortable: false,
-    width: 100,
-    // valueGetter: (value, row) => `${row.firstName || ''} ${row.lastName || ''}`,
+    name: 'Rol',
+    selector: row => row.role,
+  },
+  {
+    name: 'Team',
+    selector: row => row.team,
+  },
+  {
+    name: 'Acciones',
+    cell: () =>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Tooltip className='bg-slate-300' content="Informacion">
+          <Link to='/dashboard/egresados/informacionForm'>
+            <IconButton className='bg-slate-800 btn-grp' radius="full">
+              <IoIosInformation />
+            </IconButton>
+          </Link>
+        </Tooltip>
+        <Tooltip className='bg-slate-300' content="Modificar Informacion">
+          <Link to='/dashboard/egresados/informacionForm' />
+          <IconButton className='bg-slate-800 btn-grp editCita' radius="full" />
+          <IoPencil />
+        </Tooltip>
+        <Tooltip className='bg-slate-300' content="Borrar Informacion">
+          <Link to='/dashboard/egresados/informacionForm'>
+            <IconButton className='bg-slate-800 btn-grp' radius="full">
+              <IoTrashOutline />
+            </IconButton>
+          </Link>
+        </Tooltip>
+
+      </div>
   },
 ];
 
-const rows = [
-  { id: 30123456, lastName: 'Snow', firstName: 'Jon', email: 'jonsnow@example.com', role: 'Front', team:'7',  },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', email: 'lanister@example.com', role: 'Back', team:'20',  },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  
-];
+const datos = [
 
-const paginationModel = { page: 0, pageSize: 5 };
+]
 
-export default function DataTable() {
+export const EgresadosTable = () => {
+  const [pending, setPending] = useState(true);
+  const [rows, setRows] = useState([]);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setRows(datos);
+      setPending(false);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
   return (
-    <Paper sx={{ height: 400, width: { sm: `calc(100vw - ${drawerWidth}px)` }, ml: { sm: `${drawerWidth}px` }, maxWidth: "1440px" }}>
-      <DataGrid
-        rows={rows}
+    <div>
+      <DataTable
         columns={columns}
-        initialState={{ pagination: { paginationModel } }}
-        pageSizeOptions={[5, 10]}
-        checkboxSelection
-        sx={{ border: 0 }}
+        data={datos}
+        customStyles={customStyles}
+        expandableRows
+        pagination
+        paginationPerPage={10}
+        progressPending={pending}
+        responsive
+        onSelectedRowsChange={(data) => console.log(data)}
       />
-    </Paper>
-  );
+    </div>
+  )
 }
+
+export default EgresadosTable

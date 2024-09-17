@@ -23,6 +23,7 @@ const mentorSlice = createSlice({
     loading: false,
     error: null,
     mentorCount: 0, //total de mentores
+    mentorData: [],
   },
   reducers: {
     incrementarMentorCount:(state)=>{

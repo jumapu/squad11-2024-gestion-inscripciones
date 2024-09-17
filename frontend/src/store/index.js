@@ -18,8 +18,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     user: userReducer,
-    mentor: mentorReducer,
-    eventos: eventosReducer,
+    mentors: mentorReducer,
     egresado: egresadoReducer,
     team: teamReducer,
     admin: adminReducer,
@@ -30,7 +29,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Configurar el store con middleware para ignorar las acciones no serializables
 const storeRedux = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    eventos: eventosReducer,
+    persistedReducer,
+},
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

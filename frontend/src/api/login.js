@@ -23,8 +23,8 @@ export const userLogin = async (data, signIn, navigate) => {
       },
     });
     if (res.rol === "admin") {
-      //   toast.error("Este usuario no tiene permisos suficientes para poder acceder");
-      navigate("/admindash");
+toast.error("Este usuario sera redirigido para poder acceder");
+      navigate("/adminlogin");
       return;
     }
 

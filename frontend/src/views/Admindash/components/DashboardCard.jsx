@@ -1,10 +1,13 @@
 import Box from "@mui/material/Box";
+import Stack from '@mui/material/Stack';
 import Typography from "@mui/material/Typography";
 import { IoCalendar } from "react-icons/io5";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
+
+
 export default function DashboardCard() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
@@ -39,16 +42,24 @@ export default function DashboardCard() {
     })
       .then((response) => response.json())
       .then((data) => console.log(data));
+    setEventos()
   }, []);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Box
-        display={"flex"}
-        flexDirection={"row"}
-        gap={2}
-        flexWrap={"wrap"}
-      ></Box>
+      <Stack>
+        <Item>
+          <IoCalendar size={24} style={{ marginRight: '8px' }} />
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6">Eventos</Typography>
+            <Typography variant="body2">
+              Total: 
+            </Typography>
+          </Box>
+        </Item>
+      </Stack>
+
+
     </Box>
   );
 }

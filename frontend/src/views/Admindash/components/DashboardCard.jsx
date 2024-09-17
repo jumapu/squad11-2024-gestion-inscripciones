@@ -41,10 +41,18 @@ export default function DashboardCard() {
         } = result;
         console.log(events);
 
-        if (events != null && events.length > 0) {
+        if (events != null) {
           setEventos(events);
           setLoading(false);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axiosInstance
+      .get("admin/user/all")
+      .then((result) => {
+        console.log(result);
       })
       .catch((err) => {
         console.log(err);
@@ -54,6 +62,7 @@ export default function DashboardCard() {
   useEffect(() => {
     console.log(eventos);
   }, [eventos]);
+
   return loading ? (
     <h2>Loading</h2>
   ) : (

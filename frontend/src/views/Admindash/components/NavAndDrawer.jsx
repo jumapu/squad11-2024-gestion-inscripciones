@@ -19,6 +19,7 @@ import { IoCalendar } from "react-icons/io5";
 import { PiGearFill } from "react-icons/pi";
 import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
+import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 
 const drawerWidth = 240;
@@ -41,9 +42,13 @@ function NavAndDrawer() {
             setMobileOpen(!mobileOpen);
         }
     };
+    const [active, setActive] = useState(false)
+    const handleMenu = ()=>{
+        setActive(!active)
+      }
     const items = [
         { icon: <MdLeaderboard />, text: 'Dashboard' },
-        { icon: <GiGraduateCap />, text: 'Egresados' },
+        { icon: <GiGraduateCap />, text: 'Egresados'  },
         { icon: <MdOutlineGroup />, text: 'Mentores' },
         { icon: <IoCalendar />, text: 'Eventos' },
         { icon: <PiGearFill />, text: 'Configuración' },
@@ -54,7 +59,7 @@ function NavAndDrawer() {
         <div>
             <Toolbar />
             <Divider />
-            <List>
+            <List >
                 {items.map((item, index) => (
                     <React.Fragment key={index}>
                         <ListItem>
@@ -62,7 +67,7 @@ function NavAndDrawer() {
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} />
+                                <ListItemText primary={item.text} onClick={handleMenu} />
                             </ListItemButton>
                         </ListItem>
                         {index < items.length - 1 && <Divider />}

@@ -31,7 +31,7 @@ export default function DashboardCard() {
             setError(null);
             setIsLoading(true);
             try {
-                const endpoint = 'http://localhost:8080/api/v1/admin/event/all?format=json';
+                const endpoint = 'http://localhost:8080/api/v1/admin/event/all';
                 const response = await fetch(endpoint);
                 console.log(response);
                 if (!response.ok) {

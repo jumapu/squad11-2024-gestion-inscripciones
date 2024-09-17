@@ -31,18 +31,17 @@ export default function DashboardCard() {
     axiosInstance
       .get("admin/event/all")
       .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    fetch("http://localhost:8080/api/v1/admin/event/all", {
-      method: "GET",
-      headers: { Authorization: localStorage.getItem("token") },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-    setEventos()
+        console.log('Respuesta de la API:', result.data);
+        const totalEventos = Array.isArray(result.data.events) ? result.data.events : [];
+        
+        setEventos(totalEventos)
+    console.log(`Total de eventos: ${totalEventos.length}`);
+      })    
+      
+    .catch((err) => {
+      console.log(err);
+    });
+    
   }, []);
 
   return (
@@ -53,13 +52,11 @@ export default function DashboardCard() {
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6">Eventos</Typography>
             <Typography variant="body2">
-              Total: 
+              Total: {eventos.length}
             </Typography>
           </Box>
         </Item>
       </Stack>
-
-
     </Box>
   );
 }

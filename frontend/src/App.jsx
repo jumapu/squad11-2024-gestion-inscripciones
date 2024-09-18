@@ -22,7 +22,7 @@ function App() {
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>
           <Route path="/mentordash" element={<Mentordash />}></Route>
           <Route path="/admindash" element={<AdminHome />}></Route>
-          <Route path="/admindash/egresados" element={<Egresados />}></Route>
+          <Route path="/Egresados" element={<Egresados />}></Route>
         </Route>
       </Routes>
     </>

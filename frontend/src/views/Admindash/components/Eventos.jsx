@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
 
-export default function DashboardCard() {
+export default function Eventos() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,

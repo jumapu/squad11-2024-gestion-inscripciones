@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { MdOutlineGroup } from "react-icons/md";
+import { GiGraduateCap } from "react-icons/gi";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
 
-export default function Mentores() {
+export default function Egresados() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,
@@ -23,7 +23,7 @@ export default function Mentores() {
     }),
   }));
 
-  const [Mentores, setMentores] = useState([]);
+  const [Estudiantes, setEstudiantes] = useState([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -31,12 +31,12 @@ export default function Mentores() {
       .get("admin/user/all")
       .then((result) => {
         const {
-          data: { Mentors:Mentores },
+          data: { Student:Estudiantes },
         } = result;
         console.log(result)
 
-        if (Mentores) {
-          setMentores(result.data.Mentors.Mentores);
+        if (Estudiantes) {
+          setEstudiantes(result.data.Student.Estudiantes);
           setLoading(false);
         }
       })
@@ -44,7 +44,7 @@ export default function Mentores() {
         console.log(err);
       });
   }, []);
-  [Mentores];
+  [Estudiantes];
 
   return loading ? (
     <h2>Loading</h2>
@@ -52,11 +52,11 @@ export default function Mentores() {
     <Box sx={{ flexGrow: 1 }}>
 
       <Item>
-        <MdOutlineGroup size={24} style={{ marginRight: "8px" }} />
+        <GiGraduateCap size={24} style={{ marginRight: "8px" }} />
         <Box sx={{ flex: 1 }}>
-          <Typography variant="h6">Mentores</Typography>
+          <Typography variant="h6">Egresados</Typography>
           <Typography variant="body2">
-            Total:{Mentores.length}
+            Total:{Estudiantes.length}
           </Typography>
         </Box>
       </Item>

@@ -21,6 +21,7 @@ import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
+import { Link } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -67,7 +68,9 @@ function NavAndDrawer() {
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
-                                <ListItemText primary={item.text} onClick={handleMenu} />
+                                <Link href={item.text} underline="none">
+                                <ListItemText className='text-gray-500' primary={item.text} onClick={handleMenu} />
+                                </Link>
                             </ListItemButton>
                         </ListItem>
                         {index < items.length - 1 && <Divider />}

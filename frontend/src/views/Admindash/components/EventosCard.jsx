@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { MdOutlineGroup } from "react-icons/md";
+import { IoCalendar } from "react-icons/io5";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
 
-export default function Mentores() {
+export default function EventosCard() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,
@@ -23,20 +23,20 @@ export default function Mentores() {
     }),
   }));
 
-  const [Mentores, setMentores] = useState([]);
+  const [eventos, setEventos] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     axiosInstance
-      .get("admin/user/all")
+      .get("admin/event/all")
       .then((result) => {
         const {
-          data: { Mentors:Mentores },
+          data: { Events: events },
         } = result;
-        console.log(result)
+        console.log(events);
 
-        if (Mentores) {
-          setMentores(result.data.Mentors.Mentores);
+        if (events != null) {
+          setEventos(events);
           setLoading(false);
         }
       })
@@ -44,22 +44,22 @@ export default function Mentores() {
         console.log(err);
       });
   }, []);
-  [Mentores];
 
+   [eventos];
   return loading ? (
     <h2>Loading</h2>
   ) : (
     <Box sx={{ flexGrow: 1 }}>
 
-      <Item>
-        <MdOutlineGroup size={24} style={{ marginRight: "8px" }} />
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h6">Mentores</Typography>
-          <Typography variant="body2">
-            Total:{Mentores.length}
-          </Typography>
-        </Box>
-      </Item>
+        <Item>
+          <IoCalendar size={24} style={{ marginRight: "8px" }} />
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h6">Eventos</Typography>
+            <Typography variant="body2">
+              Total:{eventos.length}
+            </Typography>
+          </Box>
+        </Item>
 
     </Box>
   );

@@ -1,7 +1,7 @@
-import Eventos from "./Eventos";
-import Mentores from "./Mentores";
+import Eventos from "./EventosCard";
+import Mentores from "./MentoresCard";
 import Stack from "@mui/material/Stack";
-import Egresados from "./Egresados";
+import Egresados from "./EgresadosCard";
 const DashboardCard = () => {
   return (
     <div>

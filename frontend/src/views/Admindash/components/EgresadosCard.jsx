@@ -6,7 +6,7 @@ import { styled } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
 
-export default function Egresados() {
+export default function EgresadosCard() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,

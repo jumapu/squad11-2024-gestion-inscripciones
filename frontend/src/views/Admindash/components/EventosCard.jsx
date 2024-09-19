@@ -16,7 +16,9 @@ export default function EventosCard() {
     alignItems: "center",
     justifyContent: "space-around",
     padding: theme.spacing(1),
-    width: "150px",
+    width: "175px",
+    border: "solid 2px blue",
+    borderRadius:"21px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
@@ -52,7 +54,7 @@ export default function EventosCard() {
     <Box sx={{ flexGrow: 1 }}>
 
         <Item>
-          <IoCalendar size={24} style={{ marginRight: "8px" }} />
+          <IoCalendar size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%", padding:"5px" }} />
           <Box sx={{ flex: 1 }}>
             <Typography variant="h6">Eventos</Typography>
             <Typography variant="body2">

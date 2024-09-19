@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
 
 export default function DateCalendarValue() {
-    const [value, setValue] = useState(dayjs('2023-12-25'));
+    const [value, setValue] = useState(dayjs('2024-01-01'));
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: '#fff',
         ...theme.typography.body2,
@@ -20,11 +20,10 @@ export default function DateCalendarValue() {
             backgroundColor: '#1A2027',
         }),
     }));
-  
     return (
         <Box display={'flex'} alignItems={"start"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>          
-          <Item>
+          <Item style={{border:"2px solid blue", borderRadius:"25px"}}>
             <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
           </Item>
       </LocalizationProvider>

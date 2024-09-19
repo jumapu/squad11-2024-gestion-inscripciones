@@ -16,7 +16,9 @@ export default function MentoresCard() {
     alignItems: "center",
     justifyContent: "space-around",
     padding: theme.spacing(1),
-    width: "150px",
+    border: "solid 2px blue",
+    borderRadius:"21px",
+    width: "175px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
@@ -52,7 +54,7 @@ export default function MentoresCard() {
     <Box sx={{ flexGrow: 1 }}>
 
       <Item>
-        <MdOutlineGroup size={24} style={{ marginRight: "8px" }} />
+        <MdOutlineGroup size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%" }} />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Mentores</Typography>
           <Typography variant="body2">

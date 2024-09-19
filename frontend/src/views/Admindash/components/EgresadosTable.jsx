@@ -19,6 +19,7 @@ export const EgresadosTable = () => {
     },
     headCells: {
       style: {
+        color: "red",
         fontSize: "1rem",
         justifyContent: "center",
       }
@@ -26,6 +27,8 @@ export const EgresadosTable = () => {
     cells: {
       style: {
         textAlign: "center",
+        alignItems:"center",
+        justifyContent:"center",
       }
     }
   };
@@ -48,30 +51,30 @@ export const EgresadosTable = () => {
       selector: row => row.rol,
     },
     {
-      name: 'Team',
+      name: 'Squad',
       selector: row => row.team,
     },
     {
       name: 'Acciones',
       cell: row => (
-        <div style={{ display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', textAlign:"center" }}>
           <Tooltip content="Informacion">
             <Link to={`Egresados/informacionForm/${row.id}`}>
-              <IconButton className='bg-slate-800'>
-                <IoIosInformation />
+              <IconButton className='bg-blue-800 rounded-full'>
+                <IoIosInformation size={24} />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Modificar Informacion">
-            <Link to={`/dashboard/egresados/editar/${row.id}`}>
-              <IconButton className='bg-slate-800'>
+            <Link to={`/Egresados/editar/${row.id}`}>
+              <IconButton className='bg-blue-800 rounded-full'>
                 <IoPencil />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Borrar Informacion">
-            <Link to={`/dashboard/egresados/borrar/${row.id}`}>
-              <IconButton className='bg-slate-800'>
+            <Link to={`/Egresados/borrar/${row.id}`}>
+              <IconButton className='bg-red-700 rounded-full'>
                 <IoTrashOutline />
               </IconButton>
             </Link>
@@ -101,7 +104,7 @@ export const EgresadosTable = () => {
   }, []);
 
   return (
-    <div style={{marginLeft: drawerWidth }}>
+    <div style={{marginLeft: drawerWidth,border: "solid 3px blue", borderRadius:"20px", marginTop: "20px",}}>
       <DataTable
         columns={columns}
         data={Estudiantes}

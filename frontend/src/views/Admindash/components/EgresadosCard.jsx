@@ -16,7 +16,9 @@ export default function EgresadosCard() {
     alignItems: "center",
     justifyContent: "space-around",
     padding: theme.spacing(1),
-    width: "150px",
+    border: "solid 2px blue",
+    borderRadius:"21px",
+    width: "175px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
@@ -51,8 +53,8 @@ export default function EgresadosCard() {
   ) : (
     <Box sx={{ flexGrow: 1 }}>
 
-      <Item>
-        <GiGraduateCap size={24} style={{ marginRight: "8px" }} />
+      <Item >
+        <GiGraduateCap size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%" }} />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Egresados</Typography>
           <Typography variant="body2">

@@ -19,12 +19,13 @@ export default function DashboardChart() {
     }));
     return (
         <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} flexGrow={1} marginTop={3} justifyContent={"space-around"} alignItems={"start"}>
-            <Box display={'flex'} flexDirection={'row'} flexWrap={"wrap"} gap={2}>
-                <Item>
+            <Box display={'flex'} flexDirection={'row'} flexWrap={"wrap"} gap={2} >
+                <Item style={{border:"2px solid blue", borderRadius:"25px"}}>
                     <Typography>
                         Egresados
                     </Typography>
                     <PieChart
+                    colors={['lightgray', 'gray', 'white']}
                         series={[
                             {
                                 data: [
@@ -36,11 +37,12 @@ export default function DashboardChart() {
                         {...pieParams}
                     />
                 </Item>
-                <Item>
+                <Item style={{border:"2px solid blue", borderRadius:"25px"}}>
                     <Typography>
                         Egresados
                     </Typography>
                     <PieChart
+                    colors={['gray', 'lightgray', 'black']}
                         series={[
                             {
                                 data: [
@@ -63,5 +65,6 @@ export default function DashboardChart() {
 const pieParams = {
     height: 200,
     margin: { right: 5 },
-    slotProps: { legend: { hidden: true } },
+    slotProps: { legend: { hidden: true }, backgroundColor: "slategray" },
+    
 };

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import axiosInstance from "@/api/interceptor.js";
 
-export const EgresadosTable = () => {
+export const MentoresTable = () => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
@@ -28,7 +28,7 @@ export const EgresadosTable = () => {
       style: {
         textAlign: "center",
         alignItems:"center",
-        justifyContent:"center",
+        justifyContent: "center",
       }
     }
   };
@@ -47,9 +47,10 @@ export const EgresadosTable = () => {
       selector: row => row.surname,
     },
     {
-      name: 'Rol',
-      selector: row => row.rol,
+      name: 'Empresa',
+      selector: row => row.company,
     },
+
     {
       name: 'Squad',
       selector: row => row.team,
@@ -59,21 +60,21 @@ export const EgresadosTable = () => {
       cell: row => (
         <div style={{ display: 'flex', alignItems: 'center', textAlign:"center" }}>
           <Tooltip content="Informacion">
-            <Link to={`Egresados/informacionForm/${row.id}`}>
+            <Link to={`/Mentores/informacionForm/${row.id}`}>
               <IconButton className='bg-blue-800 rounded-full'>
                 <IoIosInformation size={24} />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Modificar Informacion">
-            <Link to={`/Egresados/editar/${row.id}`}>
+            <Link to={`/Mentores/editar/${row.id}`}>
               <IconButton className='bg-blue-800 rounded-full'>
                 <IoPencil />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Borrar Informacion">
-            <Link to={`/Egresados/borrar/${row.id}`}>
+            <Link to={`/Mentores/borrar/${row.id}`}>
               <IconButton className='bg-red-700 rounded-full'>
                 <IoTrashOutline />
               </IconButton>
@@ -84,30 +85,30 @@ export const EgresadosTable = () => {
     },
   ];
 
-  const [Estudiantes, setEstudiantes] = useState([]);
+  const [Mentores, setMentores] = useState([]);
   const [pending, setPending] = useState(true);
 
   useEffect(() => {
-    const fetchEstudiantes = async () => {
+    const fetchMentores = async () => {
       try {
         const result = await axiosInstance.get("admin/user/all");
-        const estudiantes = result.data.Student.Estudiantes || [];
+        const Mentores = result.data.Mentors.Mentores || [];
         console.log(result);
-        setEstudiantes(estudiantes);
+        setMentores(Mentores);
         setPending(false);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchEstudiantes();
+    fetchMentores();
   }, []);
 
   return (
-    <div style={{marginLeft: drawerWidth,border: "solid 3px blue", borderRadius:"20px", marginTop: "20px",}}>
+    <div style={{marginLeft: drawerWidth,border: "solid 3px blue", borderRadius:"20px", marginTop: "20px"}}>
       <DataTable
         columns={columns}
-        data={Estudiantes}
+        data={Mentores}
         customStyles={customStyles}
         pagination
         paginationPerPage={10}
@@ -118,4 +119,4 @@ export const EgresadosTable = () => {
   );
 }
 
-export default EgresadosTable;
+export default MentoresTable;

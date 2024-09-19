@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
-import EgresadosTable from "./components/EgresadosTable";
+import MentoresTable from "./components/MentoresTable";
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -72,7 +72,7 @@ const Egresados = () => {
               gap: "2rem",
             }}
           >
-            Egresados
+            Mentores
           </Typography>
           <Stack 
           display={'flex'}
@@ -100,12 +100,12 @@ const Egresados = () => {
             </Box>
             <Box 
             alignItems={'flex-end'} 
-            marginRight="50px">
+            paddingRight={7}>
               <Button style={{borderRadius:"25px", color:"white", padding:"7px 20px", backgroundColor:"red"}}> + Agregar</Button>
             </Box>
           </Stack>
         </Box>
-        <EgresadosTable/>
+        <MentoresTable/>
       </Box>
 
     </div >

@@ -6,8 +6,8 @@ import { useState } from 'react'
 
 const navigation = [
   { name: 'Caracteristicas', href: '#caracteristicas' },
-  { name: 'Nosotros', href: '#nosotros' },
   { name: 'Novedades', href: '#novedades' },
+  { name: 'Nosotros', href: '#nosotros' },  
   { name: 'Reseñas', href: '#resegnas' },
 ]
 
@@ -38,7 +38,7 @@ const Navbar = () => {
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="/login" className="text-base font-normal leading-6 text-sky-100 bg-sky-800 p-2 rounded-md shadow-md shadow-slate-600">
+            <a href="/login" className="text-base font-normal leading-6 text-white bg-red-800 px-4 py-2 rounded-3xl shadow-md shadow-slate-600">
               Iniciar Sesion
             </a>
           </div>

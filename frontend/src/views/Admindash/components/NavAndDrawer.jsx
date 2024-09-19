@@ -22,7 +22,7 @@ import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import { Link } from '@mui/material';
-
+import Logo from "@/components/Logo";
 const drawerWidth = 240;
 
 function NavAndDrawer() {
@@ -58,9 +58,9 @@ function NavAndDrawer() {
     ];
     const drawer = (
         <div>
-            <Toolbar />
+            <Toolbar className='bg-red-50'><Logo /></Toolbar>
             <Divider />
-            <List >
+            <List className='bg-red-50'>
                 {items.map((item, index) => (
                     <React.Fragment key={index}>
                         <ListItem>

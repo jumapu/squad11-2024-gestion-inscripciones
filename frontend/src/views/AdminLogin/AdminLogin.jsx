@@ -73,7 +73,7 @@ import {
                       />
                     </div>
                     <Button className="mt-4 w-full bg-sky-800 py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">                      
-                      <Link className=" text-white" href="/admindash">Ingresar</Link>
+                      <Link className=" text-white" href="/Dashboard">Ingresar</Link>
                     </Button>
                   </Flex>
                 </form>

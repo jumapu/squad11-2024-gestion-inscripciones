@@ -48,7 +48,7 @@ function NavAndDrawer() {
         setActive(!active)
       }
     const items = [
-        { icon: <MdLeaderboard />, text: 'Dashboard' },
+        { icon: <MdLeaderboard />, text: 'Dashboard', },
         { icon: <GiGraduateCap />, text: 'Egresados'  },
         { icon: <MdOutlineGroup />, text: 'Mentores' },
         { icon: <IoCalendar />, text: 'Eventos' },
@@ -58,7 +58,7 @@ function NavAndDrawer() {
     ];
     const drawer = (
         <div>
-            <Toolbar className='bg-red-50'><Logo /></Toolbar>
+            <Toolbar className='bg-red-50 ml-20'><Logo/></Toolbar>
             <Divider />
             <List className='bg-red-50'>
                 {items.map((item, index) => (

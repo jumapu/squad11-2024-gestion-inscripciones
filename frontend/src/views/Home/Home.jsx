@@ -14,10 +14,10 @@ export default function Home() {
         <div className=" max-w-xl lg:pl-32 py-32 sm:py-48 lg:py-56">
           <div className="text-start pt-10">
             <h1 className="font-extrabold tracking-tight text-gray-900 text-3xl">
-              Bienvenido al sistema de inscripcion del Polo IT.
+              Bienvenido al sistema de inscripción del Polo IT.
             </h1>
             <p className="mt-4 text-base leading-5 text-gray-800">
-              Una plataforma innovadora que conecta automaticamente a mentores tecnicos con egresados, facilitando su participacion en diversas actividades y programas.
+              Una plataforma innovadora que conecta automáticamente a mentores técnicos con egresados, facilitando su participación en diversas actividades y programas.
             </p>
           </div>
         </div>

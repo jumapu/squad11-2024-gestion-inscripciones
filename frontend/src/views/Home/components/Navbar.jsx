@@ -39,7 +39,7 @@ const Navbar = () => {
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="/login" className="text-base font-normal leading-6 text-white bg-red-800 px-4 py-2 rounded-3xl shadow-md shadow-slate-600">
-              Iniciar Sesion
+              Iniciar Sesión
             </a>
           </div>
         </nav>
@@ -75,7 +75,7 @@ const Navbar = () => {
                     href="/login"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-lg font-bold leading-7 text-sky-800 hover:bg-sky-50"
                   >
-                    Log in
+                    Iniciar Sesión
                   </a>
                 </div>
               </div>

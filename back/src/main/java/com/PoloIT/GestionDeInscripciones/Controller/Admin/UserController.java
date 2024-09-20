@@ -26,7 +26,8 @@ public class UserController {
     private final StudentServiceImpl studentService;
     private final HttpServletRequest request;
     private final MentorServiceImpl mentorService;
-
+//algunos controladores no deverian estar en el AdminController? como save/mentor save/student
+//tengo el controlador para cambiar la contraseña de los usuarios aqui XD
     @PostMapping("save/student")
     public ResponseEntity<Map<String, String>> registerStudent(@RequestPart("data") String data, @RequestPart("file") MultipartFile file) {
         userService.registerStudent(data, file, request);

@@ -8,12 +8,14 @@ import com.PoloIT.GestionDeInscripciones.Services.AdminServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.StudentServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -25,6 +27,8 @@ public class AdminController {
     private final StudentServiceImpl studentService;
     private final MentorServiceImpl mentorServiceImpl;
     private final AdminServiceImpl adminService;
+    private final HttpServletRequest request;
+
     @Transactional
     @DeleteMapping("deleteUser/{id}")
     public ResponseEntity<Map<String, String>> deleteUser(@PathVariable Long id) {
@@ -46,6 +50,12 @@ public class AdminController {
     public ResponseEntity<Map<String, String>> update(@Valid @RequestBody AdminUpdateDTO adminUpdateDTO) {
         adminService.update(adminUpdateDTO);
         return new ResponseEntity<>(Map.of("update", "Datos actualizados"), HttpStatus.OK);
+    }
+
+    @PostMapping("img")
+    public ResponseEntity<Map<String, String>> updateFile(@RequestPart("file") MultipartFile file) {
+        adminService.changeImg(file, request);
+        return new ResponseEntity<>(Map.of("Img", "Imagen cargada"), HttpStatus.CREATED);
     }
 
 }

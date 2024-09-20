@@ -24,6 +24,7 @@ public class Admin {
     private User user;
     private String name;
     private String lastName;
+    private String imgUrl;
 
     @OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
     private Set<Event> events;

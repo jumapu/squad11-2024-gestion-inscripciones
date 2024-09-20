@@ -5,12 +5,14 @@ import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
 import com.PoloIT.GestionDeInscripciones.Services.MentorServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -21,6 +23,7 @@ public class MentorController {
 
     private final MentorServiceImpl mentorService;
     private final UserServiceImpl userService;
+    private final HttpServletRequest request;
 
     @PatchMapping("update")
     public ResponseEntity<Map<String, String>> update(@Valid @RequestBody MentorDTO mentorDTO) {
@@ -33,6 +36,11 @@ public class MentorController {
     public ResponseEntity<Map<String, MentorDTO>> getStudentById() {
         MentorDTO body = new MentorDTO(userService.getUserRolContext(Mentor.class));
         return new ResponseEntity<>(Map.of("Event", body), HttpStatus.OK);
+    }
+    @PostMapping("img")
+    public ResponseEntity<Map<String, String>> updateFile(@RequestPart("file") MultipartFile file) {
+        mentorService.changeImg(file, request);
+        return new ResponseEntity<>(Map.of("Img", "Imagen cargada"), HttpStatus.CREATED);
     }
 
     @Transactional

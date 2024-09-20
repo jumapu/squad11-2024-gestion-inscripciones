@@ -3,11 +3,15 @@ package com.PoloIT.GestionDeInscripciones.Services;
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.MentorDTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
+import com.PoloIT.GestionDeInscripciones.Entity.Student;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
+import com.PoloIT.GestionDeInscripciones.Utils.FileUserServices;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,6 +24,7 @@ public class MentorServiceImpl {
     private final UserRepository userRepository;
     private final MentorRepository mentorRepository;
     private final UserServiceImpl userService;
+    private final FileUserServices fileUserServices;
 
     public void update(MentorDTO mentorDTO) {
         mentorRepository.save(dateUpdate(mentorDTO));
@@ -50,5 +55,15 @@ public class MentorServiceImpl {
 
     public void delete() {
         userService.getUserContext().setDelete(true);
+    }
+    public void changeImg(MultipartFile file, HttpServletRequest request) {
+        Mentor mentor = userService.getUserContext().getMentor();
+
+        if (Objects.isNull(mentor.getImgUrl())) {
+            mentor.setImgUrl(fileUserServices.saveFile(file, request));
+            mentorRepository.save(mentor);
+        }
+
+        fileUserServices.saveFile(mentor.getImgUrl(), file);
     }
 }

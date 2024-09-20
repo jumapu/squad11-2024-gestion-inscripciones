@@ -25,10 +25,6 @@ public class MediaController {
         Resource file = eventServiceImpl.loadResource(filename);
         String contentType = Files.probeContentType(file.getFile().toPath());
         //! este es para descargar archivos
-//        return ResponseEntity
-//                .ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, contentType)
-//                .body(file);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(file);
 

@@ -26,8 +26,8 @@ import Logo from "@/components/Logo";
 const drawerWidth = 240;
 
 function NavAndDrawer() {
-    const [mobileOpen, setMobileOpen] = React.useState(false);
-    const [isClosing, setIsClosing] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
+    const [isClosing, setIsClosing] = useState(false);
 
     const handleDrawerClose = () => {
         setIsClosing(true);
@@ -43,10 +43,6 @@ function NavAndDrawer() {
             setMobileOpen(!mobileOpen);
         }
     };
-    const [active, setActive] = useState(false)
-    const handleMenu = ()=>{
-        setActive(!active)
-      }
     const items = [
         { icon: <MdLeaderboard />, text: 'Dashboard', },
         { icon: <GiGraduateCap />, text: 'Egresados'  },
@@ -59,7 +55,7 @@ function NavAndDrawer() {
 
     const drawer = (
         <div>
-            <Toolbar className='bg-red-50 ml-20'><Logo/></Toolbar>
+            <Toolbar className='bg-red-50 justify-center'><Logo /></Toolbar>
             <Divider />
             <List className='bg-red-50'>
                 {items.map((item, index) => (
@@ -70,7 +66,7 @@ function NavAndDrawer() {
                                     {item.icon}
                                 </ListItemIcon>
                                 <Link href={item.text} underline="none">
-                                <ListItemText className='text-gray-500' primary={item.text} onClick={handleMenu} />
+                                <ListItemText className='text-gray-700' primary={item.text} />
                                 </Link>
                             </ListItemButton>
                         </ListItem>
@@ -136,7 +132,7 @@ function NavAndDrawer() {
                     onTransitionEnd={handleDrawerTransitionEnd}
                     onClose={handleDrawerClose}
                     ModalProps={{
-                        keepMounted: true, // Better open performance on mobile.
+                        keepMounted: true,
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },

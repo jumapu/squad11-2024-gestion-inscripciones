@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import { EventosTable } from "./components/EventosTable";
 import { useEffect, useState } from "react";
@@ -50,12 +51,21 @@ const ColorButton = styled(Button)(({ theme }) => ({
         backgroundColor: blue[600],
     },
 }));
+const OtherButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(red[900]),
+    backgroundColor: red[900],
+    '&:hover': {
+        backgroundColor: red[600],
+    },
+    borderRadius:"33px",
+    padding: "5px 15px",
+}));
 
- const Eventos = () => {
+const Eventos = () => {
     const drawerWidth = 240;
 
     const [search, setSearch] = useState("");
-    const [eventos, setEventos] = useState([]); // Declarar el estado para eventos
+    const [eventos, setEventos] = useState([]); // Declara el estado para eventos
     const [filteredEventos, setFilteredEventos] = useState([]); // Estado para los eventos filtrados
 
     useEffect(() => {
@@ -69,7 +79,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
                 if (events != null) {
                     setEventos(events);
-                    setFilteredEventos(events); // Inicialmente, mostrar todos los eventos.
+                    setFilteredEventos(events); // Inicialmente, muestra todos los eventos.
                 }
             })
             .catch((err) => {
@@ -81,76 +91,75 @@ const ColorButton = styled(Button)(({ theme }) => ({
         const value = event.target.value;
         setSearch(value); // Actualiza el valor de búsqueda
 
-        // Filtrar los eventos según el valor de búsqueda
-        const filtered = eventos.filter((evento) => 
+        // Filtra los eventos según el valor de búsqueda
+        const filtered = eventos.filter((evento) =>
             evento.name.toUpperCase().includes(value.toUpperCase())
         );
         setFilteredEventos(filtered);
     };
 
 
-return (
-    <div>
+    return (
         <div>
-            <NavAndDrawer />
-        </div>
-        <Box
-            component="main"
-            sx={{ flexGrow: 1, p: 3 }}
-        >
-            <Box sx={{
-                width: { sm: `calc(100vw - ${drawerWidth}px)` },
-                ml: { sm: `${drawerWidth}px` },
-                maxWidth: "1440px",
-            }}>
-                <Typography
-                    variant="h6" noWrap component="div"
-                    sx={{
-                        padding: "1.5rem",
-                        gap: "2rem",
-                    }}
-                >
-                    Eventos
-                </Typography>
-                <Stack
-                    display={'flex'}
-                    flexDirection={'row'}
-                    alignItems={{ sm: 'center' }}
-                    justifyContent={{ xs: "center", md: 'space-between' }}
-                    maxWidth="1440px"
-                    flexWrap={'wrap'}
-                    gap={2}
-                >
-                    <Box
-                        as="div"
-                        display={'flex'}
-                        alignItems={'center'}
+            <div>
+                <NavAndDrawer />
+            </div>
+            <Box
+                component="main"
+                sx={{ flexGrow: 1, p: 3 }}
+            >
+                <Box sx={{
+                    width: { sm: `calc(100vw - ${drawerWidth}px)` },
+                    ml: { sm: `${drawerWidth}px` },
+                    maxWidth: "1440px",
+                }}>
+                    <Typography
+                        variant="h6" noWrap component="div"
+                        sx={{
+                            padding: "1.5rem",
+                            gap: "2rem",
+                        }}
                     >
-                        <Search>
-                            <StyledInputBase
-                                placeholder="Buscar .."
-                                inputProps={{ 'aria-label': 'search' }}
-                                type="text"
-                                value={search}
-                                
-                            />
-                        </Search>
-                        <Box paddingLeft={2}>
-                            <ColorButton style={{ borderRadius: "25px" }} 
-                            variant="outlined" onChange={handleChange} >BUSCAR</ColorButton>
-                        </Box>
-                    </Box>
-                    <Box
-                        alignItems={'flex-end'}
-                        marginRight="50px">
-                        <Button style={{ borderRadius: "25px", color: "white", padding: "7px 20px", backgroundColor: "red" }}> + Agregar</Button>
-                    </Box>
-                </Stack>
-            </Box>
-            <EventosTable eventos={filteredEventos} />
-        </Box>
+                        Eventos
+                    </Typography>
+                    <Stack
+                        display={'flex'}
+                        flexDirection={'row'}
+                        alignItems={{ sm: 'center' }}
+                        justifyContent={{ xs: "center", md: 'space-between' }}
+                        maxWidth="1440px"
+                        flexWrap={'wrap'}
+                        gap={2}
+                    >
+                        <Box
+                            as="div"
+                            display={'flex'}
+                            alignItems={'center'}
+                        >
+                            <Search>
+                                <StyledInputBase
+                                    placeholder="Buscar .."
+                                    inputProps={{ 'aria-label': 'search' }}
+                                    type="text"
+                                    value={search}
 
-    </div >
-);
+                                />
+                            </Search>
+                            <Box paddingLeft={2}>
+                                <ColorButton style={{ borderRadius: "25px" }}
+                                    variant="outlined" onChange={handleChange} >BUSCAR</ColorButton>
+                            </Box>
+                        </Box>
+                        <Box
+                            alignItems={'flex-end'}
+                            marginRight="50px">
+                            <OtherButton > + Agregar</OtherButton>
+                        </Box>
+                    </Stack>
+                </Box>
+                <EventosTable eventos={filteredEventos} />
+            </Box>
+        </div >
+    );
 }
 export default Eventos

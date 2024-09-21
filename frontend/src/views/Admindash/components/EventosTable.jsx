@@ -7,14 +7,14 @@ import { IoTrashOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import DataTable from 'react-data-table-component';
 import axiosInstance from "@/api/interceptor.js";
+import Box from "@mui/material/Box";
 
 export const EventosTable = () => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
       style: {
-        width: "100%", 
-        maxWidth: "1440px",
+        sm:{width: "100%"},
       }
     },
     headCells: {
@@ -29,6 +29,7 @@ export const EventosTable = () => {
         textAlign: "center",
         alignItems:"center",
         justifyContent:"center",
+        width: 100,
       }
     }
   };
@@ -60,21 +61,21 @@ export const EventosTable = () => {
         <div style={{ display: 'flex', alignItems: 'center', textAlign:"center" }}>
           <Tooltip content="Informacion">
             <Link to={`Egresados/informacionForm/${row.id}`}>
-              <IconButton className='bg-blue-800 rounded-full'>
+              <IconButton className='bg-indigo-900 rounded-full'>
                 <IoIosInformation size={24} />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Modificar Informacion">
             <Link to={`/Egresados/editar/${row.id}`}>
-              <IconButton className='bg-blue-800 rounded-full'>
+              <IconButton className='bg-indigo-900 rounded-full'>
                 <IoPencil />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Borrar Informacion">
             <Link to={`/Egresados/borrar/${row.id}`}>
-              <IconButton className='bg-red-700 rounded-full'>
+              <IconButton className='bg-red-800 rounded-full'>
                 <IoTrashOutline />
               </IconButton>
             </Link>
@@ -109,7 +110,15 @@ export const EventosTable = () => {
    [eventos];
 
   return (
-    <div style={{ display:"flex", flexDirection:"column", marginLeft: drawerWidth, border: "solid 3px blue", borderRadius:"20px", marginTop: "20px", paddingBottom:"20px"}}>
+    <Box sx={{
+      width: { sm: `calc(95vw - ${drawerWidth}px)` },
+      ml: { sm: ` ${drawerWidth}px` },
+      maxWidth: "1440px",
+      border:"3px solid darkblue",
+      borderRadius:"33px",
+      marginTop: "20px",
+      paddingBottom: "25px",
+    }}>
       <DataTable
         columns={columns}
         data={eventos}
@@ -119,7 +128,7 @@ export const EventosTable = () => {
         progressPending={pending}
         responsive
       />
-    </div>
+    </Box>
   )
 }
 

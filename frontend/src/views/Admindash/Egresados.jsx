@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import EgresadosTable from "./components/EgresadosTable";
 
@@ -25,7 +26,7 @@ const Search = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
-  border: 'solid 1px blue',
+  border: 'solid 2px darkblue',
   borderRadius: '25px',
   width: '250px',
   '& .MuiInputBase-input': {
@@ -42,11 +43,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const ColorButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(blue[900]),
+  color: theme.palette.getContrastText(blue[600]),
   backgroundColor: blue[900],
   '&:hover': {
-    backgroundColor: blue[600],
+    backgroundColor: blue[800],
   },
+}));
+const OtherButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(red[600]),
+  backgroundColor: red[900],
+  '&:hover': {
+    backgroundColor: red[800],
+  },
+  borderRadius:"33px",
+  padding: "5px 15px",
 }));
 
 const Egresados = () => {
@@ -74,19 +84,19 @@ const Egresados = () => {
           >
             Egresados
           </Typography>
-          <Stack 
-          display={'flex'}
-          flexDirection={'row'}          
-          alignItems={{sm:'center'}}
-          justifyContent={{xs:"center", md: 'space-between'}}
-          maxWidth="1440px"
-          flexWrap={'wrap'}
-          gap={2}
+          <Stack
+            display={'flex'}
+            flexDirection={'row'}
+            alignItems={{ sm: 'center' }}
+            justifyContent={{ xs: "center", md: 'space-between' }}
+            maxWidth="1440px"
+            flexWrap={'wrap'}
+            gap={2}
           >
-            <Box 
-            as="div" 
-            display={'flex'} 
-            alignItems={'center'}
+            <Box
+              as="div"
+              display={'flex'}
+              alignItems={'center'}
             >
               <Search>
                 <StyledInputBase
@@ -95,17 +105,17 @@ const Egresados = () => {
                 />
               </Search>
               <Box paddingLeft={2}>
-                <ColorButton style={{borderRadius:"25px"}} variant="outlined">BUSCAR</ColorButton>
+                <ColorButton style={{ borderRadius: "25px" }} variant="outlined">BUSCAR</ColorButton>
               </Box>
             </Box>
-            <Box 
-            alignItems={'flex-end'} 
-            marginRight="50px">
-              <Button style={{borderRadius:"25px", color:"white", padding:"7px 20px", backgroundColor:"red"}}> + Agregar</Button>
+            <Box
+              alignItems={'flex-end'}
+              marginRight="50px">
+              <OtherButton > + Agregar</OtherButton>
             </Box>
           </Stack>
         </Box>
-        <EgresadosTable/>
+        <EgresadosTable />
       </Box>
 
     </div >

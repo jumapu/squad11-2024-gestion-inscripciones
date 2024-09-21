@@ -105,7 +105,7 @@ export const MentoresTable = () => {
   }, []);
 
   return (
-    <div style={{marginLeft: drawerWidth,border: "solid 3px blue", borderRadius:"20px", marginTop: "20px"}}>
+    <div style={{display:"flex", flexDirection:"column", marginLeft: drawerWidth, border: "solid 3px blue", borderRadius:"20px", marginTop: "20px", paddingBottom:"20px"}}>
       <DataTable
         columns={columns}
         data={Mentores}

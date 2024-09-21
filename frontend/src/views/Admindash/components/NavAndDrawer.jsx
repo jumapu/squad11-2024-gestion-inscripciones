@@ -56,6 +56,7 @@ function NavAndDrawer() {
         { icon: <IoPersonOutline />, text: 'Perfil' },
         { icon: <IoLogOutOutline />, text: 'Cerrar Sesion' }
     ];
+
     const drawer = (
         <div>
             <Toolbar className='bg-red-50 ml-20'><Logo/></Toolbar>

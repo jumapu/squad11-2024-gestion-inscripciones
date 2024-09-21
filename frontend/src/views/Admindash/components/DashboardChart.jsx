@@ -14,15 +14,13 @@ export default function DashboardChart() {
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: "#fff",
     ...theme.typography.body2,
-    padding: theme.spacing(1),
+    padding: theme.spacing(4),
     color: theme.palette.text.secondary,
-    border: '2px solid blue',
+    border: '2px solid darkblue',
     borderRadius: '21px',
     flexGrow: 1,
-    width: "300px",
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
-      
     }),
   }));
 
@@ -64,17 +62,20 @@ export default function DashboardChart() {
     <h2>loading</h2>
   ) : (
     <Box
+      display={"flex"} 
+    >
+      <Box 
       display={"flex"}
-      flexDirection={"row"}
       flexWrap={"wrap"}
       flexGrow={1}
       marginTop={3}
-      justifyContent={"space-around"}
+      justifyContent={"center"}
       alignItems={"start"}
-    >
-      <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} gap={2} >
+      gap={2}
+      >
+        
         <Item>
-          <Typography>Egresados</Typography>
+          <Typography>Egresados - Géneros</Typography>
           <PieChart
             series={[
               {
@@ -88,7 +89,7 @@ export default function DashboardChart() {
           />
         </Item>
         <Item>
-          <Typography>Egresados</Typography>
+          <Typography>Egresados - Roles</Typography>
           <PieChart
             series={[
               {
@@ -98,8 +99,9 @@ export default function DashboardChart() {
             {...pieParams}
           />
         </Item>
+        <DashboardCalendar />
       </Box>
-      <DashboardCalendar />
+      
     </Box>
   );
 }

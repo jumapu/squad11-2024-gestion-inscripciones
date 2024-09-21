@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
+import { red } from "@mui/material/colors";
 import Stack from '@mui/material/Stack';
 import MentoresTable from "./components/MentoresTable";
 
@@ -47,6 +48,15 @@ const ColorButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     backgroundColor: blue[600],
   },
+}));
+const OtherButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(red[900]),
+  backgroundColor: red[900],
+  '&:hover': {
+      backgroundColor: red[600],
+  },
+  borderRadius:"33px",
+  padding: "5px 15px",
 }));
 
 const Egresados = () => {
@@ -101,7 +111,7 @@ const Egresados = () => {
             <Box 
             alignItems={'flex-end'} 
             paddingRight={7}>
-              <Button style={{borderRadius:"25px", color:"white", padding:"7px 20px", backgroundColor:"red"}}> + Agregar</Button>
+              <OtherButton > + Agregar</OtherButton>
             </Box>
           </Stack>
         </Box>

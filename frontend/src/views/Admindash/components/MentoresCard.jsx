@@ -16,7 +16,7 @@ export default function MentoresCard() {
     alignItems: "center",
     justifyContent: "space-around",
     padding: theme.spacing(1),
-    border: "solid 2px blue",
+    border: "solid 2px darkblue",
     borderRadius:"21px",
     width: "175px",
     color: theme.palette.text.secondary,

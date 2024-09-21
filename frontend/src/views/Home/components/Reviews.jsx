@@ -1,4 +1,5 @@
 import { Heading } from "@radix-ui/themes";
+import Rating from "@/components/Rating";
 
 // Hardcodeado por ahora
 const posts = [
@@ -57,16 +58,17 @@ const Reviews = () => {
                     </div>
                     <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16  border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                         {posts.map((post) => (
-                            <article key={post.id} className="flex max-w-xl flex-col items-start justify-between bg-slate-50 p-5 border-red-500 border-solid border-2 rounded-lg shadow-slate-200 shadow-inner">
+                            <article key={post.id} className="flex max-w-xl flex-col items-start justify-between bg-red-50 p-5 border-red-500 border-solid border-4 rounded-3xl shadow-black-600 shadow-xl">
                                 <div className="flex items-center gap-x-4 text-xs">
                                     <time dateTime={post.datetime} className="text-gray-500">
                                         {post.date}
                                     </time>
-                                    <button
+                                    <p
                                         className="relative z-10 rounded-lg bg-gray-100 px-3 py-0.5 font-medium text-gray-600"
                                     >
                                         {post.category.title}
-                                    </button>
+                                    </p>
+                                    <Rating/>
                                 </div>
                                 <div className="relative mt-8 flex items-center gap-x-4">
                                 <div className="text-sm leading-6">

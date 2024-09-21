@@ -13,12 +13,12 @@ const Dashboard = () => {
       <NavAndDrawer />
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3 }}
+        sx={{ flexGrow: 1, p: 4, justifyContent: "center" }}
       >
-        
+
         <Box sx={{
-          width: { sm: `calc(100vw - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { sm: `calc(95vw - ${drawerWidth}px)` },
+          ml: { sm: ` ${drawerWidth}px` },
           maxWidth: "1440px",
         }}>
           <Typography variant="h6" noWrap component="div"
@@ -28,9 +28,9 @@ const Dashboard = () => {
             }}
           >
             Dashboard
-          </Typography>
-          <DashboardCard />
-          <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} maxWidth={"90%"}>
+          </Typography>          
+            <DashboardCard />
+            <Box >
             <DashboardChart />
           </Box>
         </Box>

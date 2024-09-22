@@ -1,12 +1,9 @@
 import NavAndDrawer from "./components/NavAndDrawer"
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { Box } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { red } from "@mui/material/colors";
-import Stack from '@mui/material/Stack';
+import NuevoEgresado from "./Agregar/NuevoEgresado";
 import EgresadosTable from "./components/EgresadosTable";
 
 const Search = styled('div')(({ theme }) => ({
@@ -49,15 +46,15 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: blue[800],
   },
 }));
-const OtherButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(red[600]),
-  backgroundColor: red[900],
-  '&:hover': {
-    backgroundColor: red[800],
-  },
-  borderRadius:"33px",
-  padding: "5px 15px",
-}));
+// const OtherButton = styled(Button)(({ theme }) => ({
+//   color: theme.palette.getContrastText(red[600]),
+//   backgroundColor: red[900],
+//   '&:hover': {
+//     backgroundColor: red[600],
+//   },
+//   borderRadius:"33px",
+//   padding: "5px 15px",
+// }));
 
 const Egresados = () => {
   const drawerWidth = 240;
@@ -111,7 +108,8 @@ const Egresados = () => {
             <Box
               alignItems={'flex-end'}
               marginRight="50px">
-              <OtherButton > + Agregar</OtherButton>
+              {/* <OtherButton > + Agregar</OtherButton> */}
+              <NuevoEgresado/>
             </Box>
           </Stack>
         </Box>

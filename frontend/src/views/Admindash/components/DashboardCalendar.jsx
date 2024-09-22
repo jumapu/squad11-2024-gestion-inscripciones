@@ -10,20 +10,24 @@ import { styled } from '@mui/material/styles';
 export default function DateCalendarValue() {
     const [value, setValue] = useState(dayjs('2024-01-01'));
     const Item = styled(Paper)(({ theme }) => ({
-        backgroundColor: '#fff',
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        color: theme.palette.text.secondary,
-        maxWidth: '400px',
-        flexGrow: 1,
-        ...theme.applyStyles('dark', {
-            backgroundColor: '#1A2027',
-        }),
+      backgroundColor: "#fff",
+      ...theme.typography.body2,
+      padding: theme.spacing(1),
+      color: theme.palette.text.secondary,
+      border: '2px solid darkblue',
+      borderRadius: '21px',
+      flexGrow: 1,
+      maxWidth: "500px",
+      maxHeight:"500px",
+      ...theme.applyStyles("dark", {
+        backgroundColor: "#1A2027",
+        
+      }),
     }));
     return (
-        <Box display={'flex'} alignItems={"start"}>
+        <Box display={'flex'} alignItems={"center"}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>          
-          <Item style={{border:"2px solid blue", borderRadius:"25px"}}>
+          <Item >
             <DateCalendar value={value} onChange={(newValue) => setValue(newValue)} />
           </Item>
       </LocalizationProvider>

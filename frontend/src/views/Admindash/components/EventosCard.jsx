@@ -17,7 +17,7 @@ export default function EventosCard() {
     justifyContent: "space-around",
     padding: theme.spacing(1),
     width: "175px",
-    border: "solid 2px blue",
+    border: "solid 2px darkblue",
     borderRadius:"21px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {

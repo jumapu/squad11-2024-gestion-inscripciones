@@ -34,26 +34,24 @@ const Login = () => {
         <Container size="2" align="center" className="relative h-screen flex justify-center">
           <Logo/>
           <div className="text-center py-4">
-            <Heading as="h1" size="8" className="w-full" style={{color:"#1c668f"}}>Iniciar Sesion</Heading>
+            <Heading as="h1" size="8" className="w-full">Iniciar Sesión</Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
               style={{ margin: "10px 5px" }}
-              className="py-4 px-6 shadow-lg rounded-lg"
+              className="py-4 px-6 shadow-lg rounded-3xl"
             >
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Flex direction="column" gap="6" className="py-8 px-10">
                   <div>
                     <Text as="p" size="2" className="mb-1">
-                      <Strong>Email:</Strong>
+                      <Strong>Correo Electrónico:</Strong>
                     </Text>
-                    <input
-                    
-                      style={{ width: "98%" }}
+                    <input                    
+                      style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
                       type="text"
                       name="email"
-                      placeholder="Ingrese su email"
-                      className="campos"
+                      placeholder="Ingrese su correo electrónico"
                       {...register("email")}
                     />
                   </div>
@@ -62,15 +60,14 @@ const Login = () => {
                       <Strong>Contraseña:</Strong>
                     </Text>
                     <input
-                      style={{ width: "98%" }}
+                      style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
                       type="password"
                       name="password"
                       placeholder="Ingrese su contraseña"
-                      className="campos"
                       {...register("password")}
                     />
                   </div>
-                  <Button className="mt-4 w-full bg-sky-800 text-white py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">
+                  <Button className="mt-4 w-full bg-red-800 text-white py-5 rounded-2xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md shadow-black font-bold">
                     Ingresar
                   </Button>
                   <Text className="w-full text-center">

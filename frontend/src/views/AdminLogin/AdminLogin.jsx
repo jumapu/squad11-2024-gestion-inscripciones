@@ -34,25 +34,25 @@ import {
           <Container size="2" align="center" className="relative h-screen flex justify-center bg-sky-200">
             <Logo/>
             <div className="text-center py-4">
-              <Heading as="h1" size="8" className="w-full text-sky-900" >Iniciar Sesion</Heading>
+              <Heading as="h1" size="8" className="w-full text-sky-900" >Iniciar Sesión</Heading>
             </div>
             <Flex direction="column" gap="2" className="max-w-md mx-auto">
               <Card
                 style={{ margin: "10px 5px" }}
-                className="py-4 px-6 shadow-lg rounded-lg"
+                className="py-4 px-6 shadow-lg rounded-3xl"
               >
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <Flex direction="column" gap="6" className="py-8 px-10">
                     <div>
                       <Text as="p" size="2" className="mb-1">
-                        <Strong>Email:</Strong>
+                        <Strong>Correo Electrónico:</Strong>
                       </Text>
                       <input
                       
-                        style={{ width: "100%" }}
+                      style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
                         type="text"
                         name="email"
-                        placeholder="Ingrese su email"
+                        placeholder="Ingrese su correo electrónico"
                         className="campos"
                         {...register("email")}
                         required
@@ -63,7 +63,7 @@ import {
                         <Strong>Contraseña:</Strong>
                       </Text>
                       <input
-                        style={{ width: "100%" }}
+                        style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
                         type="password"
                         name="password"
                         placeholder="Ingrese su contraseña"
@@ -72,7 +72,7 @@ import {
                         required
                       />
                     </div>
-                    <Button className="mt-4 w-full bg-sky-800 py-4 rounded-md hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 shadow-md shadow-black">                      
+                    <Button className="mt-4 w-full bg-red-800 py-5 rounded-3xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md font-bold shadow-black">                      
                       <Link className=" text-white" href="/Dashboard">Ingresar</Link>
                     </Button>
                   </Flex>

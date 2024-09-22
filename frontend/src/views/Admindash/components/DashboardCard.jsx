@@ -4,8 +4,8 @@ import Stack from "@mui/material/Stack";
 import Egresados from "./EgresadosCard";
 const DashboardCard = () => {
   return (
-    <div>
-      <Stack spacing={1} flexDirection={'row'} alignItems={'center'} flexWrap={'wrap'}>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}> 
+      <Stack  flexDirection={'row'}  flexWrap={'wrap'} gap={1}>
       <Eventos/>
       <Mentores/>
       <Egresados/>

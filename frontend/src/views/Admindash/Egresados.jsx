@@ -46,7 +46,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: blue[800],
   },
 }));
-// const OtherButton = styled(Button)(({ theme }) => ({
 //   color: theme.palette.getContrastText(red[600]),
 //   backgroundColor: red[900],
 //   '&:hover': {
@@ -108,7 +107,6 @@ const Egresados = () => {
             <Box
               alignItems={'flex-end'}
               marginRight="50px">
-              {/* <OtherButton > + Agregar</OtherButton> */}
               <NuevoEgresado/>
             </Box>
           </Stack>

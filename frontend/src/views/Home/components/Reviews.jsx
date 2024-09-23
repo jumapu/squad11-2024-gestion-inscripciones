@@ -79,7 +79,7 @@ const Reviews = () => {
                                                 {post.author.name}
                                         </p>
                                         <p className="text-gray-600">{post.author.role}</p>
-                                        <p className="mt-5 line-clamp-3 text-base leading-6 text-gray-600">{post.description}</p>
+                                        <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{post.description}</p>
                                     </div>
                                 </div>
                             </article>

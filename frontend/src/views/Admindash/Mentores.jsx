@@ -61,8 +61,8 @@ const Egresados = () => {
   useEffect(() => {
     const fetchMentores = async () => {
       try {
-        const result = await axiosInstance.get("admin/user/all");
-        const mentores = result.data.Mentors.Mentores || [];
+        const result = await axiosInstance.get("admin/user/mentors");
+        const mentores = result.data.Mentores || [];
         setMentoresOrigin(mentores);
         setMentores(mentores);
         setPending(false);

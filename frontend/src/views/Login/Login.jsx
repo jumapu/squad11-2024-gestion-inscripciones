@@ -30,7 +30,7 @@ const Login = () => {
     <div className="flex h-screen">
       <Toaster richColors position="top-center" />
 
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center from-rose-100 from-0% via-transparent via-50% to-blue-100 to-100% bg-gradient-to-r bg-opacity-5">
         <Container size="2" align="center" className="relative h-screen flex justify-center">
           <Logo/>
           <div className="text-center py-4">

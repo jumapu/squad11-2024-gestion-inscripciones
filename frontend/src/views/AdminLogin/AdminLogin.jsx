@@ -30,8 +30,8 @@ import {
       <div className="flex h-screen">
         <Toaster richColors position="top-center" />
   
-        <div className="flex-1 flex items-center justify-center">
-          <Container size="2" align="center" className="relative h-screen flex justify-center bg-sky-200">
+        <div className="flex-1 flex items-center justify-center ">
+          <Container size="2" align="center" className="relative h-screen flex justify-center from-blue-100 from-0% to-100% bg-gradient-to-tr bg-opacity-5">
             <Logo/>
             <div className="text-center py-4">
               <Heading as="h1" size="8" className="w-full text-sky-900" >Iniciar Sesión</Heading>

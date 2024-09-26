@@ -8,6 +8,8 @@ import { blue } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import EgresadosTable from "./components/EgresadosTable";
 import { useState, useEffect } from "react";
+import axiosInstance from "@/api/interceptor.js";
+import { toast, Toaster } from "sonner";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -53,8 +55,55 @@ const ColorButton = styled(Button)(({ theme }) => ({
 const Egresados = () => {
   const drawerWidth = 240;
 
+  const [estudiantes, setEstudiantes] = useState([]);
+  const [pending, setPending] = useState(true);
+  const [searchValue, setSearchValue] = useState("");
+  const [estudiantesOrigin, setEstudiantesOrigin] = useState([]);
+
+  useEffect(() => {
+    const fetchEstudiantes = async () => {
+      try {
+        const result = await axiosInstance.get("admin/user/students");
+
+        const estudiantes = result?.data?.Estudiantes || [];
+        setEstudiantes(estudiantes);
+        setEstudiantesOrigin(estudiantes);
+        setPending(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchEstudiantes();
+  }, []);
+
+  const handleInputChange = (event) => {
+    const value = event.target.value.trim();
+
+    if (!value.trim()) {
+      setEstudiantes(estudiantesOrigin);
+    }
+    setSearchValue(event.target.value);
+  };
+
+  const handleSearchClick = () => {
+    const value = searchValue.trim();
+    const filter = estudiantesOrigin.filter((item) => {
+      if (value == item.name || value == item.lastName || value == item.id) {
+        return item;
+      }
+    });
+
+    if (filter.length == 0) {
+      toast.error("No se encontraron coincidencias");
+      setEstudiantes(estudiantesOrigin);
+      return;
+    }
+    setEstudiantes(filter);
+  };
   return (
     <div>
+      <Toaster richColors position="top-center" />
       <div>
         <NavAndDrawer />
       </div>
@@ -91,12 +140,15 @@ const Egresados = () => {
                 <StyledInputBase
                   placeholder="Buscar .."
                   inputProps={{ "aria-label": "search" }}
+                  value={searchValue}
+                  onChange={handleInputChange}
                 />
               </Search>
               <Box paddingLeft={2}>
                 <ColorButton
                   style={{ borderRadius: "25px" }}
                   variant="outlined"
+                  onClick={handleSearchClick}
                 >
                   BUSCAR
                 </ColorButton>
@@ -117,7 +169,7 @@ const Egresados = () => {
             </Box>
           </Stack>
         </Box>
-        <EgresadosTable />
+        <EgresadosTable students={estudiantes} pending={pending} />
       </Box>
     </div>
   );

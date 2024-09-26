@@ -21,11 +21,39 @@ import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import Avatar from '@mui/material/Avatar';
-import { Link } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import Logo from "@/components/Logo";
+import Notifications from "@/components/Notifications"
+import { IoIosNotificationsOutline } from "react-icons/io";
+import Badge from '@mui/material/Badge';
+import Popover from "@mui/material/Popover";
+
 const drawerWidth = 240;
 
 function NavAndDrawer() {
+
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [notifications, setNotifications] = useState([
+        { message: "Nuevo Taller de Git" },
+        { message: "Próximo Curso: 2024-10-20" },
+        { message: "Workshop: Reconversión" },
+        { message: "Registración para Acelerador" },
+    ]);
+    const [anchorEl, setAnchorEl] = useState(null);
+
+    const handlePopoverOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+    };
+
+    const open = Boolean(anchorEl);
+    const handleNotificaciones = () => {
+        setShowNotifications(!showNotifications);
+    };
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -43,31 +71,37 @@ function NavAndDrawer() {
             setMobileOpen(!mobileOpen);
         }
     };
+
+
     const items = [
-        { icon: <MdLeaderboard />, text: 'Dashboard', },
-        { icon: <GiGraduateCap />, text: 'Egresados'  },
-        { icon: <MdOutlineGroup />, text: 'Mentores' },
-        { icon: <IoCalendar />, text: 'Eventos' },
-        { icon: <PiGearFill />, text: 'Configuración' },
-        { icon: <IoPersonOutline />, text: 'Perfil' },
-        { icon: <IoLogOutOutline />, text: 'Cerrar Sesion' }
+        { icon: <MdLeaderboard />, text: 'Dashboard', path: "/dashboard" },
+        { icon: <GiGraduateCap />, text: 'Egresados', path: "/egresados" },
+        { icon: <MdOutlineGroup />, text: 'Mentores', path: "/mentores" },
+        { icon: <IoCalendar />, text: 'Eventos', path: "/eventos" },
+        { icon: <PiGearFill />, text: 'Configuración', path: "/configuracion" },
+        { icon: <IoPersonOutline />, text: 'Perfil', path: "/perfil" },
+        { icon: <IoLogOutOutline />, text: 'Cerrar Sesión', path: "/login" }
     ];
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        localStorage.removeItem('token'); // borra el token
+        navigate('/login'); // redirige al login después de salir
+    };
+
 
     const drawer = (
-        <div>
-            <Toolbar className='bg-red-50 justify-center'><Logo /></Toolbar>
+        <div className='from-blue-300 to-red-300 bg-gradient-to-r h-screen'>
+            <Toolbar className='justify-center'><Logo /></Toolbar>
             <Divider />
-            <List className='bg-red-50'>
+            <List >
                 {items.map((item, index) => (
                     <React.Fragment key={index}>
                         <ListItem>
-                            <ListItemButton>
+                            <ListItemButton onClick={item.text === 'Cerrar Sesión' ? handleLogout : () => { navigate(item.path) }}>
                                 <ListItemIcon>
                                     {item.icon}
                                 </ListItemIcon>
-                                <Link href={item.text} underline="none">
                                 <ListItemText className='text-gray-700' primary={item.text} />
-                                </Link>
                             </ListItemButton>
                         </ListItem>
                         {index < items.length - 1 && <Divider />}
@@ -75,10 +109,9 @@ function NavAndDrawer() {
                 ))}
             </List>
         </div>
+
     );
-
     return (
-
         <Box sx={{
             width: { sm: `calc(100vw - ${drawerWidth}px)`, md: 'screen' },
             ml: { sm: `${drawerWidth}px` },
@@ -113,6 +146,37 @@ function NavAndDrawer() {
                 >
                 </Box>
                 <Box display={"flex"} flexDirection={"row"} paddingX={"1rem"}>
+                    <Box  >
+                        <div >
+                            <IconButton size='large' aria-label="show 4 new notifications" aria-haspopup="true" color="inherit" onClick={handlePopoverOpen}>
+                                <Badge badgeContent={4} color="error">
+                                    <IoIosNotificationsOutline onClick={handleNotificaciones} />
+                                </Badge>
+                            </IconButton>
+                            <Popover
+                                open={open}
+                                anchorEl={anchorEl}
+                                onClose={handlePopoverClose}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                }}
+                            ><Box fontSize={14} padding={"1rem"} border={"1px solid red"} overflow={'hidden'}>
+                                    <Notifications
+                                        p={2}
+                                        notifications={notifications}
+                                        onClose=
+                                        {handlePopoverClose}
+                                    />
+                                </Box>
+                            </Popover>
+                        </div>
+                    </Box>
+
                     <Box display={"flex"} flexDirection={"column"} justifyContent={"flex-end"} paddingX={"2rem"}>
                         <Typography>
                             Fulano de Tal
@@ -121,7 +185,6 @@ function NavAndDrawer() {
                             Administrador
                         </Typography>
                     </Box>
-
                     <Avatar alt="" src="/static/images/avatar/1.jpg" />
                 </Box>
             </Box>
@@ -152,7 +215,6 @@ function NavAndDrawer() {
                     {drawer}
                 </Drawer>
             </Box>
-
         </Box>
     );
 }

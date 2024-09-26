@@ -22,10 +22,10 @@ function App() {
         <Route element={<AuthOutlet fallbackPath="/login" />}>
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>
           <Route path="/mentordash" element={<Mentordash />}></Route>
-          <Route path="/Dashboard" element={<Dashboard />}></Route>
-          <Route path="/Egresados" element={<Egresados />}></Route>
-          <Route path="/Mentores" element={<Mentores />}></Route>
-          <Route path="/Eventos" element={<Eventos />}></Route>
+          <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path="/egresados" element={<Egresados />}></Route>
+          <Route path="/mentores" element={<Mentores />}></Route>
+          <Route path="/eventos" element={<Eventos />}></Route>
         </Route>
       </Routes>
     </>

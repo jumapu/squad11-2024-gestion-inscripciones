@@ -3,10 +3,10 @@ import { toast } from "sonner";
 
 // Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1", // Configura la URL base de tu API
+  baseURL: "http://localhost:8080/api/v1",
   httpsAgent: false, // Disable HTTPS
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -34,8 +34,6 @@ axiosInstance.interceptors.response.use(
       //* Suponiendo que el token está en response.data.token
       const token = response.data.jwt;
 
-      console.log(token);
-
       if (token) {
         localStorage.removeItem("token");
         //* Guarda el token en localStorage
@@ -58,7 +56,6 @@ axiosInstance.interceptors.response.use(
     if (error?.response?.data["PASSWORD"])
       toast.error("La contraseña debe tener como minimo 8 caracteres..");
 
-    console.log(error?.response?.data);
     return Promise.reject(error);
   }
 );

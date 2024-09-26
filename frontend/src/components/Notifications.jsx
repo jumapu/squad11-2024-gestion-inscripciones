@@ -13,8 +13,11 @@ const Notifications = ({ notifications, onClose }) => {
   return (
     <div>
       <div>
+        
+        <button style={{display:"flex", flexDirection:"row", width:"100%", justifyContent:"flex-end",
+
+        }} onClick={onClose}><IoIosCloseCircleOutline /></button>
         <Text as="h4">Notificaciones</Text>
-        <button onClick={onClose}><IoIosCloseCircleOutline /></button>
       </div>
       {defaultNotifications.length === 0 ? (
         <Text as="p">No hay nuevas notificaciones.</Text>

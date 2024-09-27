@@ -13,7 +13,6 @@ const Notifications = ({ notifications, onClose }) => {
   return (
     <div>
       <div>
-
         <button style={{
           display: "flex",
           flexDirection: "row",

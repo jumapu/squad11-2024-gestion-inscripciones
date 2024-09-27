@@ -137,7 +137,7 @@ export default function NuevoEgresado() {
                                                                 minLength="4"
                                                                 type="text"
                                                                 placeholder="Apellido"
-                                                                {...register("name")}
+                                                                {...register("surname")}
                                                             />
                                                         </div>
                                                     </div>
@@ -186,7 +186,7 @@ export default function NuevoEgresado() {
                                                         </div>
                                                     </div>
                                                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} gap={2}>
-                                                        <CancelButton>
+                                                        <CancelButton >
                                                             Cancelar
                                                         </CancelButton>
                                                         <OtherButton >

@@ -17,7 +17,7 @@ export const registerUser = async (data, navigate, selectedOption) => {
     return;
   }
 
-  const { email, password, name, confirmpassword } = data;
+  const { name, surname, email, password, confirmpassword } = data;
   const { value } = selectedOption;
 
   if (password !== confirmpassword) {
@@ -31,7 +31,7 @@ export const registerUser = async (data, navigate, selectedOption) => {
   }
 
   axiosInstance
-    .post(`auth/register`, { email, password, name, rol: value })
+    .post(`auth/register`, { name, surname, email, password, rol: value })
     .then((res) => {
       navigate("/login");
     });

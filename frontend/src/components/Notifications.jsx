@@ -13,8 +13,9 @@ const Notifications = ({ notifications, onClose }) => {
   return (
     <div>
       <div>
-        <Text as="h4">Notificaciones</Text>
+        
         <button onClick={onClose}><IoIosCloseCircleOutline /></button>
+        <Text as="h4">Notificaciones</Text>
       </div>
       {defaultNotifications.length === 0 ? (
         <Text as="p">No hay nuevas notificaciones.</Text>

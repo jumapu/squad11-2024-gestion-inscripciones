@@ -10,6 +10,8 @@ import EgresadosTable from "./components/EgresadosTable";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/interceptor.js";
 import { toast, Toaster } from "sonner";
+import NuevoEgresado from "./Agregar/NuevoEgresado";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -51,6 +53,14 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: blue[600],
   },
 }));
+//   color: theme.palette.getContrastText(red[600]),
+//   backgroundColor: red[900],
+//   '&:hover': {
+//     backgroundColor: red[600],
+//   },
+//   borderRadius:"33px",
+//   padding: "5px 15px",
+// }));
 
 const Egresados = () => {
   const drawerWidth = 240;
@@ -154,18 +164,10 @@ const Egresados = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box alignItems={"flex-end"} marginRight="50px">
-              <Button
-                style={{
-                  borderRadius: "25px",
-                  color: "white",
-                  padding: "7px 20px",
-                  backgroundColor: "red",
-                }}
-              >
-                {" "}
-                + Agregar
-              </Button>
+            <Box
+              alignItems={'flex-end'}
+              marginRight="50px">
+              <NuevoEgresado/>
             </Box>
           </Stack>
         </Box>

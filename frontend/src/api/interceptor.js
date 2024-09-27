@@ -13,7 +13,7 @@ const axiosInstance = axios.create({
 // Interceptor para agregar el token a las solicitudes
 axiosInstance.interceptors.request.use(
   (request) => {
-    const token = localStorage.getItem("token"); // Obtén el token desde donde lo tengas almacenado
+    const token = localStorage.getItem("token"); // Obtiene el token desde donde lo tengas almacenado
 
     if (token) {
       request.headers["Authorization"] = token;
@@ -45,7 +45,7 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    //! virificar las response de  errores del back todos!
+    //! verifica las response de  errores del back todos!
 
     if (error?.response?.data["404"] === "Email in use")
       toast.error("El email ya esta se encuentra en uso.");

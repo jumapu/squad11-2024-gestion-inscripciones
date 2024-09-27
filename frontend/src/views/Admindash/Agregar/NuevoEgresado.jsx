@@ -65,7 +65,7 @@ export default function NuevoEgresado() {
     };
 
     const [selectedOption, setSelectedOption] = useState(null);
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     const navigate = useNavigate();
     const onSubmit = (data) => {
         registerUser(data, navigate, selectedOption);
@@ -83,6 +83,12 @@ export default function NuevoEgresado() {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const handleCancel = () => {
+        reset(); // Reseteo el formulario
+        setOpen(false); // Cierro el modal
+        setSelectedOption(null); // Limpio la selección de opción
+    };
 
     return (
         <div>
@@ -186,10 +192,10 @@ export default function NuevoEgresado() {
                                                         </div>
                                                     </div>
                                                     <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} gap={2}>
-                                                        <CancelButton >
+                                                        <CancelButton onClick={handleCancel} >
                                                             Cancelar
                                                         </CancelButton>
-                                                        <OtherButton >
+                                                        <OtherButton type="submit" >
                                                             Guardar
                                                         </OtherButton>
                                                     </Box>

@@ -1,9 +1,3 @@
-#ENV PRODUCTION
-image:
-  directory:
-    event: images/events/
-    profile: images/profiles/
-
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/squad_db

@@ -51,6 +51,7 @@ public class EventServiceImpl {
         eventRepository.save(event);
     }
 
+
     public void save(String data, MultipartFile file, HttpServletRequest request) {
         Event event = setEvent(data, request, file);
         eventRepository.save(event);

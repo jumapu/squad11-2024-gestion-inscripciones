@@ -1,15 +1,10 @@
-#ENV PRODUCTION
-image:
-  directory:
-    event: images/events/
-    profile: images/profiles/
-
 spring:
   datasource:
-    url: jdbc:h2:mem:testdb;
+    url: jdbc:h2:file:./data/demo
     username: sa
-    password:
+    password: password
     driver-class-name: org.h2.Driver
+
   jpa:
     hibernate:
       ddl-auto: update

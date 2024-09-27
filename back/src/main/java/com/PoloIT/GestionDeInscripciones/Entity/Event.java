@@ -59,6 +59,9 @@ public class Event {
     public void update(EventDTO eventDTO) {
         this.name = eventDTO.name();
         this.description = eventDTO.description();
+        this.isActive = eventDTO.isActive();
+        this.finishAt = eventDTO.finishAt();
+
     }
 
     public void deactivateEvent() {

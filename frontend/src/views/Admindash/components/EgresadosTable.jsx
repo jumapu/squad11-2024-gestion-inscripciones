@@ -86,6 +86,25 @@ export const EgresadosTable = ({ students, pending }) => {
       ),
     },
   ];
+  const [Estudiantes, setEstudiantes] = useState([]);
+  const [pending, setPending] = useState(true);
+
+  useEffect(() => {
+    const fetchEstudiantes = async () => {
+      try {
+        const result = await axiosInstance.get("admin/user/all");
+        const estudiantes = result.data.Student.Estudiantes || [];
+        console.log(result);
+        setEstudiantes(estudiantes);
+        setPending(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchEstudiantes();
+  }, []);
+
 
   return (
     <Box
@@ -101,7 +120,7 @@ export const EgresadosTable = ({ students, pending }) => {
     >
       <DataTable
         columns={columns}
-        data={students}
+        data={Estudiantes}
         customStyles={customStyles}
         pagination
         paginationPerPage={10}

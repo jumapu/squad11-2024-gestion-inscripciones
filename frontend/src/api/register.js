@@ -49,7 +49,7 @@ export const registerMentor = async (data, navigate, selectedOption) => {
 
   if (!validateFields(data, requiredFields)) return;
 
-  if (selectedOption?.value === undefined || selectedOption?.value !== 'mentor') {
+  if (!selectedOption || !selectedOption.value) {
     toast.error("Seleccione el rol de mentor.");
     return;
   }

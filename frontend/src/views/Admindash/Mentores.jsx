@@ -10,6 +10,8 @@ import MentoresTable from "./components/MentoresTable";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/interceptor.js";
 import { toast, Toaster } from "sonner";
+import NuevoMentor from "./Agregar/NuevoMentor";
+
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -27,7 +29,7 @@ const Search = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  border: "solid 1px blue",
+  border: "solid 2px darkblue",
   borderRadius: "25px",
   width: "250px",
   "& .MuiInputBase-input": {
@@ -51,7 +53,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Egresados = () => {
+const Mentores = () => {
   const [mentoresOrigin, setMentoresOrigin] = useState([]);
   const [mentores, setMentores] = useState([]);
   const [pending, setPending] = useState(true);
@@ -143,7 +145,7 @@ const Egresados = () => {
               </Search>
               <Box paddingLeft={2}>
                 <ColorButton
-                  style={{ borderRadius: "25px" }}
+                  style={{ borderRadius: "33px" }}
                   variant="outlined"
                   onClick={handleSearchClick}
                 >
@@ -151,18 +153,10 @@ const Egresados = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box alignItems={"flex-end"} paddingRight={7}>
-              <Button
-                style={{
-                  borderRadius: "25px",
-                  color: "white",
-                  padding: "7px 20px",
-                  backgroundColor: "red",
-                }}
-              >
-                {" "}
-                + Agregar
-              </Button>
+            <Box
+              alignItems={'flex-end'}
+              marginRight="50px">
+              <NuevoMentor/>
             </Box>
           </Stack>
         </Box>
@@ -172,4 +166,4 @@ const Egresados = () => {
   );
 };
 
-export default Egresados;
+export default Mentores;

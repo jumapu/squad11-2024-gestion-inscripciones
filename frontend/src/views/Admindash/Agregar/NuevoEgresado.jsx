@@ -4,11 +4,11 @@ import { useForm } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
 import { red } from "@mui/material/colors";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "@/api/register";
+import { registerEgresado } from "@/api/register";
 import { Toaster } from "sonner";
 import Select from "react-select";
 
+// Estilo para el modal
 const style = {
     display: "flex",
     flexDirection:"column",
@@ -17,13 +17,14 @@ const style = {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: "auto",
-    border:"2ox solid gray",
+    border:"2px solid gray",
     borderRadius:"33px",
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 2,
 };
 
+// Estilos para botones
 const OtherButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(red[600]),
     backgroundColor: red[900],
@@ -45,7 +46,6 @@ const CancelButton = styled(Button)(({ theme }) => ({
 }));
 
 export default function NuevoEgresado() {
-
     const customStyles = {
         control: (provided) => ({
             ...provided,
@@ -54,7 +54,6 @@ export default function NuevoEgresado() {
             borderRadius: "33px",
             outline: "none",
             boxShadow: '0 2px 4px rgba(0,0,0,.2)',
-            ringOffsetColor: "none",
         }),
         option: (provided, state) => ({
             ...provided,
@@ -66,28 +65,39 @@ export default function NuevoEgresado() {
 
     const [selectedOption, setSelectedOption] = useState(null);
     const { register, handleSubmit, reset } = useForm();
-    const navigate = useNavigate();
-    const onSubmit = (data) => {
-        registerUser(data, navigate, selectedOption);
-        console.log(data);
+
+    const onSubmit = async (data) => {
+        try {
+            const datosConOpcion = {
+                ...data,
+                selectedRole:selectedOption.value,
+            };    
+            
+            // Registra el egresado
+            await registerEgresado(datosConOpcion);
+            reset(); // Limpiar el formulario
+            handleClose(); // Cerrar el modal
+            console.log(datosConOpcion); // Para debug
+        } catch (error) {
+            console.error("Error al registrar egresado:", error);
+        }
     };
+    
     const options = [
-        { value: "QA", label: "QA" },
-        { value: "Frontend", label: "Frontend" },
-        { value: "Backend", label: "Backend" },
-        { value: "UX/UI", label: "UX/UI" },
-        { value: "DevOps", label: "DevOps" },
-        { value: "PM", label: "PM" },
+        { value: "qa", label: "QA" },
+        { value: "frontend developer", label: "Frontend Developer" },
+        { value: "python developer", label: "Python Backend" },
+        { value: "ux/ui designer", label: "UX/UI Designer" },
     ];
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => setOpen(false); // Cerrar el modal
 
     const handleCancel = () => {
-        reset(); // Reseteo el formulario
-        setOpen(false); // Cierro el modal
-        setSelectedOption(null); // Limpio la selección de opción
+        reset(); // Limpiar el formulario
+        setOpen(false); // Cerrar el modal
+        setSelectedOption(null); // Limpiar la selección
     };
 
     return (
@@ -103,113 +113,111 @@ export default function NuevoEgresado() {
                     <Typography id="modal-modal-title" variant="h6" component="h2" paddingLeft="45px">
                         Agregar Nuevo Egresado
                     </Typography>                    
-                        <div className="flex flex-col mb-2 justify-center items-center md:flex-shrink">
-                            <Toaster richColors position="top-center" />
-                            <Container size="1" align="center" className="relative flex">
-                                <Flex direction="column" gap="2" className="max-w-md mx-auto">
-                                    <Card className="p-6">
-                                        <form onSubmit={handleSubmit(onSubmit)}>
-                                            <Flex direction="column" gap="4" className="py-2 px-4">
+                    <div className="flex flex-col mb-2 justify-center items-center md:flex-shrink">
+                        <Toaster richColors position="top-center" />
+                        <Container size="1" align="center" className="relative flex">
+                            <Flex direction="column" gap="2" className="max-w-md mx-auto">
+                                <Card className="p-6">
+                                    <form onSubmit={handleSubmit(onSubmit)}>
+                                        <Flex direction="column" gap="4" className="py-2 px-4">
+                                            <div>
                                                 <div>
-                                                    <div >
-                                                        <Select
-                                                            defaultValue={selectedOption}
-                                                            onChange={setSelectedOption}
-                                                            options={options}
-                                                            styles={customStyles}
-                                                            placeholder="Selecciona"
+                                                    <Select
+                                                        value={selectedOption} 
+                                                        onChange={setSelectedOption}
+                                                        options={options}
+                                                        styles={customStyles}
+                                                        placeholder="Selecciona"
+                                                    />
+                                                </div>
+                                                <div className="mt-4 flex flex-row space-x-2">
+                                                    <div className="flex-1">
+                                                        <Text as="p" size="2" className="mb-1">
+                                                            <Strong>Nombre Completo</Strong>
+                                                        </Text>
+                                                        <input
+                                                            style={{ width: "50%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px", flexWrap:"wrap" }}
+                                                            autoComplete="name"
+                                                            name="name"
+                                                            id="name"
+                                                            minLength="3"
+                                                            type="text"
+                                                            placeholder="Nombre"
+                                                            {...register("name")}
+                                                        />
+                                                        <input
+                                                            style={{ width: "50%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
+                                                            autoComplete="lastName"
+                                                            name="lastName"
+                                                            id="lastName"
+                                                            minLength="3"
+                                                            type="text"
+                                                            placeholder="Apellido"
+                                                            {...register("lastName")}
                                                         />
                                                     </div>
-                                                    <div className="mt-4 flex flex-row space-x-2">
-                                                        <div className="flex-1">
+                                                </div>
+                                                <div className="flex flex-col mb-2">
+                                                    <div className="flex flex-col rounded-lg shadow-sm">
+                                                        <div className="mt-4">
                                                             <Text as="p" size="2" className="mb-1">
-                                                                <Strong>Nombre Completo</Strong>
+                                                                <Strong>Correo Electrónico</Strong>
                                                             </Text>
                                                             <input
-                                                                style={{ width: "50%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px", flexWrap:"wrap" }}
-                                                                autoComplete="name"
-                                                                name="name"
-                                                                id="name"
-                                                                minLength="4"
-                                                                type="text"
-                                                                placeholder="Nombre"
-                                                                {...register("name")}
+                                                                style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
+                                                                autoComplete="email"
+                                                                size="30"
+                                                                type="email"
+                                                                id="email"
+                                                                placeholder="alguien@ejemplo.com"
+                                                                {...register("email")}
                                                             />
+                                                        </div>
+                                                        <div className="mt-4">
+                                                            <Text as="p" size="2" className="mb-1">
+                                                                <Strong>Contraseña</Strong>
+                                                            </Text>
                                                             <input
-                                                                style={{ width: "50%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
-                                                                autoComplete="surname"
-                                                                name="surname"
-                                                                id="surname"
-                                                                minLength="4"
-                                                                type="text"
-                                                                placeholder="Apellido"
-                                                                {...register("surname")}
+                                                                style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
+                                                                autoComplete="new-password"
+                                                                className="campos"
+                                                                type="password"
+                                                                id="password"
+                                                                {...register("password")}
+                                                            />
+                                                        </div>
+                                                        <div className="mt-4">
+                                                            <Text as="p" size="2" className="mb-1">
+                                                                <Strong>Confirmar Contraseña</Strong>
+                                                            </Text>
+                                                            <input
+                                                                style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px", outline: "none", marginBottom: "5px" }}
+                                                                autoComplete="new-password"
+                                                                type="password"
+                                                                id="confirmpassword"
+                                                                required
+                                                                {...register("confirmpassword")}
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className="flex flex-col mb-2">
-                                                        <div className="flex flex-col rounded-lg shadow-sm">
-                                                            <div className="mt-4">
-                                                                <Text as="p" size="2" className="mb-1">
-                                                                    <Strong>Correo Electrónico</Strong>
-                                                                </Text>
-                                                                <input
-                                                                    style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
-                                                                    autoComplete="email"
-                                                                    size="30"
-                                                                    type="email"
-                                                                    id="email"
-                                                                    placeholder="alguien@ejemplo.com"
-                                                                    {...register("email")}
-                                                                />
-                                                            </div>
-                                                            <div className="mt-4">
-                                                                <Text as="p" size="2" className="mb-1">
-                                                                    <Strong>Contraseña</Strong>
-                                                                </Text>
-                                                                <input
-                                                                    style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
-                                                                    autoComplete="new-password"
-                                                                    className="campos"
-                                                                    type="password"
-                                                                    id="password"
-                                                                    {...register("password")}
-                                                                />
-                                                            </div>
-                                                            <div className="mt-4">
-                                                                <Text as="p" size="2" className="mb-1">
-                                                                    <Strong>Confirmar Contraseña</Strong>
-                                                                </Text>
-                                                                <input
-                                                                    style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px", outline: "none", marginBottom: "5px" }}
-                                                                    autoComplete="new-password"
-                                                                    type="password"
-                                                                    id="confirmpassword"
-                                                                    required
-                                                                    {...register("confirmpassword")}
-                                                                />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} gap={2}>
-                                                        <CancelButton onClick={handleCancel} >
-                                                            Cancelar
-                                                        </CancelButton>
-                                                        <OtherButton type="submit" >
-                                                            Guardar
-                                                        </OtherButton>
-                                                    </Box>
                                                 </div>
-                                            </Flex>
-                                        </form>
-                                    </Card>
-                                </Flex>
-                            </Container>
-                        </div>
-
+                                                <Box display={"flex"} flexDirection={"row"} justifyContent={"center"} gap={2}>
+                                                    <CancelButton onClick={handleCancel} >
+                                                        Cancelar
+                                                    </CancelButton>
+                                                    <OtherButton type="submit" >
+                                                        Guardar
+                                                    </OtherButton>
+                                                </Box>
+                                            </div>
+                                        </Flex>
+                                    </form>
+                                </Card>
+                            </Flex>
+                        </Container>
+                    </div>
                 </Box>
             </Modal>
         </div>
     );
 }
-

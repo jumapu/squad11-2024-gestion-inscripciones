@@ -1,38 +1,93 @@
 import axiosInstance from "./interceptor.js";
 import { toast } from "sonner";
 
-export const registerUser = async (data, navigate, selectedOption) => {
-  //* Usar Object.entries() para obtener clave e índice
-  for (const [key, value] of Object.entries(data)) {
-    if (value.trim() === "" || value == null) {
-      toast.error(`El campo ${key} está vacío. Debe completarlo.`);
-      return;
+// Función común para validar campos
+const validateFields = (data, requiredFields) => {
+  for (const field of requiredFields) {
+    if (data[field] === "" || data[field] == null) {
+      toast.error(`El campo ${field} está vacío. Es necesario completarlo.`);
+      return false;
     }
   }
+  return true;
+};
 
-  console.log(selectedOption?.value);
+// Validación y registro de nuevos egresados
+export const registerEgresado = async (data, navigate, selectedOption) => {
+  const requiredFields = ['name', 'lastName', 'email', 'password', 'confirmpassword'];
 
-  if (selectedOption?.value === undefined || selectedOption?.value === null) {
-    toast.error("Seleccione el rol.");
+  if (!validateFields(data, requiredFields)) return;
+
+  const { password, confirmpassword } = data;
+
+  if (!selectedOption  || !selectedOption?.value) {
+    toast.error("Seleccione el rol de egresado.");
     return;
   }
-
-  const { name, surname, email, password, confirmpassword } = data;
-  const { value } = selectedOption;
 
   if (password !== confirmpassword) {
     toast.error("Las contraseñas no coinciden");
     return;
   }
 
-  if (password.length < 7) {
-    toast.error("Las contraseña debe ser mayor  a 8 caracteres.");
+  if (password.length < 8) {
+    toast.error("La contraseña debe ser mayor a 8 caracteres.");
     return;
   }
 
-  axiosInstance
-    .post(`auth/register`, { name, surname, email, password, rol: value })
-    .then((res) => {
-      navigate("/login");
+  try {
+    await axiosInstance.post(`/admin/user/save/student`, { ...data, rol: selectedOption.value });
+    navigate("/egresados");
+  } catch (error) {
+    toast.error("Error en el registro del egresado.");
+  }
+};
+
+// Validación y registro de nuevos mentores
+export const registerMentor = async (data, navigate, selectedOption) => {
+  const requiredFields = ['name', 'lastName', 'company'];
+
+  if (!validateFields(data, requiredFields)) return;
+
+  if (selectedOption?.value === undefined || selectedOption?.value !== 'mentor') {
+    toast.error("Seleccione el rol de mentor.");
+    return;
+  }
+
+  try {
+    await axiosInstance.post(`/admin/user/save/mentor`, { ...data, rol: selectedOption.value });
+    navigate("/mentores");
+  } catch (error) {
+    toast.error("Error en el registro del mentor.");
+  }
+};
+
+// Validación y registro de nuevos eventos
+export const registerEvent = async (data, navigate) => {
+  const requiredFields = ['nombreEvento', 'fecha', 'file'];
+
+  // Verifica que la imagen haya sido seleccionada
+  if (data.file == null || data.file.length === 0) {
+    toast.error("Falta agregar una imagen");
+    return;
+  }
+
+  if (!validateFields(data, requiredFields))
+     return;
+
+  try {
+    const formData = new FormData();
+    formData.append('file', data.file[0]);
+    formData.append('nombreEvento', data.name);
+    formData.append('fecha', data.date);
+
+    await axiosInstance.post(`/admin/event/save`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
+    navigate("/eventos");
+  } catch (error) {
+    toast.error("Error en el registro del evento.");
+  }
 };

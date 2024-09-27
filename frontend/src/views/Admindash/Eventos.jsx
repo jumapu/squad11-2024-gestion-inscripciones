@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { toast, Toaster } from "sonner";
 import { blue } from "@mui/material/colors";
-import { red } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
 import { EventosTable } from "./components/EventosTable";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
+import NuevoEvento from "./Agregar/NuevoEvento";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -29,8 +29,8 @@ const Search = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  border: "solid 1px blue",
-  borderRadius: "25px",
+  border: "solid 2px darkblue",
+  borderRadius: "33px",
   width: "250px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -51,15 +51,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
   "&:hover": {
     backgroundColor: blue[600],
   },
-}));
-const OtherButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.getContrastText(red[900]),
-  backgroundColor: red[900],
-  "&:hover": {
-    backgroundColor: red[600],
-  },
-  borderRadius: "33px",
-  padding: "5px 15px",
 }));
 
 const Eventos = () => {
@@ -168,8 +159,10 @@ const Eventos = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box alignItems={"flex-end"} marginRight="50px">
-              <OtherButton> + Agregar</OtherButton>
+            <Box
+              alignItems={'flex-end'}
+              marginRight="50px">
+              <NuevoEvento/>
             </Box>
           </Stack>
         </Box>

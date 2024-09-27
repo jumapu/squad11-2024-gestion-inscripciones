@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form';
 import { styled } from '@mui/material/styles';
 import { red } from "@mui/material/colors";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "@/api/register";
+import { registerMentor } from "@/api/register";
 import { Toaster } from "sonner";
 import Select from "react-select";
 
@@ -63,20 +62,6 @@ export default function NuevoMentor() {
             borderRadius: "33px",
         }),
     };
-
-    const [selectedOption, setSelectedOption] = useState(null);
-    const { register, handleSubmit, reset } = useForm();
-    const navigate = useNavigate("/mentores");
-    const onSubmit = (data) => {
-        registerUser(data, navigate, selectedOption);
-        console.log(data);
-    };
-    const options = [
-        { value: "Dev", label: "Dev" },
-        { value: "QA", label: "QA" },
-        { value:"UX/UI", label:"UX/UI"},
-    ];
-
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -86,7 +71,21 @@ export default function NuevoMentor() {
         setOpen(false); // Cierro el modal
         setSelectedOption(null); // Limpio la selección de opción
     };
+    const [selectedOption, setSelectedOption] = useState(null);
+    const { register, handleSubmit, reset } = useForm();
 
+    const onSubmit = (data) => {
+        registerMentor(data, selectedOption).then(() => {
+            reset();
+            handleClose();
+        });
+        console.log(data);
+    };
+    const options = [
+        // { value: "developer", label: "Desarrollador" },
+        { value: "qa", label: "QA" },
+        { value:"design", label:"Diseño"},
+    ];
     return (
         <div>
             <OtherButton onClick={handleOpen}> + Agregar </OtherButton>
@@ -127,20 +126,20 @@ export default function NuevoMentor() {
                                                                 autoComplete="name"
                                                                 name="name"
                                                                 id="name"
-                                                                minLength="4"
+                                                                minLength="3"
                                                                 type="text"
                                                                 placeholder="Nombre"
                                                                 {...register("name")}
                                                             />
                                                             <input
                                                                 style={{ width: "50%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
-                                                                autoComplete="surname"
-                                                                name="surname"
-                                                                id="surname"
-                                                                minLength="4"
+                                                                autoComplete="lastName"
+                                                                name="lastName"
+                                                                id="lastName"
+                                                                minLength="3"
                                                                 type="text"
                                                                 placeholder="Apellido"
-                                                                {...register("surname")}
+                                                                {...register("lastName")}
                                                             />
                                                         </div>
                                                     </div>
@@ -162,12 +161,26 @@ export default function NuevoMentor() {
                                                             </div>
                                                             <div className="mt-4">
                                                                 <Text as="p" size="2" className="mb-1">
+                                                                    <Strong>Empresa</Strong>
+                                                                </Text>
+                                                                <input
+                                                                    style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
+                                                                    autoComplete="company"
+                                                                    name="company"
+                                                                    size="20"
+                                                                    type="text"
+                                                                    id="company"
+                                                                    placeholder="Empresa"
+                                                                    {...register("company")}
+                                                                />
+                                                            </div>
+                                                            <div className="mt-4">
+                                                                <Text as="p" size="2" className="mb-1">
                                                                     <Strong>Contraseña</Strong>
                                                                 </Text>
                                                                 <input
                                                                     style={{ width: "100%", border: "2px solid gray", borderRadius: "33px", padding: "5px 10px", outline: "none", marginBottom: "5px" }}
                                                                     autoComplete="new-password"
-                                                                    className="campos"
                                                                     type="password"
                                                                     id="password"
                                                                     {...register("password")}
@@ -192,7 +205,7 @@ export default function NuevoMentor() {
                                                         <CancelButton onClick={handleCancel} >
                                                             Cancelar
                                                         </CancelButton>
-                                                        <OtherButton type="submit" onSubmit={navigate}>
+                                                        <OtherButton type="submit">
                                                             Guardar
                                                         </OtherButton>
                                                     </Box>

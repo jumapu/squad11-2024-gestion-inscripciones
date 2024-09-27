@@ -5,7 +5,6 @@ import {
   Text,
   Button,
   Strong,
-  Link,
   Heading
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
@@ -70,10 +69,10 @@ const Login = () => {
                   <Button className="mt-4 w-full bg-red-800 text-white py-5 rounded-2xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md shadow-black font-bold">
                     Ingresar
                   </Button>
-                  <Text className="w-full text-center">
+                  {/* <Text className="w-full text-center">
                     ¿No tienes una cuenta?{" "}
                     <Link href="/registro">Crear Cuenta</Link>
-                  </Text>
+                  </Text> */}
                 </Flex>
               </form>
             </Card>

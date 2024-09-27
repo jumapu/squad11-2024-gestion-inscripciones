@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./views/Home/Home";
 import Login from "./views/Login/Login";
-import Register from "./views/Register/Register";
 import Egresadosdash from "./views/Egresadosdash/Egresadosdash";
 import Mentordash from "./views/Mentordash/Mentordash";
 import Dashboard from "./views/Admindash/Dashboard";
@@ -17,8 +16,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/adminlogin" element={<AdminLogin />} />
-        <Route path="/registro" element={<Register />} />
-
         <Route element={<AuthOutlet fallbackPath="/login" />}>
           <Route path="/egresadosdash" element={<Egresadosdash />}></Route>
           <Route path="/mentordash" element={<Mentordash />}></Route>

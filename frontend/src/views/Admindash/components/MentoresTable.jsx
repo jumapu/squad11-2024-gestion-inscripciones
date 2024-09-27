@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/interceptor.js";
+
 export const MentoresTable = () => {
   const drawerWidth = 240;
   const customStyles = {
@@ -43,7 +44,7 @@ export const MentoresTable = () => {
     },
     {
       name: "Apellido",
-      selector: (row) => row.surname,
+      selector: (row) => row.lastName,
     },
     {
       name: "Empresa",
@@ -51,8 +52,8 @@ export const MentoresTable = () => {
     },
 
     {
-      name: "Squad",
-      selector: (row) => row.team,
+      name: "Rol",
+      selector: (row) => row.rol,
     },
     {
       name: "Acciones",
@@ -62,21 +63,21 @@ export const MentoresTable = () => {
         >
           <Tooltip content="Informacion">
             <Link to={`/Mentores/informacionForm/${row.id}`}>
-              <IconButton className="bg-blue-800 rounded-full">
+              <IconButton className="bg-blue-900 rounded-full">
                 <IoIosInformation size={24} />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Modificar Informacion">
             <Link to={`/Mentores/editar/${row.id}`}>
-              <IconButton className="bg-blue-800 rounded-full">
+              <IconButton className="bg-blue-900 rounded-full">
                 <IoPencil />
               </IconButton>
             </Link>
           </Tooltip>
           <Tooltip content="Borrar Informacion">
             <Link to={`/Mentores/borrar/${row.id}`}>
-              <IconButton className="bg-red-700 rounded-full">
+              <IconButton className="bg-red-800 rounded-full">
                 <IoTrashOutline />
               </IconButton>
             </Link>
@@ -107,9 +108,10 @@ export const MentoresTable = () => {
     <div
       style={{
         marginLeft: drawerWidth,
-        border: "solid 3px blue",
+        border: "solid 3px darkblue",
         borderRadius: "20px",
         marginTop: "20px",
+        paddingBottom: "25px",
       }}
     >
       <DataTable

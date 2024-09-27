@@ -29,7 +29,7 @@ const Search = styled("div")(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
-  border: "solid 1px blue",
+  border: "solid 2px darkblue",
   borderRadius: "25px",
   width: "250px",
   "& .MuiInputBase-input": {
@@ -53,14 +53,6 @@ const ColorButton = styled(Button)(({ theme }) => ({
     backgroundColor: blue[600],
   },
 }));
-//   color: theme.palette.getContrastText(red[600]),
-//   backgroundColor: red[900],
-//   '&:hover': {
-//     backgroundColor: red[600],
-//   },
-//   borderRadius:"33px",
-//   padding: "5px 15px",
-// }));
 
 const Egresados = () => {
   const drawerWidth = 240;

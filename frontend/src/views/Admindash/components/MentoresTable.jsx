@@ -5,9 +5,9 @@ import { IoPencil } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { useEffect } from "react";
-
-export const MentoresTable = ({ mentores, pending }) => {
+import { useState, useEffect } from "react";
+import axiosInstance from "@/api/interceptor.js";
+export const MentoresTable = () => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
@@ -85,7 +85,24 @@ export const MentoresTable = ({ mentores, pending }) => {
       ),
     },
   ];
+  const [Mentores, setMentores] = useState([]);
+  const [pending, setPending] = useState(true);
 
+  useEffect(() => {
+    const fetchMentores = async () => {
+      try {
+        const result = await axiosInstance.get("admin/user/all");
+        const Mentores = result.data.Mentors.Mentores || [];
+        console.log(result);
+        setMentores(Mentores);
+        setPending(false);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchMentores();
+  }, []);
   return (
     <div
       style={{
@@ -97,7 +114,7 @@ export const MentoresTable = ({ mentores, pending }) => {
     >
       <DataTable
         columns={columns}
-        data={mentores}
+        data={Mentores}
         customStyles={customStyles}
         pagination
         paginationPerPage={10}

@@ -9,7 +9,7 @@ import DataTable from "react-data-table-component";
 import axiosInstance from "@/api/interceptor.js";
 import Box from "@mui/material/Box";
 
-export const EgresadosTable = ({ students, pending }) => {
+export const EgresadosTable = () => {
   const drawerWidth = 240;
   const customStyles = {
     table: {

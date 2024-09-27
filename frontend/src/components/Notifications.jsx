@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 import { Text } from "@radix-ui/themes";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
@@ -13,8 +13,14 @@ const Notifications = ({ notifications, onClose }) => {
   return (
     <div>
       <div>
-        
-        <button onClick={onClose}><IoIosCloseCircleOutline /></button>
+
+        <button style={{
+          display: "flex",
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "flex-end"
+        }}
+          onClick={onClose}><IoIosCloseCircleOutline /></button>
         <Text as="h4">Notificaciones</Text>
       </div>
       {defaultNotifications.length === 0 ? (

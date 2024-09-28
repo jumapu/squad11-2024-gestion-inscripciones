@@ -6,10 +6,9 @@ import { IoPencil } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import axiosInstance from "@/api/interceptor.js";
 import Box from "@mui/material/Box";
 
-export const EgresadosTable = () => {
+export const EgresadosTable = ({ students, pending }) => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
@@ -86,25 +85,6 @@ export const EgresadosTable = () => {
       ),
     },
   ];
-  const [Estudiantes, setEstudiantes] = useState([]);
-  const [pending, setPending] = useState(true);
-
-  useEffect(() => {
-    const fetchEstudiantes = async () => {
-      try {
-        const result = await axiosInstance.get("admin/user/all");
-        const estudiantes = result.data.Student.Estudiantes || [];
-        console.log(result);
-        setEstudiantes(estudiantes);
-        setPending(false);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchEstudiantes();
-  }, []);
-
 
   return (
     <Box
@@ -120,7 +100,7 @@ export const EgresadosTable = () => {
     >
       <DataTable
         columns={columns}
-        data={Estudiantes}
+        data={students}
         customStyles={customStyles}
         pagination
         paginationPerPage={10}

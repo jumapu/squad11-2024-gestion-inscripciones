@@ -88,7 +88,12 @@ const Mentores = () => {
   const handleSearchClick = () => {
     const value = searchValue.trim();
     const filter = mentoresOrigin.filter((item) => {
-      if (value == item.name || value == item.lastName || value == item.id) {
+      if (
+        value == item.name ||
+        value == item.lastName ||
+        value == item.id ||
+        item.rol.includes(value)
+      ) {
         return item;
       }
     });
@@ -153,10 +158,8 @@ const Mentores = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box
-              alignItems={'flex-end'}
-              marginRight="50px">
-              <NuevoMentor/>
+            <Box alignItems={"flex-end"} marginRight="50px">
+              <NuevoMentor />
             </Box>
           </Stack>
         </Box>

@@ -34,7 +34,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "250px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -57,8 +56,8 @@ const Eventos = () => {
   const drawerWidth = 240;
 
   const [search, setSearch] = useState("");
-  const [eventos, setEventos] = useState([]); // Declara el estado para eventos
-  const [filteredEventos, setFilteredEventos] = useState([]); // Estado para los eventos filtrados
+  const [eventos, setEventos] = useState([]);
+  const [filteredEventos, setFilteredEventos] = useState([]);
   const [pending, setPending] = useState(true);
 
   useEffect(() => {
@@ -159,10 +158,8 @@ const Eventos = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box
-              alignItems={'flex-end'}
-              marginRight="50px">
-              <NuevoEvento/>
+            <Box alignItems={"flex-end"} marginRight="50px">
+              <NuevoEvento />
             </Box>
           </Stack>
         </Box>

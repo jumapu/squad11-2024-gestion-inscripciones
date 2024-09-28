@@ -5,10 +5,8 @@ import { IoPencil } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
-import { useState, useEffect } from "react";
-import axiosInstance from "@/api/interceptor.js";
 
-export const MentoresTable = () => {
+export const MentoresTable = ({ mentores, pending }) => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
@@ -86,24 +84,7 @@ export const MentoresTable = () => {
       ),
     },
   ];
-  const [Mentores, setMentores] = useState([]);
-  const [pending, setPending] = useState(true);
 
-  useEffect(() => {
-    const fetchMentores = async () => {
-      try {
-        const result = await axiosInstance.get("admin/user/all");
-        const Mentores = result.data.Mentors.Mentores || [];
-        console.log(result);
-        setMentores(Mentores);
-        setPending(false);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchMentores();
-  }, []);
   return (
     <div
       style={{
@@ -116,7 +97,7 @@ export const MentoresTable = () => {
     >
       <DataTable
         columns={columns}
-        data={Mentores}
+        data={mentores}
         customStyles={customStyles}
         pagination
         paginationPerPage={10}

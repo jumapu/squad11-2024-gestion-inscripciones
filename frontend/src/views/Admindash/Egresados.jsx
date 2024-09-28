@@ -91,7 +91,14 @@ const Egresados = () => {
   const handleSearchClick = () => {
     const value = searchValue.trim();
     const filter = estudiantesOrigin.filter((item) => {
-      if (value == item.name || value == item.lastName || value == item.id) {
+      console.log();
+
+      if (
+        value == item.name ||
+        value == item.lastName ||
+        value == item.id ||
+        item.rol.includes(value)
+      ) {
         return item;
       }
     });
@@ -156,10 +163,8 @@ const Egresados = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box
-              alignItems={'flex-end'}
-              marginRight="50px">
-              <NuevoEgresado/>
+            <Box alignItems={"flex-end"} marginRight="50px">
+              <NuevoEgresado />
             </Box>
           </Stack>
         </Box>

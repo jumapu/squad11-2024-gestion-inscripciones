@@ -17,7 +17,7 @@ export default function EgresadosCard() {
     justifyContent: "space-around",
     padding: theme.spacing(1),
     border: "solid 2px darkblue",
-    borderRadius:"21px",
+    borderRadius: "21px",
     width: "175px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
@@ -27,18 +27,16 @@ export default function EgresadosCard() {
 
   const [Estudiantes, setEstudiantes] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     axiosInstance
-      .get("admin/user/all")
+      .get("admin/user/students")
       .then((result) => {
         const {
-          data: { Student:Estudiantes },
+          data: { Estudiantes },
         } = result;
-        console.log(result)
-
         if (Estudiantes) {
-          setEstudiantes(result.data.Student.Estudiantes);
+          setEstudiantes(Estudiantes);
           setLoading(false);
         }
       })
@@ -52,17 +50,20 @@ export default function EgresadosCard() {
     <h2>Loading</h2>
   ) : (
     <Box sx={{ flexGrow: 1 }}>
-
-      <Item >
-        <GiGraduateCap size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%" }} />
+      <Item>
+        <GiGraduateCap
+          size={32}
+          style={{
+            color: "white",
+            backgroundColor: "red",
+            borderRadius: "50%",
+          }}
+        />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Egresados</Typography>
-          <Typography variant="body2">
-            Total:{Estudiantes.length}
-          </Typography>
+          <Typography variant="body2">Total:{Estudiantes.length}</Typography>
         </Box>
       </Item>
-
     </Box>
   );
 }

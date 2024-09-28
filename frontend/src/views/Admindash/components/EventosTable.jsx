@@ -9,7 +9,7 @@ import DataTable from "react-data-table-component";
 import axiosInstance from "@/api/interceptor.js";
 import Box from "@mui/material/Box";
 
-export const EventosTable = () => {
+export const EventosTable = ({ eventos, pending }) => {
   const drawerWidth = 240;
   const customStyles = {
     table: {
@@ -86,29 +86,7 @@ export const EventosTable = () => {
       ),
     },
   ];
-  const [eventos, setEventos] = useState([]);
-  const [pending, setPending] = useState(true);
 
-  useEffect(() => {
-    axiosInstance
-      .get("admin/event/all")
-      .then((result) => {
-        const {
-          data: { Events: events },
-        } = result;
-        console.log(events);
-
-        if (events != null) {
-          setEventos(events);
-          setPending(false);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-   [eventos];
   return (
     <Box
       sx={{

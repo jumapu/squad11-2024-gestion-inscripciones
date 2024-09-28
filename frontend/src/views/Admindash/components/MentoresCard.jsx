@@ -17,7 +17,7 @@ export default function MentoresCard() {
     justifyContent: "space-around",
     padding: theme.spacing(1),
     border: "solid 2px darkblue",
-    borderRadius:"21px",
+    borderRadius: "21px",
     width: "175px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
@@ -27,18 +27,17 @@ export default function MentoresCard() {
 
   const [Mentores, setMentores] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   useEffect(() => {
     axiosInstance
-      .get("admin/user/all")
+      .get("admin/user/mentors")
       .then((result) => {
         const {
-          data: { Mentors:Mentores },
+          data: { Mentores },
         } = result;
-        console.log(result)
 
         if (Mentores) {
-          setMentores(result.data.Mentors.Mentores);
+          setMentores(Mentores);
           setLoading(false);
         }
       })
@@ -52,17 +51,20 @@ export default function MentoresCard() {
     <h2>Loading</h2>
   ) : (
     <Box sx={{ flexGrow: 1 }}>
-
       <Item>
-        <MdOutlineGroup size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%" }} />
+        <MdOutlineGroup
+          size={32}
+          style={{
+            color: "white",
+            backgroundColor: "red",
+            borderRadius: "50%",
+          }}
+        />
         <Box sx={{ flex: 1 }}>
           <Typography variant="h6">Mentores</Typography>
-          <Typography variant="body2">
-            Total:{Mentores.length}
-          </Typography>
+          <Typography variant="body2">Total:{Mentores.length}</Typography>
         </Box>
       </Item>
-
     </Box>
   );
 }

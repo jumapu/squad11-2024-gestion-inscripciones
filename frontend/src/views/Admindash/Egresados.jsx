@@ -94,10 +94,10 @@ const Egresados = () => {
       console.log();
 
       if (
-        value == item.name ||
-        value == item.lastName ||
+        item?.name?.toLowerCase().includes(value) ||
+        item?.lastName?.toLowerCase().includes(value) ||
         value == item.id ||
-        item.rol.includes(value)
+        item?.rol.some((x) => x.toLowerCase().includes(value))
       ) {
         return item;
       }

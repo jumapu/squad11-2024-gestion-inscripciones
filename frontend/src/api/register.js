@@ -13,17 +13,18 @@ const validateFields = (data, requiredFields) => {
 };
 
 // Validación y registro de nuevos egresados
-export const registerEgresado = async (data, navigate, selectedOption) => {
-  const requiredFields = ['name', 'lastName', 'email', 'password', 'confirmpassword'];
+export const registerEgresado = async (data, navigate, handleClose) => {
+  const requiredFields = [
+    "name",
+    "lastName",
+    "email",
+    "password",
+    "confirmpassword",
+  ];
 
   if (!validateFields(data, requiredFields)) return;
 
   const { password, confirmpassword } = data;
-
-  if (!selectedOption  || !selectedOption?.value) {
-    toast.error("Seleccione el rol de egresado.");
-    return;
-  }
 
   if (password !== confirmpassword) {
     toast.error("Las contraseñas no coinciden");
@@ -36,7 +37,9 @@ export const registerEgresado = async (data, navigate, selectedOption) => {
   }
 
   try {
-    await axiosInstance.post(`/admin/user/save/student`, { ...data, rol: selectedOption.value });
+    axiosInstance.post(`/auth/register`, data).then((res) => {
+      console.log(res);
+    });
     navigate("/egresados");
   } catch (error) {
     toast.error("Error en el registro del egresado.");
@@ -45,7 +48,7 @@ export const registerEgresado = async (data, navigate, selectedOption) => {
 
 // Validación y registro de nuevos mentores
 export const registerMentor = async (data, navigate, selectedOption) => {
-  const requiredFields = ['name', 'lastName', 'company'];
+  const requiredFields = ["name", "lastName", "company"];
 
   if (!validateFields(data, requiredFields)) return;
 
@@ -55,7 +58,10 @@ export const registerMentor = async (data, navigate, selectedOption) => {
   }
 
   try {
-    await axiosInstance.post(`/admin/user/save/mentor`, { ...data, rol: selectedOption.value });
+    await axiosInstance.post(`/admin/user/save/mentor`, {
+      ...data,
+      rol: selectedOption.value,
+    });
     navigate("/mentores");
   } catch (error) {
     toast.error("Error en el registro del mentor.");
@@ -64,7 +70,7 @@ export const registerMentor = async (data, navigate, selectedOption) => {
 
 // Validación y registro de nuevos eventos
 export const registerEvent = async (data, navigate) => {
-  const requiredFields = ['nombreEvento', 'fecha', 'file'];
+  const requiredFields = ["nombreEvento", "fecha", "file"];
 
   // Verifica que la imagen haya sido seleccionada
   if (data.file == null || data.file.length === 0) {
@@ -72,18 +78,17 @@ export const registerEvent = async (data, navigate) => {
     return;
   }
 
-  if (!validateFields(data, requiredFields))
-     return;
+  if (!validateFields(data, requiredFields)) return;
 
   try {
     const formData = new FormData();
-    formData.append('file', data.file[0]);
-    formData.append('nombreEvento', data.name);
-    formData.append('fecha', data.date);
+    formData.append("file", data.file[0]);
+    formData.append("nombreEvento", data.name);
+    formData.append("fecha", data.date);
 
     await axiosInstance.post(`/admin/event/save`, formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
       },
     });
     navigate("/eventos");

@@ -80,7 +80,7 @@ const Eventos = () => {
   }, []);
 
   const handleInputChange = (event) => {
-    const value = event.target.value.trim();
+    const value = event.target?.value?.trim();
 
     if (!value.trim()) {
       setFilteredEventos(eventos);
@@ -89,9 +89,13 @@ const Eventos = () => {
   };
 
   const handleSearchClick = () => {
-    const value = search.trim();
+    const value = search.toLowerCase().trim();
     const filter = eventos.filter((item) => {
-      if (value == item.name || value == item.lastName || value == item.id) {
+      if (
+        item?.name?.toLowerCase().includes(value) ||
+        item?.lastName?.toLowerCase()?.includes(value) ||
+        value == item.id
+      ) {
         return item;
       }
     });

@@ -89,10 +89,10 @@ const Mentores = () => {
     const value = searchValue.trim();
     const filter = mentoresOrigin.filter((item) => {
       if (
-        value == item.name ||
-        value == item.lastName ||
-        value == item.id ||
-        item.rol.includes(value)
+        item?.name?.toLowerCase()?.includes(value) ||
+        item?.lastName?.toLowerCase().includes(value) ||
+        value == item?.id ||
+        item?.rol.some((x) => x?.toLowerCase().includes(value))
       ) {
         return item;
       }

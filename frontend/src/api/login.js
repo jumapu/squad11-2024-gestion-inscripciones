@@ -9,9 +9,9 @@ export const userLogin = async (data, signIn, navigate) => {
       return;
     }
   }
+  console.log(data);
 
   axiosInstance.post(`auth/authentication`, data).then((res) => {
-    console.log(res);
     signIn({
       auth: {
         token: res?.jwt,
@@ -22,14 +22,16 @@ export const userLogin = async (data, signIn, navigate) => {
         email: data?.email,
       },
     });
-    if (res.rol === "admin") {
-toast.error("Este usuario sera redirigido para poder acceder");
-      navigate("/adminlogin");
+
+    if (
+      res.rol === "admin" &&
+      window.location.href.includes("http://localhost:5173/adminlogin")
+    ) {
+      navigate("/Dashboard");
       return;
     }
 
     if (res.rol === "mentor") {
-      console.log(res.rol);
       navigate("/mentordash");
       return;
     }

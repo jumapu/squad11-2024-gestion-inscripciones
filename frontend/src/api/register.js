@@ -13,7 +13,7 @@ const validateFields = (data, requiredFields) => {
 };
 
 // Validación y registro de nuevos egresados
-export const registerEgresado = async (data, navigate, handleClose) => {
+export const registerEgresado = async (data, navigate) => {
   const requiredFields = [
     "name",
     "lastName",

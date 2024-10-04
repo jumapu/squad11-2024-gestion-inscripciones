@@ -24,8 +24,8 @@ export const userLogin = async (data, signIn, navigate) => {
     });
 
     if (
-      res.rol === "admin" &&
-      window.location.href.includes("http://localhost:5173/adminlogin")
+      res.rol === "admin" 
+      //&& window.location.href.includes("http://localhost:5173/adminlogin") //QA: error en esta linea de codigo. No permite el ingreso autenticado por rol
     ) {
       navigate("/Dashboard");
       return;

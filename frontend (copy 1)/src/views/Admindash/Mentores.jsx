@@ -6,11 +6,10 @@ import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
 import { blue } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
-import EgresadosTable from "./components/EgresadosTable";
+import MentoresTable from "./components/MentoresTable";
 import { useState, useEffect } from "react";
 import axiosInstance from "@/api/interceptor.js";
 import { toast, Toaster } from "sonner";
-import NuevoEgresado from "./Agregar/NuevoEgresado";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -45,7 +44,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(blue[900]),
   backgroundColor: blue[900],
@@ -54,50 +52,46 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Egresados = () => {
-  const drawerWidth = 240;
-
-  const [estudiantes, setEstudiantes] = useState([]);
+const Mentores = () => {
+  const [mentoresOrigin, setMentoresOrigin] = useState([]);
+  const [mentores, setMentores] = useState([]);
   const [pending, setPending] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-  const [estudiantesOrigin, setEstudiantesOrigin] = useState([]);
 
+  const drawerWidth = 240;
   useEffect(() => {
-    const fetchEstudiantes = async () => {
+    const fetchMentores = async () => {
       try {
-        const result = await axiosInstance.get("admin/user/students");
-
-        const estudiantes = result?.data?.Estudiantes || [];
-        setEstudiantes(estudiantes);
-        setEstudiantesOrigin(estudiantes);
+        const result = await axiosInstance.get("admin/user/mentors");
+        const mentores = result.data.Mentores || [];
+        setMentoresOrigin(mentores);
+        setMentores(mentores);
         setPending(false);
       } catch (err) {
         console.error(err);
       }
     };
 
-    fetchEstudiantes();
+    fetchMentores();
   }, []);
 
   const handleInputChange = (event) => {
     const value = event.target.value.trim();
 
     if (!value.trim()) {
-      setEstudiantes(estudiantesOrigin);
+      setMentores(mentoresOrigin);
     }
     setSearchValue(event.target.value);
   };
 
   const handleSearchClick = () => {
     const value = searchValue.trim();
-    const filter = estudiantesOrigin.filter((item) => {
-      console.log();
-
+    const filter = mentoresOrigin.filter((item) => {
       if (
-        item?.name?.toLowerCase().includes(value) ||
+        item?.name?.toLowerCase()?.includes(value) ||
         item?.lastName?.toLowerCase().includes(value) ||
-        value == item.id ||
-        item?.rol.some((x) => x.toLowerCase().includes(value))
+        value == item?.id ||
+        item?.rol.some((x) => x?.toLowerCase().includes(value))
       ) {
         return item;
       }
@@ -105,10 +99,10 @@ const Egresados = () => {
 
     if (filter.length == 0) {
       toast.error("No se encontraron coincidencias");
-      setEstudiantes(estudiantesOrigin);
+      setMentores(mentoresOrigin);
       return;
     }
-    setEstudiantes(filter);
+    setMentores(filter);
   };
   return (
     <div>
@@ -133,7 +127,7 @@ const Egresados = () => {
               gap: "2rem",
             }}
           >
-            Egresados
+            Mentores
           </Typography>
           <Stack
             display={"flex"}
@@ -155,7 +149,7 @@ const Egresados = () => {
               </Search>
               <Box paddingLeft={2}>
                 <ColorButton
-                  style={{ borderRadius: "25px" }}
+                  style={{ borderRadius: "33px" }}
                   variant="outlined"
                   onClick={handleSearchClick}
                 >
@@ -163,15 +157,12 @@ const Egresados = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box alignItems={"flex-end"} marginRight="50px">
-              <NuevoEgresado />
-            </Box>
           </Stack>
         </Box>
-        <EgresadosTable students={estudiantes} pending={pending} />
+        <MentoresTable mentores={mentores} pending={pending} />
       </Box>
     </div>
   );
 };
 
-export default Egresados;
+export default Mentores;

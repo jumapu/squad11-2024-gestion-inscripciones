@@ -4,7 +4,7 @@ import "@radix-ui/themes/styles.css";
 import { IoIosInformation } from "react-icons/io";
 import { IoPencil } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import DataTable from "react-data-table-component";
 import axiosInstance from "@/api/interceptor.js";
 import Box from "@mui/material/Box";
@@ -36,24 +36,65 @@ export const EventosTable = ({ eventos, pending }) => {
 
   const columns = [
     {
-      name: "ID",
-      selector: (row) => row.id,
-    },
-    {
-      name: "Nombre",
+      name: "Nombre del Evento",
       selector: (row) => row.name,
     },
     {
-      name: "Imagen",
-      selector: (row) => row.imgURL,
+      name: "Estado",
+      selector: (row) => {
+        const fecha = new Date(
+          row.createdAt[0],
+          row.createdAt[1],
+          row.createdAt[2]
+        );
+        const fechaActual = new Date();
+
+        return fecha < fechaActual ? "Finalizado" : "En curso";
+      },
     },
     {
-      name: "Fecha de Creación",
-      selector: (row) => row.createdAt,
+      name: "Fecha de Inicio",
+      selector: (row) =>
+        new Date(
+          row.createdAt[0],
+          row.createdAt[1],
+          row.createdAt[2]
+        ).toLocaleDateString(),
     },
     {
-      name: "Squad",
-      selector: (row) => row.team,
+      name: "Fecha de finalización",
+      selector: (row) =>
+        new Date(
+          row.finishAt[0],
+          row.finishAt[1],
+          row.finishAt[2]
+        ).toLocaleDateString(),
+    },
+    {
+      name: "Crear Grupos",
+      selector: (row) => (
+        <div className="p-3">
+          <a
+            href={"/createTeam/" + row.id}
+            className=" text-md px-3 py-2 bg-red-600 rounded-3xl hover:bg-red-500 text-white  cursor-pointer  "
+          >
+            Asignar
+          </a>
+        </div>
+      ),
+    },
+    {
+      name: "Grupos",
+      selector: (row) => (
+        <div className="p-3">
+          <a
+            href={"/team/" + row.id}
+            className=" text-md px-3 py-2 bg-red-600 rounded-3xl hover:bg-red-500 text-white  cursor-pointer  "
+          >
+            Ver Mas...
+          </a>
+        </div>
+      ),
     },
     {
       name: "Acciones",

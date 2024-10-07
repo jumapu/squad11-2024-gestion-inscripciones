@@ -5,10 +5,9 @@ import {
   Text,
   Button,
   Strong,
-  Heading
+  Heading,
 } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
-//import { authenticateUser } from "@/utils/authUtils";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -30,10 +29,16 @@ const Login = () => {
       <Toaster richColors position="top-center" />
 
       <div className="flex-1 flex items-center justify-center from-rose-100 from-0% via-transparent via-50% to-blue-100 to-100% bg-gradient-to-r bg-opacity-5">
-        <Container size="2" align="center" className="relative h-screen flex justify-center">
-          <Logo/>
+        <Container
+          size="2"
+          align="center"
+          className="relative h-screen flex justify-center"
+        >
+          <Logo />
           <div className="text-center py-4">
-            <Heading as="h1" size="8" className="w-full">Iniciar Sesión</Heading>
+            <Heading as="h1" size="8" className="w-full">
+              Iniciar Sesión
+            </Heading>
           </div>
           <Flex direction="column" gap="2" className="max-w-md mx-auto">
             <Card
@@ -46,8 +51,14 @@ const Login = () => {
                     <Text as="p" size="2" className="mb-1">
                       <Strong>Correo Electrónico:</Strong>
                     </Text>
-                    <input                    
-                      style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
+                    <input
+                      style={{
+                        width: "100%",
+                        border: "2px solid gray",
+                        borderRadius: "33px",
+                        padding: "7px 10px",
+                        outline: "none",
+                      }}
                       type="text"
                       name="email"
                       placeholder="Ingrese su correo electrónico"
@@ -59,7 +70,13 @@ const Login = () => {
                       <Strong>Contraseña:</Strong>
                     </Text>
                     <input
-                      style={{ width: "100%", border:"2px solid gray", borderRadius: "33px", padding:"7px 10px", outline: "none" }}
+                      style={{
+                        width: "100%",
+                        border: "2px solid gray",
+                        borderRadius: "33px",
+                        padding: "7px 10px",
+                        outline: "none",
+                      }}
                       type="password"
                       name="password"
                       placeholder="Ingrese su contraseña"

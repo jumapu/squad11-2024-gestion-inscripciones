@@ -18,7 +18,7 @@ export default function EventosCard() {
     padding: theme.spacing(1),
     width: "175px",
     border: "solid 2px darkblue",
-    borderRadius:"21px",
+    borderRadius: "21px",
     color: theme.palette.text.secondary,
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
@@ -35,7 +35,6 @@ export default function EventosCard() {
         const {
           data: { Events: events },
         } = result;
-        console.log(events);
 
         if (events != null) {
           setEventos(events);
@@ -47,22 +46,26 @@ export default function EventosCard() {
       });
   }, []);
 
-   [eventos];
+  [eventos];
   return loading ? (
     <h2>Loading</h2>
   ) : (
     <Box sx={{ flexGrow: 1 }}>
-
-        <Item>
-          <IoCalendar size={32} style={{ color:"white", backgroundColor:"red", borderRadius:"50%", padding:"5px" }} />
-          <Box sx={{ flex: 1 }}>
-            <Typography variant="h6">Eventos</Typography>
-            <Typography variant="body2">
-              Total:{eventos.length}
-            </Typography>
-          </Box>
-        </Item>
-
+      <Item>
+        <IoCalendar
+          size={32}
+          style={{
+            color: "white",
+            backgroundColor: "red",
+            borderRadius: "50%",
+            padding: "5px",
+          }}
+        />
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h6">Eventos</Typography>
+          <Typography variant="body2">Total:{eventos.length}</Typography>
+        </Box>
+      </Item>
     </Box>
   );
 }

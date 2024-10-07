@@ -1,16 +1,15 @@
-import NavAndDrawer from "./components/NavAndDrawer";
+import NavAndDrawer from "../components/NavAndDrawer";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box } from "@mui/material";
+import { toast, Toaster } from "sonner";
 import { blue } from "@mui/material/colors";
 import Stack from "@mui/material/Stack";
-import MentoresTable from "./components/MentoresTable";
-import { useState, useEffect } from "react";
+import { EventosTable } from "./Component/EventosTable";
+import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
-import { toast, Toaster } from "sonner";
-import NuevoMentor from "./Agregar/NuevoMentor";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -30,11 +29,10 @@ const Search = styled("div")(({ theme }) => ({
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   border: "solid 2px darkblue",
-  borderRadius: "25px",
+  borderRadius: "33px",
   width: "250px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -53,46 +51,49 @@ const ColorButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const Mentores = () => {
-  const [mentoresOrigin, setMentoresOrigin] = useState([]);
-  const [mentores, setMentores] = useState([]);
-  const [pending, setPending] = useState(true);
-  const [searchValue, setSearchValue] = useState("");
-
+const Eventos = () => {
   const drawerWidth = 240;
-  useEffect(() => {
-    const fetchMentores = async () => {
-      try {
-        const result = await axiosInstance.get("admin/user/mentors");
-        const mentores = result.data.Mentores || [];
-        setMentoresOrigin(mentores);
-        setMentores(mentores);
-        setPending(false);
-      } catch (err) {
-        console.error(err);
-      }
-    };
 
-    fetchMentores();
+  const [search, setSearch] = useState("");
+  const [eventos, setEventos] = useState([]);
+  const [filteredEventos, setFilteredEventos] = useState([]);
+  const [pending, setPending] = useState(true);
+
+  useEffect(() => {
+    axiosInstance
+      .get("admin/event/all")
+      .then((result) => {
+        const {
+          data: { Events: events },
+        } = result;
+
+        if (events != null) {
+          setEventos(events);
+          setFilteredEventos(events);
+          setPending(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const handleInputChange = (event) => {
-    const value = event.target.value.trim();
+    const value = event.target?.value?.trim();
 
     if (!value.trim()) {
-      setMentores(mentoresOrigin);
+      setFilteredEventos(eventos);
     }
-    setSearchValue(event.target.value);
+    setSearch(event.target.value);
   };
 
   const handleSearchClick = () => {
-    const value = searchValue.trim();
-    const filter = mentoresOrigin.filter((item) => {
+    const value = search.toLowerCase().trim();
+    const filter = eventos.filter((item) => {
       if (
-        item?.name?.toLowerCase()?.includes(value) ||
-        item?.lastName?.toLowerCase().includes(value) ||
-        value == item?.id ||
-        item?.rol.some((x) => x?.toLowerCase().includes(value))
+        item?.name?.toLowerCase().includes(value) ||
+        item?.lastName?.toLowerCase()?.includes(value) ||
+        value == item.id
       ) {
         return item;
       }
@@ -100,11 +101,12 @@ const Mentores = () => {
 
     if (filter.length == 0) {
       toast.error("No se encontraron coincidencias");
-      setMentores(mentoresOrigin);
+      setFilteredEventos(eventos);
       return;
     }
-    setMentores(filter);
+    setFilteredEventos(filter);
   };
+
   return (
     <div>
       <Toaster richColors position="top-center" />
@@ -128,7 +130,7 @@ const Mentores = () => {
               gap: "2rem",
             }}
           >
-            Mentores
+            Eventos
           </Typography>
           <Stack
             display={"flex"}
@@ -144,13 +146,14 @@ const Mentores = () => {
                 <StyledInputBase
                   placeholder="Buscar .."
                   inputProps={{ "aria-label": "search" }}
-                  value={searchValue}
+                  type="text"
+                  value={search}
                   onChange={handleInputChange}
                 />
               </Search>
               <Box paddingLeft={2}>
                 <ColorButton
-                  style={{ borderRadius: "33px" }}
+                  style={{ borderRadius: "25px" }}
                   variant="outlined"
                   onClick={handleSearchClick}
                 >
@@ -158,15 +161,30 @@ const Mentores = () => {
                 </ColorButton>
               </Box>
             </Box>
-            <Box alignItems={"flex-end"} marginRight="50px">
-              <NuevoMentor />
+            <Box alignItems={"flex-end"} marginRight="100px">
+              <a
+                href="/eventos/agregar"
+                className="bg-[#DA5061] flex self-baseline gap-1 p-2 rounded-3xl text-white"
+              >
+                <svg
+                  height="20"
+                  viewBox="0 0 21 22"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M20.168 8.41406V12.6523H0.675781V8.41406H20.168ZM12.707 0.445312V21.1484H8.15625V0.445312H12.707Z"
+                    fill="white"
+                  />
+                </svg>
+                Agregar
+              </a>
             </Box>
           </Stack>
         </Box>
-        <MentoresTable mentores={mentores} pending={pending} />
+        <EventosTable eventos={filteredEventos} loading={pending} />
       </Box>
     </div>
   );
 };
-
-export default Mentores;
+export default Eventos;

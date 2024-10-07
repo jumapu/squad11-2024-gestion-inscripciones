@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -17,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -32,6 +31,7 @@ public class EventController {
 
     private final EventServiceImpl eventServiceImpl;
     private final HttpServletRequest request;
+
     @Operation(
             summary = "Registrar un nuevo evento",
             description = "Este endpoint permite registrar un nuevo evento con datos JSON y una imagen asociada."
@@ -44,12 +44,11 @@ public class EventController {
     })
     @PostMapping("save")
     public ResponseEntity<Map<String, String>> registerEvent(
-            @RequestBody(description = "Datos del evento en formato JSON", required = true) String data,
-            @RequestBody(description = "Archivo del evento (imagen)", required = true) MultipartFile file)
-            {
-//data es el Json que contioene los datos de la entidad que se maneja en el controlador
-        eventServiceImpl.save(data, file, request);
+            @RequestPart("data") EventDTO eventDTO,
+            @RequestPart("file") MultipartFile file) {
 
+
+        eventServiceImpl.save(eventDTO, file, request);
 
         return new ResponseEntity<>(Map.of("Event", "Save Event"), HttpStatus.CREATED);
     }
@@ -138,6 +137,7 @@ public class EventController {
         Map<String, List<EventDTO>> body = eventServiceImpl.AllActiveEvent();
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
+
     @Operation(
             summary = "Obtener detalles de un evento",
             description = "Este endpoint obtiene los detalles de un evento por su ID."

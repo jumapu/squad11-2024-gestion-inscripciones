@@ -7,7 +7,5 @@ image:
 
 spring:
   profiles:
-    active: dev
+    active: prod
 
-#Cuidado con h2 y la entidad user ya que es una palabra reservada por lo visto.
-#En mysql no ocurre este inconveniente.

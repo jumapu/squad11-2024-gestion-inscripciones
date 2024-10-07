@@ -2,6 +2,7 @@ package com.PoloIT.GestionDeInscripciones.DTO;
 
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
@@ -10,10 +11,10 @@ import java.util.stream.Collectors;
 
 public record RegistrationDTO(
         @NotNull(message = "Required enrollment start date ")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonProperty("createdAt")
         LocalDateTime createdAt,
         @NotNull(message = "Required enrollment end date")
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonProperty("finishAt")
         LocalDateTime finishAt,
         Set<StudentDTO> Students,
         Set<MentorDTO> Mentors,

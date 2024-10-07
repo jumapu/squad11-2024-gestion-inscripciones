@@ -3,7 +3,7 @@ package com.PoloIT.GestionDeInscripciones.DTO;
 import com.PoloIT.GestionDeInscripciones.Entity.Event;
 import com.PoloIT.GestionDeInscripciones.Entity.Registration;
 import com.PoloIT.GestionDeInscripciones.Entity.TeamGroup;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,20 +13,21 @@ public record EventDTO(
         Long id,
         @NotNull(message = "Name required")
         @NotEmpty(message = "Name required")
+        @JsonProperty("name")
         String name,
         @NotNull(message = "description required")
         @NotEmpty(message = "description required")
+        @JsonProperty("description")
         String description,
         String imgURL,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonProperty("createdAt")
         LocalDateTime createdAt,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+        @JsonProperty("finishAt")
         LocalDateTime finishAt,
         @NotNull(message = "registration required")
         RegistrationDTO registration,
         TeamGroupDTO teamGroup,
         boolean isActive,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
         LocalDateTime updatedAt
 ) {
 
@@ -46,7 +47,7 @@ public record EventDTO(
         );
     }
 
-    //
+
     public static Event fromEvent(EventDTO eventDTO) {
         Event event = Event.builder()
                 .name(eventDTO.name())
@@ -67,4 +68,6 @@ public record EventDTO(
         event.getTeamGroup().setEvent(event);
         return event;
     }
+
+
 }

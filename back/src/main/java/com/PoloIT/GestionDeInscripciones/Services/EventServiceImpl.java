@@ -52,7 +52,7 @@ public class EventServiceImpl {
     }
 
 
-    public void save(String data, MultipartFile file, HttpServletRequest request) {
+    public void save(EventDTO data, MultipartFile file, HttpServletRequest request) {
         Event event = setEvent(data, request, file);
         eventRepository.save(event);
     }
@@ -112,23 +112,13 @@ public class EventServiceImpl {
         );
     }
 
-    private Event setEvent(String data, HttpServletRequest request, MultipartFile file) {
+    private Event setEvent(EventDTO data, HttpServletRequest request, MultipartFile file) {
 
-        Event event = dataToEvent(data);
+        Event event = EventDTO.fromEvent(data);
         event.setAdmin(getUserContext().getAdmin());
         event.setImg(fileEventServices.saveFile(file, request));
         return event;
 
-    }
-
-    private Event dataToEvent(String data) {
-        try {
-            EventDTO eventDTO = objectMapper.readValue(data, EventDTO.class);
-            return EventDTO.fromEvent(eventDTO);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new ResponseException("404", "ERROR EN EL SERVIDOR", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
     }
 
 

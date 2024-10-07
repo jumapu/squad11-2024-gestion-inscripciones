@@ -49,22 +49,18 @@ public class RegistrationController {
         return new ResponseEntity<>(Map.of("Event", "Successfully registered for the event"), HttpStatus.CREATED);
     }
 
-    @Operation(
-            summary = "Obtener eventos del usuario",
-            description = "Este endpoint permite obtener todos los eventos en los que el usuario identificado por su ID está registrado."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Eventos obtenidos exitosamente",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = List.class),
-                            examples = @ExampleObject(value = "{ \"Mis eventos\": [...] }")))
-    })
-    @GetMapping("myEvent/{id}")
+
+    @GetMapping("myEvents")
     public ResponseEntity<Map<String, List<EventDTO>>> myEvents(
-            @Parameter(description = "ID del Estudiante", example = "1")
-            @PathVariable Long id) {
-        List<EventDTO> body = eventService.myEvents(id);
-        return new ResponseEntity<>(Map.of("Mis eventos", body), HttpStatus.CREATED);
+    ) {
+        List<EventDTO> body = eventService.myEvents();
+        return new ResponseEntity<>(Map.of("events", body), HttpStatus.CREATED);
+    }
+
+    @GetMapping("allEvents")
+    public ResponseEntity<Map<String, List<EventDTO>>> allEvents() {
+        Map<String, List<EventDTO>> body = eventService.all();
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
 
 

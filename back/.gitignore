@@ -1,7 +1,6 @@
 HELP.md
 target/
 /target/
-images/**
 images/
 !.mvn/wrapper/maven-wrapper.jar
 /mvn/

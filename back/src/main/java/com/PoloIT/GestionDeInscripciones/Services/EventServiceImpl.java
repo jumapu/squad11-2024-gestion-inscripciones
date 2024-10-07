@@ -11,7 +11,6 @@ import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.UserRepository;
 import com.PoloIT.GestionDeInscripciones.Utils.FileEventServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +34,8 @@ public class EventServiceImpl {
     private final MentorRepository mentorRepository;
     private final EventRepository eventRepository;
     private final FileEventServices fileEventServices;
-    private final ObjectMapper objectMapper;
 
 
-    //! para luz que haga las pruebas
     public void registerUserEvent(Long id) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new ResponseException("404", "Not Found Event", HttpStatus.NOT_FOUND));
@@ -81,7 +78,8 @@ public class EventServiceImpl {
 
     }
 
-    public List<EventDTO> myEvents(Long id) {
+    public List<EventDTO> myEvents() {
+        Long id = getUserContext().getId();
         return eventRepository.findAll().stream()
                 .filter(event -> event.getTeamGroup().getTeams().stream().anyMatch(team -> team.getStudents().stream().anyMatch(student -> student.getId().equals(id))))
                 .map(EventDTO::new)

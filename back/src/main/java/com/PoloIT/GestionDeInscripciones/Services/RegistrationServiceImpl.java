@@ -33,7 +33,7 @@ public class RegistrationServiceImpl {
 
     private Registration setUserEvent(Registration registration) {
         //! se verifca si ya finalizo el registro al evento.
-        isActiveRegister(registration);
+        //   isActiveRegister(registration);
 
         User user = getUserContext();
 

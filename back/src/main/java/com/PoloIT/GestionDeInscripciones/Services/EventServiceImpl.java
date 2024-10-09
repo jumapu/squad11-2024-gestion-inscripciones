@@ -2,10 +2,7 @@ package com.PoloIT.GestionDeInscripciones.Services;
 
 import com.PoloIT.GestionDeInscripciones.Config.ExecptionControll.ResponseException;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
-import com.PoloIT.GestionDeInscripciones.Entity.Event;
-import com.PoloIT.GestionDeInscripciones.Entity.Mentor;
-import com.PoloIT.GestionDeInscripciones.Entity.Student;
-import com.PoloIT.GestionDeInscripciones.Entity.User;
+import com.PoloIT.GestionDeInscripciones.Entity.*;
 import com.PoloIT.GestionDeInscripciones.Repository.EventRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.MentorRepository;
 import com.PoloIT.GestionDeInscripciones.Repository.StudentRepository;
@@ -79,11 +76,13 @@ public class EventServiceImpl {
     }
 
     public List<EventDTO> myEvents() {
-        Long id = getUserContext().getId();
-        return eventRepository.findAll().stream()
-                .filter(event -> event.getTeamGroup().getTeams().stream().anyMatch(team -> team.getStudents().stream().anyMatch(student -> student.getId().equals(id))))
+        User user = getUserContext();
+
+        return user.getStudent().getRegistrations()
+                .stream().map(Registration::getEvent)
                 .map(EventDTO::new)
                 .toList();
+
     }
 
     public Resource loadResource(String filename) {

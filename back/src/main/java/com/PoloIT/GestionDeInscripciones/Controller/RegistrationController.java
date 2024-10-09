@@ -3,13 +3,6 @@ package com.PoloIT.GestionDeInscripciones.Controller;
 import com.PoloIT.GestionDeInscripciones.DTO.EventDTO;
 import com.PoloIT.GestionDeInscripciones.Services.EventServiceImpl;
 import com.PoloIT.GestionDeInscripciones.Services.RegistrationServiceImpl;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,19 +24,9 @@ public class RegistrationController {
     private final EventServiceImpl eventService;
     private final RegistrationServiceImpl registrationService;
 
-    @Operation(
-            summary = "Registrar usuario en un evento",
-            description = "Este endpoint permite registrar al usuario identificado por su ID en un evento."
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Registro en el evento exitoso",
-                    content = @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Map.class),
-                            examples = @ExampleObject(value = "{ \"Event\": \"Successfully registered for the event\" }")))
-    })
+
     @GetMapping("register/{id}")
     public ResponseEntity<Map<String, String>> register(
-            @Parameter(description = "ID del Evento", example = "1")
             @PathVariable Long id) {
         registrationService.register(id);
         return new ResponseEntity<>(Map.of("Event", "Successfully registered for the event"), HttpStatus.CREATED);

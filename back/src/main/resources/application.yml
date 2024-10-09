@@ -7,5 +7,5 @@ image:
 
 spring:
   profiles:
-    active: prod
+    active: dev
 

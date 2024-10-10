@@ -16,8 +16,8 @@ export default function DashboardChart() {
     ...theme.typography.body2,
     padding: theme.spacing(4),
     color: theme.palette.text.secondary,
-    border: '2px solid darkblue',
-    borderRadius: '21px',
+    border: "2px solid darkblue",
+    borderRadius: "21px",
     flexGrow: 1,
     ...theme.applyStyles("dark", {
       backgroundColor: "#1A2027",
@@ -28,11 +28,11 @@ export default function DashboardChart() {
     axiosInstance
       .get("admin/user/students")
       .then((result) => {
-        console.log(result.data);
-        const roles = {};        
+        const roles = {};
         for (const element of result.data.Estudiantes) {
-            const rolesEstudiante = Array.isArray(element.rol)?element.rol:[element.rol];
-        //   const { rol } = element;
+          const rolesEstudiante = Array.isArray(element.rol)
+            ? element.rol
+            : [element.rol];
           rolesEstudiante.forEach((item) => {
             if (item in roles) {
               roles[item] += 1;
@@ -50,7 +50,6 @@ export default function DashboardChart() {
 
         setChart(rolesArray);
         setLoading(false);
-        console.log(rolesArray);
       })
       .catch((err) => {
         console.log(err);
@@ -61,19 +60,16 @@ export default function DashboardChart() {
   return loading ? (
     <h2>loading</h2>
   ) : (
-    <Box
-      display={"flex"} 
-    >
-      <Box 
-      display={"flex"}
-      flexWrap={"wrap"}
-      flexGrow={1}
-      marginTop={3}
-      justifyContent={"center"}
-      alignItems={"start"}
-      gap={2}
+    <Box display={"flex"}>
+      <Box
+        display={"flex"}
+        flexWrap={"wrap"}
+        flexGrow={1}
+        marginTop={3}
+        justifyContent={"center"}
+        alignItems={"start"}
+        gap={2}
       >
-        
         <Item>
           <Typography>Egresados - Géneros</Typography>
           <PieChart
@@ -101,7 +97,6 @@ export default function DashboardChart() {
         </Item>
         <DashboardCalendar />
       </Box>
-      
     </Box>
   );
 }
@@ -109,5 +104,5 @@ export default function DashboardChart() {
 const pieParams = {
   height: 200,
   margin: { right: 5 },
-  slotProps: { legend: { hidden:true}},
+  slotProps: { legend: { hidden: true } },
 };

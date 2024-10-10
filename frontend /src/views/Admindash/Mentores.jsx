@@ -85,25 +85,28 @@ const Mentores = () => {
   };
 
   const handleSearchClick = () => {
-    const value = searchValue.trim();
+    const value = searchValue.trim().toLowerCase();
     const filter = mentoresOrigin.filter((item) => {
       if (
-        item?.name?.toLowerCase()?.includes(value) ||
+        item?.name?.toLowerCase().includes(value) ||
         item?.lastName?.toLowerCase().includes(value) ||
-        value == item?.id ||
-        item?.rol.some((x) => x?.toLowerCase().includes(value))
+        value === item?.id ||
+        (Array.isArray(item?.rol) &&
+          item.rol.some((x) => x.toLowerCase().includes(value)))
       ) {
-        return item;
+        return true;
       }
+      return false;
     });
 
-    if (filter.length == 0) {
+    if (filter.length === 0) {
       toast.error("No se encontraron coincidencias");
       setMentores(mentoresOrigin);
       return;
     }
     setMentores(filter);
   };
+
   return (
     <div>
       <Toaster richColors position="top-center" />

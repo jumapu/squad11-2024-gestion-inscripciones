@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../../assets/logo.png";
 
 const Navbar = ({ handleDrawerToggle, mobileOpen }) => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   const items = [
     {
       text: "Mis Eventos",
-      path: "/user/mis_eventos",
+      path: `/${id}/mis_eventos`,
       icon: (
         <svg
           width="21"
@@ -37,10 +38,10 @@ const Navbar = ({ handleDrawerToggle, mobileOpen }) => {
           </g>
         </svg>
       ),
-    }, // Agregando la propiedad icon
+    },
     {
       text: "Eventos",
-      path: "/user/eventos",
+      path: `/${id}/eventos`,
       icon: (
         <svg
           width="24"
@@ -72,7 +73,7 @@ const Navbar = ({ handleDrawerToggle, mobileOpen }) => {
     },
     {
       text: "Configuración",
-      path: "/configuracion",
+      path: "#",
       icon: (
         <svg
           className="mr-2"
@@ -91,7 +92,7 @@ const Navbar = ({ handleDrawerToggle, mobileOpen }) => {
     },
     {
       text: "Perfil",
-      path: "/perfil",
+      path: "#",
       icon: (
         <svg
           className="mr-2"

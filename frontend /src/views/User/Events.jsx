@@ -22,7 +22,6 @@ const Events = () => {
     const eventos = async () => {
       try {
         const response = await axiosInstance.get(`/event/myEvents`);
-        console.log(response);
 
         if (response?.data?.events) {
           setEvents(response?.data?.events);

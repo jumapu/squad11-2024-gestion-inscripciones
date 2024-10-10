@@ -17,6 +17,7 @@ const ListEvents = () => {
   const toggleNotifications = () => {
     setNotificationsOpen((prev) => !prev);
   };
+
   useEffect(() => {
     const eventos = async () => {
       try {
@@ -25,8 +26,6 @@ const ListEvents = () => {
           setEvents(response?.data.Events);
         }
       } catch (error) {
-        console.log(error);
-
         toast.error("Error fetching groups");
       } finally {
       }

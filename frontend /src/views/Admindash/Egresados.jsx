@@ -88,27 +88,34 @@ const Egresados = () => {
   };
 
   const handleSearchClick = () => {
-    const value = searchValue.trim();
+    const value = searchValue.trim().toLowerCase();
     const filter = estudiantesOrigin.filter((item) => {
-      console.log();
+      const hasRolMatch =
+        Array.isArray(item?.rol) &&
+        item.rol.some((x) => x.toLowerCase().includes(value));
 
       if (
         item?.name?.toLowerCase().includes(value) ||
         item?.lastName?.toLowerCase().includes(value) ||
-        value == item.id ||
-        item?.rol.some((x) => x.toLowerCase().includes(value))
+        value === item.id ||
+        hasRolMatch
       ) {
-        return item;
+        return true;
       }
+
+      return false; // Retorna false para excluir este item
     });
 
-    if (filter.length == 0) {
+    // Si no se encuentran coincidencias
+    if (filter.length === 0) {
       toast.error("No se encontraron coincidencias");
-      setEstudiantes(estudiantesOrigin);
+      setEstudiantes(estudiantesOrigin); // Restablece a la lista original
       return;
     }
-    setEstudiantes(filter);
+
+    setEstudiantes(filter); // Actualiza el estado con los resultados filtrados
   };
+
   return (
     <div>
       <Toaster richColors position="top-center" />

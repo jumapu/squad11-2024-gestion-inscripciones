@@ -45,9 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final UserDetails userDetails = getUser(token);
 
             if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
-                //check user in db
 
-                //Create authentication
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
@@ -56,7 +54,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource());
 
-                //Inject user in context security
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
 

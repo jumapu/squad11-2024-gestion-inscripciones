@@ -2,6 +2,7 @@ HELP.md
 target/
 /target/
 images/
+data/
 !.mvn/wrapper/maven-wrapper.jar
 /mvn/
 /build/

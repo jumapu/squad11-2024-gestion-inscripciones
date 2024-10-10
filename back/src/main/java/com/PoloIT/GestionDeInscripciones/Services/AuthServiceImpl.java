@@ -42,8 +42,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserServiceImpl userService;
 
     public Map<String, String> authenticate(UserDto userDto) {
-        String rol = authenticationAccount(userDto);
-        return Map.of("jwt", jwtService.generateJwt(userDto.email()), "rol", rol);
+        return authenticationAccount(userDto);
     }
 
     public Map<String, String> register(UserDto userDto) {
@@ -53,31 +52,35 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-
-    private String authenticationAccount(UserDto userDto) {
+    public Map<String, String> authenticationAccount(UserDto userDto) {
         try {
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                    userDto.email(),
-                    userDto.password()
-            ));
-            return authentication.getAuthorities().stream().findFirst().get().toString().toLowerCase();
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            userDto.email(),
+                            userDto.password()
+                    )
+            );
+
+            User user = (User) authentication.getPrincipal();
+
+            String jwt = jwtService.generateJwt(userDto.email());
+
+            Map<String, String> response = new HashMap<>();
+            response.put("rol", user.getRol().name().toLowerCase());
+            response.put("jwt", jwt);
+            user = userRepository.findByEmail(userDto.email()).orElse(null);
+            response.put("id", user.getId().toString());
+            return response;
+
         } catch (Exception e) {
-            if (e.getLocalizedMessage().equals("Bad credentials"))
-                throw new ResponseException("404", "Incorrect password", HttpStatus.NOT_FOUND);
-            if (e.getLocalizedMessage().equals("Email not Found"))
-                throw new ResponseException("404", "Email not Found", HttpStatus.NOT_FOUND);
-            throw new ResponseException("404", "Error Credentials", HttpStatus.NOT_FOUND);
+            throw new ResponseException("404", "Credenciales incorrectas", HttpStatus.NOT_FOUND);
         }
     }
+
 
     private void emailInUsed(UserDto userDto) {
         if (Objects.isNull(userDto.email()))
             throw new ResponseException("404", "Name required", HttpStatus.NOT_FOUND);
-
-        //! se puede limitar los admin
-//        if (userRepository.countAdmins() >= 4) {
-//            throw new ResponseException("404", "No more admins can register!", HttpStatus.NOT_ACCEPTABLE);
-//        }
 
 
         if (userRepository.findByEmail(userDto.email()).isPresent())
@@ -118,12 +121,10 @@ public class AuthServiceImpl implements AuthService {
         throw new ResponseException("505", "internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
     public void seedData() {
         List<Student> students = new ArrayList<>();
         List<Mentor> mentors = new ArrayList<>();
 
-        // Crear y agregar estudiantes
         for (int i = 1; i <= 5; i++) {
             students.add(createStudent("student" + i, Set.of("java developer", "python developer")));
         }
@@ -147,15 +148,29 @@ public class AuthServiceImpl implements AuthService {
         for (int i = 6; i <= 8; i++) {
             mentors.add(createMentor("mentor" + i, Set.of("design")));
         }
-        // Crear y agregar mentores con roles adicionales
+
         mentors.add(createMentor("mentor9", Set.of("DevOps")));
         mentors.add(createMentor("mentor10", Set.of("Project Manager")));
 
-        // Guardar los estudiantes y mentores en la base de datos
-        ;
+        createAdmin("admin", "admin1234");
+
         mentorRepository.saveAll(mentors);
         studentRepository.saveAll(students);
+    }
 
+    private void createAdmin(String username, String password) {
+        User adminUser = User.builder()
+                .email(username + "@gmail.com")
+                .password(encoder.encode(password))
+                .rol(Rol.ADMIN)
+                .build();
+
+        Admin admin = Admin.builder()
+                .name(username)
+                .user(adminUser)
+                .build();
+
+        adminRepository.save(admin);
     }
 
     private Mentor createMentor(String username, Set<String> roles) {
@@ -183,13 +198,8 @@ public class AuthServiceImpl implements AuthService {
     }
 
     public void sendPasswordResetLink(EmailResetPasswordDTO emailResetPasswordDTO) {
-//        el mensaje de exception no deveria ser no found?
         User user = userRepository.findByEmail(emailResetPasswordDTO.email())
-//                por que se validaria el rol?
-//                .map(user1 -> {
-//                    isValidRol(user1.getRol());
-//                    return user1;
-//                })
+
                 .orElseThrow(() -> new ResponseException("404", "Email in used", HttpStatus.NOT_ACCEPTABLE));
         emailService.sendEmail(
                 user.getEmail(),

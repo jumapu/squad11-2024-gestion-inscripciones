@@ -5,6 +5,7 @@ import { IoPencil } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import DataTable from "react-data-table-component";
+import Box from "@mui/material/Box";
 
 export const MentoresTable = ({ mentores, pending }) => {
   const drawerWidth = 240;
@@ -48,7 +49,6 @@ export const MentoresTable = ({ mentores, pending }) => {
       name: "Empresa",
       selector: (row) => row.company,
     },
-
     {
       name: "Rol",
       selector: (row) => row.rol,
@@ -86,11 +86,13 @@ export const MentoresTable = ({ mentores, pending }) => {
   ];
 
   return (
-    <div
-      style={{
-        marginLeft: drawerWidth,
-        border: "solid 3px darkblue",
-        borderRadius: "20px",
+    <Box
+      sx={{
+        width: { sm: `calc(95vw - ${drawerWidth}px)` },
+        ml: { sm: `${drawerWidth}px` },
+        maxWidth: "1440px",
+        border: "3px solid darkblue",
+        borderRadius: "33px",
         marginTop: "20px",
         paddingBottom: "25px",
       }}
@@ -104,7 +106,7 @@ export const MentoresTable = ({ mentores, pending }) => {
         progressPending={pending}
         responsive
       />
-    </div>
+    </Box>
   );
 };
 

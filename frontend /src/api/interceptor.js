@@ -1,16 +1,16 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-// Crea una instancia de Axios
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:8080/api/v1",
+  // baseURL: "http://localhost:8080/api/v1",
+  baseURL: "https://squad-gvzl.onrender.com/api/v1",
+
   httpsAgent: false,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// Interceptor para agregar el token a las solicitudes
 axiosInstance.interceptors.request.use(
   (request) => {
     const token = localStorage.getItem("token");

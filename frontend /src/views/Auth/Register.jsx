@@ -10,8 +10,8 @@ import {
 import "@radix-ui/themes/styles.css";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
-import { useNavigate } from "react-router-dom";
-import { registerUser } from "@/api/register"; // Importa la función de registro correcta
+import { useNavigate, Link } from "react-router-dom";
+import { registerUser } from "@/api/register";
 import Logo from "@/components/Logo";
 
 const Register = () => {
@@ -75,7 +75,7 @@ const Register = () => {
                         padding: "7px 10px",
                         outline: "none",
                       }}
-                      type="text"
+                      type="email"
                       name="email"
                       placeholder="Ingrese su correo electrónico"
                       {...register("email", { required: true })}
@@ -156,6 +156,17 @@ const Register = () => {
                   <Button className="mt-4 w-full bg-red-800 text-white py-5 rounded-2xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md shadow-black font-bold">
                     Registrarse
                   </Button>
+                  <div className="mt-4 text-center">
+                    <Text as="p" size="2">
+                      ¿Ya tienes una cuenta?{" "}
+                      <Link
+                        to="/login"
+                        className="text-blue-500 underline hover:text-blue-700"
+                      >
+                        Inicia sesión
+                      </Link>
+                    </Text>
+                  </div>
                 </Flex>
               </form>
             </Card>

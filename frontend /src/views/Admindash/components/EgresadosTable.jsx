@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { IconButton, Tooltip } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import { IoIosInformation } from "react-icons/io";

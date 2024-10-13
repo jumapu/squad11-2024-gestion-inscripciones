@@ -10,7 +10,7 @@ import {
 import "@radix-ui/themes/styles.css";
 import { useForm } from "react-hook-form";
 import { Toaster } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import Logo from "@/components/Logo";
 import { userLogin } from "@/api/login";
@@ -86,10 +86,17 @@ const Login = () => {
                   <Button className="mt-4 w-full bg-red-800 text-white py-5 rounded-2xl hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md shadow-black font-bold">
                     Ingresar
                   </Button>
-                  {/* <Text className="w-full text-center">
-                    ¿No tienes una cuenta?{" "}
-                    <Link href="/registro">Crear Cuenta</Link>
-                  </Text> */}
+                  <div className="mt-4 text-center">
+                    <Text as="p" size="2">
+                      ¿No tienes una cuenta?{" "}
+                      <Link
+                        to="/registro"
+                        className="text-blue-500 underline hover:text-blue-700"
+                      >
+                        Regístrate
+                      </Link>
+                    </Text>
+                  </div>
                 </Flex>
               </form>
             </Card>

@@ -66,7 +66,6 @@ const TeamGroupFilter = () => {
     filters.forEach((filter) => {
       const { rol, quantity, technologies, groups = 1 } = filter;
 
-      // Crear el objeto del filtro en el formato deseado
       const filterData = {
         rol,
         quantity: parseInt(quantity, 10),
@@ -124,9 +123,12 @@ const TeamGroupFilter = () => {
                 fill="black"
               />
             </svg>
-            Agregar Filtros
+            Crear Grupos para el Evento
           </a>
           <div className="grid grid-cols-1 gap-4 mb-4">
+            <h3 className="font-extrabold text-3xl text-center py-3">
+              Agregar Filtros
+            </h3>
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}

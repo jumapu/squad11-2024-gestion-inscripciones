@@ -21,7 +21,7 @@ import { IoMenu } from "react-icons/io5";
 import { IoPersonOutline } from "react-icons/io5";
 import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "@/components/Logo";
 import Notifications from "@/components/Notifications";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -31,6 +31,7 @@ import Popover from "@mui/material/Popover";
 const drawerWidth = 240;
 
 function NavAndDrawer() {
+  const location = useLocation();
   const [showNotifications, setShowNotifications] = useState(false);
   const [notifications, setNotifications] = useState([
     { message: "Nuevo Taller de Git" },
@@ -80,6 +81,7 @@ function NavAndDrawer() {
     { icon: <IoPersonOutline />, text: "Perfil", path: "/perfil" },
     { icon: <IoLogOutOutline />, text: "Cerrar Sesión", path: "/login" },
   ];
+
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -104,6 +106,18 @@ function NavAndDrawer() {
                         navigate(item.path);
                       }
                 }
+                sx={{
+                  backgroundColor:
+                    location.pathname === item.path
+                      ? "rgba(0, 0, 255, 0.1)"
+                      : "transparent",
+                  "&:hover": {
+                    backgroundColor:
+                      location.pathname === item.path
+                        ? "rgba(0, 0, 255, 0.2)"
+                        : "rgba(0, 0, 255, 0.1)",
+                  },
+                }}
               >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText className="text-gray-700" primary={item.text} />
@@ -115,6 +129,7 @@ function NavAndDrawer() {
       </List>
     </div>
   );
+
   return (
     <Box
       sx={{

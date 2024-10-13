@@ -1,6 +1,5 @@
 import NavAndDrawer from "../../components/NavAndDrawer";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import { toast, Toaster } from "sonner";
 import axiosInstance from "../../../../api/interceptor";
 
@@ -10,37 +9,35 @@ const Eventos = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [image, setImage] = useState(null);
 
   const onSubmit = async (data) => {
-    if (image === null) {
+    const fileInput = document.querySelector('input[type="file"]');
+    const file = fileInput.files[0];
+
+    if (!file) {
       toast.error("Ingrese una imagen");
       return;
     }
 
     const formData = new FormData();
-
-    const fileInput = document.querySelector('input[type="file"]');
-    const file = fileInput.files[0];
     formData.append("file", file);
 
     const eventData = {
       name: data.name,
-      description: data.description,
-      createdAt: data.createdAt,
-      finishAt: data.finishAt,
+      description: data.descripcion,
+      createdAt: new Date(data.inicio).toISOString(),
+      finishAt: new Date(data.fin).toISOString(),
       registration: {
-        createdAt: data.registrationCreatedAt,
-        finishAt: data.registrationFinishAt,
+        createdAt: new Date(data.inicioIns).toISOString(),
+        finishAt: new Date(data.finIns).toISOString(),
       },
-      isActive: data.isActive,
+      isActive: true,
     };
 
     formData.append(
       "data",
       new Blob([JSON.stringify(eventData)], { type: "application/json" })
     );
-    const token = localStorage.getItem("token");
 
     try {
       const response = await axiosInstance.post("admin/event/save", formData, {
@@ -50,19 +47,22 @@ const Eventos = () => {
       });
       toast.success("Evento creado con éxito");
     } catch (error) {
-      console.error(err);
-
-      toast.error("Error al crear el evento");
+      const message =
+        error.response?.data?.message || "Error al crear el evento";
+      toast.error(message);
     }
   };
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
-    setImage(file);
+    if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
+    } else {
+      toast.error("Por favor, sube una imagen válida (PNG o JPEG)");
+    }
   };
 
   return (
-    <div className="overflow-hidden pb-10">
+    <div className="overflow-hidden pb-10 w-full">
       <NavAndDrawer />
 
       <Toaster richColors position="top-center" />
@@ -98,7 +98,7 @@ const Eventos = () => {
                 <input
                   type="text"
                   placeholder="Nombre del Evento"
-                  className="w-full p-3 rounded-3xl  border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
+                  className="w-full p-3 rounded-3xl border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
                   {...register("name", {
                     required: "Este campo es obligatorio",
                   })}
@@ -113,10 +113,10 @@ const Eventos = () => {
               <div className="relative w-full mb-4">
                 <h2 className="text-md font-bold text-gray-700 mb-2">Imagen</h2>
                 <label
-                  className="flex justify-center w-full h-32 px-4 transition bg-gray-200 border-solid border-gray-300  rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
+                  className="flex justify-center w-full h-32 px-4 transition bg-gray-200 border-solid border-gray-300 rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
                   id="drop"
                 >
-                  <span className="flex items-center space-x-2 b-">
+                  <span className="flex items-center space-x-2">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="w-6 h-6 text-gray-600"
@@ -159,7 +159,7 @@ const Eventos = () => {
                   </label>
                   <input
                     type="date"
-                    className="w-full p-3 rounded-3xl  border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
+                    className="w-full p-3 rounded-3xl border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
                     {...register("inicioIns", {
                       required: "Este campo es obligatorio",
                     })}
@@ -176,7 +176,7 @@ const Eventos = () => {
                   </label>
                   <input
                     type="date"
-                    className="w-full p-3 rounded-3xl  border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
+                    className="w-full p-3 rounded-3xl border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
                     {...register("finIns", {
                       required: "Este campo es obligatorio",
                     })}
@@ -199,7 +199,7 @@ const Eventos = () => {
                   </label>
                   <input
                     type="date"
-                    className="w-full p-3 rounded-3xl  border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
+                    className="w-full p-3 rounded-3xl border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
                     {...register("inicio", {
                       required: "Este campo es obligatorio",
                     })}
@@ -216,7 +216,7 @@ const Eventos = () => {
                   </label>
                   <input
                     type="date"
-                    className="w-full p-3 rounded-3xl  border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
+                    className="w-full p-3 rounded-3xl border-2 border-solid border-blue-600 focus:border-blue-600 focus:ring-0"
                     {...register("fin", {
                       required: "Este campo es obligatorio",
                     })}
@@ -241,7 +241,7 @@ const Eventos = () => {
                   {...register("descripcion", {
                     required: "Este campo es obligatorio",
                   })}
-                  className="appearance-none block w-full bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none  focus:border-blue-600"
+                  className="appearance-none block w-full bg-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:border-blue-600"
                   placeholder="Escribe aquí la descripción..."
                   id="descripcion"
                 ></textarea>
@@ -252,17 +252,12 @@ const Eventos = () => {
                 )}
               </div>
 
-              <div className="grid md:grid-cols-2 gap-5">
-                <button className="bg-red-500 p-3 text-white rounded-3xl hover:scale-105">
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="bg-green-600 p-3 text-white rounded-3xl hover:scale-105"
-                >
-                  Añadir
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="w-full py-3 mt-5 font-bold text-white bg-blue-600 rounded-3xl hover:bg-blue-700 transition duration-200"
+              >
+                Crear Evento
+              </button>
             </form>
           </div>
         </section>

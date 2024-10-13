@@ -33,7 +33,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "250px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -44,6 +43,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
+
 const ColorButton = styled(Button)(({ theme }) => ({
   color: theme.palette.getContrastText(blue[900]),
   backgroundColor: blue[900],
@@ -57,8 +57,8 @@ const Mentores = () => {
   const [mentores, setMentores] = useState([]);
   const [pending, setPending] = useState(true);
   const [searchValue, setSearchValue] = useState("");
-
   const drawerWidth = 240;
+
   useEffect(() => {
     const fetchMentores = async () => {
       try {
@@ -71,17 +71,15 @@ const Mentores = () => {
         console.error(err);
       }
     };
-
     fetchMentores();
   }, []);
 
   const handleInputChange = (event) => {
     const value = event.target.value.trim();
-
-    if (!value.trim()) {
+    setSearchValue(value);
+    if (!value) {
       setMentores(mentoresOrigin);
     }
-    setSearchValue(event.target.value);
   };
 
   const handleSearchClick = () => {
@@ -98,7 +96,6 @@ const Mentores = () => {
       }
       return false;
     });
-
     if (filter.length === 0) {
       toast.error("No se encontraron coincidencias");
       setMentores(mentoresOrigin);
@@ -119,6 +116,7 @@ const Mentores = () => {
             width: { sm: `calc(100vw - ${drawerWidth}px)` },
             ml: { sm: `${drawerWidth}px` },
             maxWidth: "1440px",
+            mx: "auto",
           }}
         >
           <Typography
@@ -141,7 +139,7 @@ const Mentores = () => {
             flexWrap={"wrap"}
             gap={2}
           >
-            <Box as="div" display={"flex"} alignItems={"center"}>
+            <Box display={"flex"} alignItems={"center"}>
               <Search>
                 <StyledInputBase
                   placeholder="Buscar .."
@@ -162,7 +160,15 @@ const Mentores = () => {
             </Box>
           </Stack>
         </Box>
-        <MentoresTable mentores={mentores} pending={pending} />
+        <Box
+          sx={{
+            overflowX: "auto",
+            maxWidth: "100%",
+            mt: 2,
+          }}
+        >
+          <MentoresTable mentores={mentores} pending={pending} />
+        </Box>
       </Box>
     </div>
   );

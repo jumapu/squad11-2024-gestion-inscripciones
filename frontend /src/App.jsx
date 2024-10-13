@@ -12,13 +12,16 @@ import ListEvents from "./views/User/ListEvents";
 import Events from "./views/User/Events";
 import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
-
+import InscritosTable from "./views/Admindash/Eventos/Component/InscritosTable";
+import Error404 from "./components/Error404";
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/registro" element={<Register />} />
+      <Route path="/configuracion" element={<Error404 />} />
+      <Route path="/perfil" element={<Error404 />} />
 
       <Route element={<AuthOutlet fallbackPath="/login" />}>
         <Route path="/dashboard" element={<Dashboard />} />
@@ -31,9 +34,12 @@ function App() {
 
         <Route path="/createTeam/:id" element={<TeamGroupFilter />} />
         <Route path="/team/:id" element={<GroupTable />} />
+        <Route path="/inscritos/:id" element={<InscritosTable />} />
 
         <Route path="/:id/eventos" element={<ListEvents />} />
         <Route path="/:id/mis_eventos" element={<Events />} />
+        <Route path="/:id/perfil" element={<Error404 />} />
+        <Route path="/:id/configuracion" element={<Error404 />} />
       </Route>
     </Routes>
   );

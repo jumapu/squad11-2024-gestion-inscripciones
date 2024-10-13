@@ -14,8 +14,6 @@ const EventCard = ({ event }) => {
   useEffect(() => {
     const { Mentors: mentors, Students: students } = event?.registration;
 
-    console.log(mentors, students);
-
     mentors.forEach((element) => {
       if (element?.id == id) {
         setIsRegistered(true);
@@ -30,6 +28,8 @@ const EventCard = ({ event }) => {
 
   const createdAt = new Date(...event.createdAt);
   const finishAt = new Date(...event.finishAt);
+
+  console.log(event);
 
   const options = { year: "numeric", month: "long", day: "numeric" };
   const createdDate = createdAt.toLocaleDateString("es-ES", options);
@@ -53,7 +53,7 @@ const EventCard = ({ event }) => {
   };
 
   const handleShowTeam = () => {
-    setTeams(event.teamGroup.teams); // Almacena los equipos en el estado
+    setTeams(event.teamGroup.teams);
     setShowTeamModal(true);
   };
 

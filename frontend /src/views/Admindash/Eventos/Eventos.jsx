@@ -10,6 +10,7 @@ import Stack from "@mui/material/Stack";
 import { EventosTable } from "./Component/EventosTable";
 import { useEffect, useState } from "react";
 import axiosInstance from "@/api/interceptor.js";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -75,6 +76,7 @@ const Eventos = () => {
       })
       .catch((err) => {
         console.log(err);
+        setPending(false);
       });
   }, []);
 
@@ -182,7 +184,19 @@ const Eventos = () => {
             </Box>
           </Stack>
         </Box>
-        <EventosTable eventos={filteredEventos} loading={pending} />
+
+        {pending ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="300px"
+          >
+            <CircularProgress />
+          </Box>
+        ) : (
+          <EventosTable eventos={filteredEventos} loading={pending} />
+        )}
       </Box>
     </div>
   );

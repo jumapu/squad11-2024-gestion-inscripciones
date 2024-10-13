@@ -91,15 +91,11 @@ const GroupTable = () => {
                 fill="black"
               />
             </svg>
+            Lista de Grupos del Evento {nameEvent}
           </a>
-          <div className="overflow-x-auto shadow-lg rounded-lg bg-white w-5/6">
-            <div className="bg-gray-100 text-center pb-4">
-              <h1 className="font-bold text-3xl">
-                Lista de Grupos del Evento {nameEvent}
-              </h1>
-            </div>
+          <div className="overflow-x-auto shadow-lg rounded-lg bg-white w-5/6 mt-4">
             <table className="w-max md:w-full bg-white border border-gray-300 rounded-lg">
-              <thead className="bg-gray-300 ">
+              <thead className="bg-gray-300">
                 <tr>
                   <th className="py-3 px-6 border-b border-gray-400 text-left text-gray-600 font-semibold">
                     Grupo
@@ -122,7 +118,7 @@ const GroupTable = () => {
                       {index + 1}
                     </td>
                     <td className="py-4 px-6 border-b border-gray-400 text-gray-800">
-                      {groups.length}
+                      {group.members ? group.members.length : 0}
                     </td>
                     <td className="py-4 px-6 border-b border-gray-400">
                       <button

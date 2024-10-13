@@ -2,7 +2,6 @@ import axiosInstance from "./interceptor.js";
 import { toast } from "sonner";
 
 export const userLogin = async (data, signIn, navigate) => {
-  // Validar datos de entrada
   for (const [key, value] of Object.entries(data)) {
     if (value.trim() === "" || value == null) {
       toast.error(`El campo ${key} está vacío. Falta completar.`);
@@ -12,8 +11,6 @@ export const userLogin = async (data, signIn, navigate) => {
 
   try {
     const res = await axiosInstance.post(`auth/authentication`, data);
-
-    console.log("Respuesta completa:", res);
 
     if (res.jwt) {
       const token = res.jwt;
@@ -29,8 +26,6 @@ export const userLogin = async (data, signIn, navigate) => {
         },
       });
 
-      console.log("Token recibido:", token);
-
       const role = res.rol;
       const userId = res.id;
 
@@ -45,7 +40,7 @@ export const userLogin = async (data, signIn, navigate) => {
       toast.error("¡Error de autenticación! Verifique sus credenciales.");
     }
   } catch (error) {
-    console.log(error.response.data["404"]);
+    console.log(error);
     if (error?.response?.data["404"]) {
       toast.error("¡Credenciales incorrectas.!");
       return;

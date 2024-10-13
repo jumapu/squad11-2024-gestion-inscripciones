@@ -1,4 +1,3 @@
-// import { Outlet} from 'react-router-dom';
 import NavAndDrawer from "./components/NavAndDrawer";
 import DashboardCard from "./components/DashboardCard";
 import DashboardChart from "./components/DashboardChart";

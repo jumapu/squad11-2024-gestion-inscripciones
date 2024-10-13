@@ -33,7 +33,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   width: "250px",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
     [theme.breakpoints.up("sm")]: {
@@ -103,17 +102,16 @@ const Egresados = () => {
         return true;
       }
 
-      return false; // Retorna false para excluir este item
+      return false;
     });
 
-    // Si no se encuentran coincidencias
     if (filter.length === 0) {
       toast.error("No se encontraron coincidencias");
-      setEstudiantes(estudiantesOrigin); // Restablece a la lista original
+      setEstudiantes(estudiantesOrigin);
       return;
     }
 
-    setEstudiantes(filter); // Actualiza el estado con los resultados filtrados
+    setEstudiantes(filter);
   };
 
   return (

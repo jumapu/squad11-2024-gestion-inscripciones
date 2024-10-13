@@ -42,16 +42,13 @@ export const EgresadosTable = ({ students, pending }) => {
       selector: (row) => row.name,
     },
     {
-      name: "Apellido",
-      selector: (row) => row.surname,
+      name: "ONG",
+      selector: (row) => row.ong,
     },
     {
       name: "Rol",
-      selector: (row) => row.rol,
-    },
-    {
-      name: "Squad",
-      selector: (row) => row.team,
+      selector: (row) =>
+        Array.isArray(row.rol) ? row.rol.join(", ") : row.rol,
     },
     {
       name: "Acciones",

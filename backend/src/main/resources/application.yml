@@ -1,0 +1,12 @@
+#Los perfiles DEV Y QA funcionan con h2.
+#Perfiles DEV, QA, PROD
+image:
+  directory:
+    event: images/events/
+    profile: images/profiles/
+
+spring:
+  profiles:
+    active: prod
+
+

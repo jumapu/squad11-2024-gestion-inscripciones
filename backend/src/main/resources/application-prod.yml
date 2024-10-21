@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dpg-cs5k3088fa8c73amvce0-a.oregon-postgres.render.com:5432/squad_db
+    username: squad_db_user
+    password: bgvC4FuY4lebWSBGYzcdxlTW2XDrQE4S
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email}
+    password: ${email_password}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+#email de ejemplo para probar /resetPassword
+mail: ${email_user_ejemplo}
